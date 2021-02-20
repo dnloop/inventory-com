@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.*?>
+<?import org.controlsfx.control.textfield.CustomTextField?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="io.github.dnloop.inventorycom.controller.buys.EditInvoice">
+    <center>
+        <GridPane prefHeight="215.0" prefWidth="355.0" BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <BorderPane.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="20.0"/>
+            </BorderPane.margin>
+            <Label text="Número"/>
+            <Label text="Fecha de emisión" GridPane.rowIndex="2"/>
+            <Label text="Tipo de factura" GridPane.rowIndex="4"/>
+            <CustomTextField fx:id="txtInvoiceNumber" GridPane.rowIndex="1"/>
+            <Label text="Método de pago" GridPane.rowIndex="6"/>
+            <ChoiceBox fx:id="cbPaymentMethod" maxWidth="1.7976931348623157E308" GridPane.hgrow="ALWAYS"
+                       GridPane.rowIndex="7"/>
+            <Spinner fx:id="spShare" maxWidth="1.7976931348623157E308" GridPane.rowIndex="9"/>
+            <Label text="Cuota" GridPane.rowIndex="8"/>
+            <ChoiceBox fx:id="saleInvoiceType" maxWidth="1.7976931348623157E308" GridPane.rowIndex="5"/>
+            <DatePicker fx:id="dpEmissionDate" maxWidth="1.7976931348623157E308" GridPane.rowIndex="3"/>
+        </GridPane>
+    </center>
+    <bottom>
+        <HBox alignment="CENTER" prefHeight="75.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <Button fx:id="btnCancel" cancelButton="true" text="_Cancelar">
+                <HBox.margin>
+                    <Insets left="10.0" right="10.0"/>
+                </HBox.margin>
+            </Button>
+            <Button fx:id="btnSave" defaultButton="true" text="_Aceptar">
+                <HBox.margin>
+                    <Insets left="10.0" right="10.0"/>
+                </HBox.margin>
+            </Button>
+        </HBox>
+    </bottom>
+    <left>
+        <Pane prefHeight="200.0" prefWidth="25.0" BorderPane.alignment="CENTER"/>
+    </left>
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <Menu mnemonicParsing="false" text="Archivo">
+                <accelerator>
+                    <KeyCodeCombination alt="DOWN" code="A" control="UP" meta="UP" shift="UP" shortcut="UP"/>
+                </accelerator>
+                <MenuItem fx:id="miSave" mnemonicParsing="false" text="Guardar">
+                    <accelerator>
+                        <KeyCodeCombination alt="UP" code="G" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                    </accelerator>
+                </MenuItem>
+                <MenuItem fx:id="miExit" mnemonicParsing="false" text="Salir">
+                    <accelerator>
+                        <KeyCodeCombination alt="UP" code="X" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                    </accelerator>
+                </MenuItem>
+            </Menu>
+            <Menu fx:id="miHelp" mnemonicParsing="false" text="Ayuda">
+                <accelerator>
+                    <KeyCodeCombination alt="DOWN" code="H" control="UP" meta="UP" shift="UP" shortcut="UP"/>
+                </accelerator>
+            </Menu>
+        </MenuBar>
+    </top>
+    <right>
+        <Pane prefHeight="200.0" prefWidth="25.0" BorderPane.alignment="CENTER"/>
+    </right>
+</BorderPane>

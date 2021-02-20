@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.*?>
+<?import org.controlsfx.control.textfield.CustomTextField?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
+            prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="io.github.dnloop.inventorycom.controller.products.View">
+    <left>
+        <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets/>
+            </BorderPane.margin>
+            <TitledPane animated="false" collapsible="false" text="Productos" VBox.vgrow="ALWAYS">
+                <VBox.margin>
+                    <Insets bottom="10.0" left="5.0" top="10.0"/>
+                </VBox.margin>
+                <VBox>
+                    <HBox>
+                        <VBox.margin>
+                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                        </VBox.margin>
+                        <CustomTextField fx:id="txtSearch" alignment="CENTER" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets right="5.0"/>
+                            </HBox.margin>
+                        </CustomTextField>
+                        <Button fx:id="btnClear" mnemonicParsing="false" onAction="#clear"
+                                style="-fx-background-radius: 5 0 0 5;" HBox.hgrow="ALWAYS">
+                            <tooltip>
+                                <Tooltip text="Borrar campo de búsqueda" wrapText="true"/>
+                            </tooltip>
+                            <graphic>
+                                <FontAwesomeIconView glyphName="ANGLE_DOUBLE_LEFT"/>
+                            </graphic>
+                            <HBox.margin>
+                                <Insets/>
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#search"
+                                style="-fx-background-radius: 0 5 5 0;" HBox.hgrow="ALWAYS">
+                            <tooltip>
+                                <Tooltip text="Buscar registro" wrapText="true"/>
+                            </tooltip>
+                            <graphic>
+                                <FontAwesomeIconView glyphName="SEARCH"/>
+                            </graphic>
+                            <HBox.margin>
+                                <Insets/>
+                            </HBox.margin>
+                        </Button>
+                    </HBox>
+                    <ListView fx:id="lvProducts"/>
+                </VBox>
+            </TitledPane>
+            <TitledPane collapsible="false" prefHeight="400.0" prefWidth="250.0" text="Detalle" VBox.vgrow="ALWAYS">
+                <VBox.margin>
+                    <Insets bottom="10.0" left="5.0" top="10.0"/>
+                </VBox.margin>
+                <GridPane>
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <padding>
+                        <Insets bottom="10.0"/>
+                    </padding>
+                    <Label text="Precio Unitario" GridPane.rowIndex="2">
+                        <GridPane.margin>
+                            <Insets left="20.0" right="20.0" top="5.0"/>
+                        </GridPane.margin>
+                    </Label>
+                    <Label text="Existencia">
+                        <GridPane.margin>
+                            <Insets left="20.0" right="20.0" top="5.0"/>
+                        </GridPane.margin>
+                    </Label>
+                    <Label text="Categoría" GridPane.rowIndex="4">
+                        <GridPane.margin>
+                            <Insets left="20.0" right="20.0" top="5.0"/>
+                        </GridPane.margin>
+                    </Label>
+                    <CustomTextField fx:id="txtStock" editable="false" GridPane.rowIndex="1">
+                        <GridPane.margin>
+                            <Insets bottom="5.0" left="20.0" right="20.0" top="5.0"/>
+                        </GridPane.margin>
+                    </CustomTextField>
+                    <CustomTextField fx:id="txtPrice" editable="false" GridPane.rowIndex="3">
+                        <GridPane.margin>
+                            <Insets bottom="5.0" left="20.0" right="20.0" top="5.0"/>
+                        </GridPane.margin>
+                    </CustomTextField>
+                    <CustomTextField fx:id="txtCategory" editable="false" GridPane.rowIndex="5">
+                        <GridPane.margin>
+                            <Insets bottom="5.0" left="20.0" right="20.0" top="5.0"/>
+                        </GridPane.margin>
+                    </CustomTextField>
+                </GridPane>
+            </TitledPane>
+        </VBox>
+    </left>
+    <center>
+        <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+            <Tab closable="false" text="Vendidos">
+                <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="541.0" prefWidth="574.0">
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                        <BarChart fx:id="bcSells" layoutX="-99.0" layoutY="-116.0" prefHeight="268.0"
+                                  prefWidth="574.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <xAxis>
+                                <CategoryAxis side="BOTTOM"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis side="LEFT"/>
+                            </yAxis>
+                        </BarChart>
+                    </AnchorPane>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                        <LineChart fx:id="lcSells" layoutX="-101.0" layoutY="-121.0" prefHeight="267.0"
+                                   prefWidth="574.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <xAxis>
+                                <CategoryAxis side="BOTTOM"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis side="LEFT"/>
+                            </yAxis>
+                        </LineChart>
+                    </AnchorPane>
+                </SplitPane>
+            </Tab>
+            <Tab closable="false" text="Comprados">
+                <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                        <BarChart fx:id="bcBuys" prefHeight="268.0" prefWidth="574.0" AnchorPane.bottomAnchor="0.0"
+                                  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                  AnchorPane.topAnchor="0.0">
+                            <xAxis>
+                                <CategoryAxis side="BOTTOM"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis side="LEFT"/>
+                            </yAxis>
+                        </BarChart>
+                    </AnchorPane>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                        <LineChart fx:id="lcBuys" layoutX="-101.0" layoutY="-98.0" prefHeight="267.0"
+                                   prefWidth="574.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <xAxis>
+                                <CategoryAxis side="BOTTOM"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis side="LEFT"/>
+                            </yAxis>
+                        </LineChart>
+                    </AnchorPane>
+                </SplitPane>
+                <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0">
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                        <BarChart layoutX="-99.0" layoutY="-116.0" prefHeight="268.0" prefWidth="574.0"
+                                  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <xAxis>
+                                <CategoryAxis side="BOTTOM"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis side="LEFT"/>
+                            </yAxis>
+                        </BarChart>
+                    </AnchorPane>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                        <LineChart layoutX="-101.0" layoutY="-121.0" prefHeight="267.0" prefWidth="574.0"
+                                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <xAxis>
+                                <CategoryAxis side="BOTTOM"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis side="LEFT"/>
+                            </yAxis>
+                        </LineChart>
+                    </AnchorPane>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                        <BarChart layoutX="-99.0" layoutY="-116.0" prefHeight="268.0" prefWidth="574.0"
+                                  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <xAxis>
+                                <CategoryAxis side="BOTTOM"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis side="LEFT"/>
+                            </yAxis>
+                        </BarChart>
+                    </AnchorPane>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                        <LineChart layoutX="-101.0" layoutY="-121.0" prefHeight="267.0" prefWidth="574.0"
+                                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <xAxis>
+                                <CategoryAxis side="BOTTOM"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis side="LEFT"/>
+                            </yAxis>
+                        </LineChart>
+                    </AnchorPane>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                        <BarChart layoutX="-99.0" layoutY="-116.0" prefHeight="268.0" prefWidth="574.0"
+                                  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <xAxis>
+                                <CategoryAxis side="BOTTOM"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis side="LEFT"/>
+                            </yAxis>
+                        </BarChart>
+                    </AnchorPane>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                        <LineChart layoutX="-101.0" layoutY="-121.0" prefHeight="267.0" prefWidth="574.0"
+                                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <xAxis>
+                                <CategoryAxis side="BOTTOM"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis side="LEFT"/>
+                            </yAxis>
+                        </LineChart>
+                    </AnchorPane>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                        <BarChart>
+                            <xAxis>
+                                <CategoryAxis side="BOTTOM"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis side="LEFT"/>
+                            </yAxis>
+                        </BarChart>
+                    </AnchorPane>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                        <LineChart>
+                            <xAxis>
+                                <CategoryAxis side="BOTTOM"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis side="LEFT"/>
+                            </yAxis>
+                        </LineChart>
+                    </AnchorPane>
+                </SplitPane>
+            </Tab>
+            <Tab closable="false" text="Existencia">
+                <AnchorPane>
+                    <PieChart fx:id="totalPieChart" prefHeight="541.0" prefWidth="574.0"
+                              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                              AnchorPane.topAnchor="0.0"/>
+                </AnchorPane>
+            </Tab>
+            <Tab text="Total">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <StackedBarChart fx:id="totalBarChart" prefHeight="541.0" prefWidth="574.0"
+                                     AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                     AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <xAxis>
+                            <CategoryAxis side="BOTTOM"/>
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis side="LEFT"/>
+                        </yAxis>
+                    </StackedBarChart>
+                </AnchorPane>
+            </Tab>
+        </TabPane>
+    </center>
+    <top>
+        <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <MenuButton mnemonicParsing="false" text="Archivo">
+                <items>
+                    <MenuItem fx:id="miNew" mnemonicParsing="false" onAction="#newProduct" text="Nuevo">
+                        <accelerator>
+                            <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                        </accelerator>
+                    </MenuItem>
+                    <MenuItem fx:id="miEdit" mnemonicParsing="false" onAction="#editProduct" text="Editar">
+                        <accelerator>
+                            <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                        </accelerator>
+                    </MenuItem>
+                </items>
+            </MenuButton>
+            <Button fx:id="btnHelp" mnemonicParsing="false" onAction="#showHelp" text="Ayuda"/>
+        </ToolBar>
+    </top>
+</BorderPane>

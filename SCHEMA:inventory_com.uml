@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.SCHEMA:inventario_comercial</OriginalElement>
+  <nodes>
+    <node x="874.5808823529412" y="540.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.category</node>
+    <node x="1146.25" y="0.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.municipality</node>
+    <node x="0.0" y="940.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.client_phone</node>
+    <node x="1557.5" y="1314.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.purchase_share</node>
+    <node x="712.25" y="0.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.departments</node>
+    <node x="857.0808823529412" y="888.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.product</node>
+    <node x="1164.5" y="1288.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.purchase_detail</node>
+    <node x="929.25" y="0.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.province</node>
+    <node x="1425.125" y="862.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.purchase_invoice</node>
+    <node x="502.5000000000001" y="1301.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.sale_detail</node>
+    <node x="1626.625" y="475.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.supplier</node>
+    <node x="1783.125" y="940.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.supplier_phone</node>
+    <node x="168.5000000000001" y="462.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.client</node>
+    <node x="156.5000000000001" y="1314.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.sale_share</node>
+    <node x="900.2058823529412" y="140.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.locality</node>
+    <node x="858.5" y="1340.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.supplier_catalog</node>
+    <node x="284.0000000000001" y="862.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.sale_invoice</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.locality" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.municipality">
+      <point x="84.66666666666663" y="-136.0" />
+      <point x="1111.872549019608" y="115.0" />
+      <point x="1244.75" y="115.0" />
+      <point x="0.0" y="45.0" />
+    </edge>
+    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.purchase_detail" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.purchase_invoice">
+      <point x="93.25" y="-162.0" />
+      <point x="1444.25" y="1263.0" />
+      <point x="1509.625" y="1263.0" />
+      <point x="-84.5" y="188.0" />
+    </edge>
+    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.sale_invoice" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.client">
+      <point x="0.0" y="-188.0" />
+      <point x="453.0000000000001" y="837.0" />
+      <point x="354.5000000000001" y="837.0" />
+      <point x="62.0" y="175.0" />
+    </edge>
+    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.client" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.locality">
+      <point x="0.0" y="-175.0" />
+      <point x="292.5000000000001" y="437.0" />
+      <point x="963.7058823529412" y="437.0" />
+      <point x="-63.5" y="136.0" />
+    </edge>
+    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.purchase_share" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.purchase_invoice">
+      <point x="0.0" y="-136.0" />
+      <point x="1744.0" y="1263.0" />
+      <point x="1678.625" y="1263.0" />
+      <point x="84.5" y="188.0" />
+    </edge>
+    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.locality" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.departments">
+      <point x="-84.66666666666674" y="-136.0" />
+      <point x="942.5392156862745" y="115.0" />
+      <point x="810.75" y="115.0" />
+      <point x="0.0" y="45.0" />
+    </edge>
+    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.product" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.category">
+      <point x="0.0" y="-162.0" />
+      <point x="0.0" y="97.0" />
+    </edge>
+    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.purchase_invoice" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.supplier">
+      <point x="0.0" y="-188.0" />
+      <point x="1594.125" y="837.0" />
+      <point x="1688.625" y="837.0" />
+      <point x="-62.0" y="162.0" />
+    </edge>
+    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.supplier_catalog" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.product">
+      <point x="0.0" y="-110.0" />
+      <point x="1001.5" y="1263.0" />
+      <point x="1005.5808823529412" y="1263.0" />
+      <point x="0.0" y="162.0" />
+    </edge>
+    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.supplier" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.locality">
+      <point x="0.0" y="-162.0" />
+      <point x="1750.625" y="437.0" />
+      <point x="1090.7058823529412" y="437.0" />
+      <point x="63.5" y="136.0" />
+    </edge>
+    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.locality" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.province">
+      <point x="0.0" y="-136.0" />
+      <point x="0.0" y="45.0" />
+    </edge>
+    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.sale_detail" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.product">
+      <point x="84.0" y="-149.0" />
+      <point x="754.5000000000001" y="1263.0" />
+      <point x="906.5808823529412" y="1263.0" />
+      <point x="-99.0" y="162.0" />
+    </edge>
+    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.purchase_detail" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.product">
+      <point x="-93.25" y="-162.0" />
+      <point x="1257.75" y="1263.0" />
+      <point x="1104.5808823529412" y="1263.0" />
+      <point x="99.0" y="162.0" />
+    </edge>
+    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.sale_detail" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.sale_invoice">
+      <point x="-84.0" y="-149.0" />
+      <point x="586.5000000000001" y="1263.0" />
+      <point x="537.5000000000001" y="1263.0" />
+      <point x="84.5" y="188.0" />
+    </edge>
+    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.sale_share" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.sale_invoice">
+      <point x="0.0" y="-136.0" />
+      <point x="319.5000000000001" y="1263.0" />
+      <point x="368.5000000000001" y="1263.0" />
+      <point x="-84.5" y="188.0" />
+    </edge>
+    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.client_phone" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.client">
+      <point x="0.0" y="-110.0" />
+      <point x="132.0" y="837.0" />
+      <point x="230.5000000000001" y="837.0" />
+      <point x="-62.0" y="175.0" />
+    </edge>
+    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.supplier_phone" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.supplier">
+      <point x="0.0" y="-110.0" />
+      <point x="1907.125" y="837.0" />
+      <point x="1812.625" y="837.0" />
+      <point x="62.0" y="162.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.35721247563352826" x="1016.0" y="806.0" />
+  <SelectedNodes>
+    <node>f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.sale_invoice</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Key columns</Category>
+    <Category>Columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+

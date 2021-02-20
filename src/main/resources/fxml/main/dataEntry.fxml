@@ -1,0 +1,754 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import impl.com.calendarfx.view.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.textfield.CustomTextField?>
+<TabPane fx:id="mainView" prefHeight="622.0" prefWidth="866.0" tabClosingPolicy="UNAVAILABLE"
+         xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+         fx:controller="io.github.dnloop.inventorycom.controller.main.DataEntry">
+    <Tab closable="false" text="Ventas">
+        <AnchorPane minHeight="0.0" minWidth="0.0">
+            <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                  AnchorPane.topAnchor="0.0">
+                <HBox>
+                    <Accordion>
+                        <panes>
+                            <TitledPane prefHeight="257.0" prefWidth="419.0" text="Productos">
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="130.0"
+                                            prefWidth="369.0">
+                                    <TableView fx:id="tvSProduct" layoutX="14.0" layoutY="40.0"
+                                               prefHeight="188.0" prefWidth="415.0"
+                                               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+                                        <columns>
+                                            <TableColumn fx:id="colSDescription" prefWidth="195.0"
+                                                         text="Descripción"/>
+                                            <TableColumn fx:id="colSPrice" prefWidth="98.0" text="Precio"/>
+                                            <TableColumn fx:id="colSStock" prefWidth="106.0"
+                                                         text="Existencia"/>
+                                        </columns>
+                                    </TableView>
+                                    <ToolBar prefHeight="39.0" prefWidth="417.0">
+                                        <CustomTextField fx:id="txtSProduct" prefHeight="26.0"
+                                                         prefWidth="245.0"/>
+                                        <HBox alignment="CENTER">
+                                            <Button fx:id="clearSProductSearch"
+                                                    contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false"
+                                                    style="-fx-background-radius: 5 0 0 5;">
+                                                <graphic>
+                                                    <FontAwesomeIconView glyphName="ANGLE_DOUBLE_LEFT"/>
+                                                </graphic>
+                                                <tooltip>
+                                                    <Tooltip text="Borrar campo de búsqueda"
+                                                             wrapText="true"/>
+                                                </tooltip>
+                                            </Button>
+                                            <Button fx:id="searchSProduct" contentDisplay="GRAPHIC_ONLY"
+                                                    mnemonicParsing="false"
+                                                    style="-fx-background-radius: 0 5 5 0;">
+                                                <graphic>
+                                                    <FontAwesomeIconView glyphName="SEARCH" size="16"/>
+                                                </graphic>
+                                                <tooltip>
+                                                    <Tooltip text="Buscar un registro"/>
+                                                </tooltip>
+                                            </Button>
+                                        </HBox>
+                                        <HBox alignment="CENTER" layoutX="332.0" layoutY="10.0">
+                                            <Button fx:id="addSCart" contentDisplay="GRAPHIC_ONLY"
+                                                    mnemonicParsing="false">
+                                                <graphic>
+                                                    <FontAwesomeIconView glyphName="CART_PLUS" size="16"/>
+                                                </graphic>
+                                                <tooltip>
+                                                    <Tooltip
+                                                            text="Añadir un registro &#10;al carro de ventas"/>
+                                                </tooltip>
+                                            </Button>
+                                        </HBox>
+                                    </ToolBar>
+                                </AnchorPane>
+                            </TitledPane>
+                            <TitledPane layoutX="10.0" layoutY="10.0" prefHeight="257.0" prefWidth="419.0"
+                                        text="Cliente">
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="130.0"
+                                            prefWidth="369.0">
+                                    <TableView fx:id="tvClient" layoutX="14.0" layoutY="40.0"
+                                               prefHeight="188.0" prefWidth="415.0"
+                                               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+                                        <columns>
+                                            <TableColumn fx:id="colLastName" prefWidth="195.0"
+                                                         text="Apellido"/>
+                                            <TableColumn fx:id="colName" prefWidth="98.0" text="Nombre"/>
+                                        </columns>
+                                        <columnResizePolicy>
+                                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                                        </columnResizePolicy>
+                                    </TableView>
+                                    <ToolBar prefHeight="39.0" prefWidth="417.0">
+                                        <CustomTextField fx:id="ctf_search_client" prefHeight="26.0"
+                                                         prefWidth="235.0"/>
+                                        <HBox alignment="CENTER">
+                                            <Button fx:id="clearSearchSClient"
+                                                    contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false"
+                                                    style="-fx-background-radius: 5 0 0 5;">
+                                                <graphic>
+                                                    <FontAwesomeIconView glyphName="ANGLE_DOUBLE_LEFT"/>
+                                                </graphic>
+                                                <tooltip>
+                                                    <Tooltip text="Borrar campo de búsqueda"
+                                                             wrapText="true"/>
+                                                </tooltip>
+                                            </Button>
+                                            <Button fx:id="btn_search_client" contentDisplay="GRAPHIC_ONLY"
+                                                    mnemonicParsing="false"
+                                                    style="-fx-background-radius: 0 5 5 0;">
+                                                <graphic>
+                                                    <FontAwesomeIconView glyphName="SEARCH" size="16"/>
+                                                </graphic>
+                                                <tooltip>
+                                                    <Tooltip text="Buscar un registro"/>
+                                                </tooltip>
+                                            </Button>
+                                        </HBox>
+                                        <HBox alignment="CENTER">
+                                            <Button fx:id="delClient" contentDisplay="GRAPHIC_ONLY"
+                                                    mnemonicParsing="false"
+                                                    style="-fx-background-radius: 5 0 0 5;">
+                                                <graphic>
+                                                    <FontAwesomeIconView glyphName="USER_TIMES"
+                                                                         size="16"/>
+                                                </graphic>
+                                                <tooltip>
+                                                    <Tooltip text="Eliminar cliente"/>
+                                                </tooltip>
+                                            </Button>
+                                            <Button fx:id="addClient" contentDisplay="GRAPHIC_ONLY"
+                                                    mnemonicParsing="false"
+                                                    style="-fx-background-radius: 0 5 5 0;">
+                                                <graphic>
+                                                    <FontAwesomeIconView glyphName="USER_PLUS"
+                                                                         size="16"/>
+                                                </graphic>
+                                            </Button>
+                                        </HBox>
+                                    </ToolBar>
+                                </AnchorPane>
+                            </TitledPane>
+                            <TitledPane expanded="false" prefHeight="426.0" prefWidth="419.0" text="Factura">
+                                <AnchorPane prefWidth="200.0">
+                                    <GridPane hgap="5.0" prefHeight="100.0" vgap="5.0"
+                                              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                        <columnConstraints>
+                                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES"
+                                                               maxWidth="221.0" minWidth="10.0"
+                                                               prefWidth="46.0"/>
+                                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES"
+                                                               maxWidth="221.0" minWidth="10.0"
+                                                               prefWidth="110.0"/>
+                                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES"
+                                                               maxWidth="339.0" minWidth="10.0"
+                                                               prefWidth="260.0"/>
+                                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES"
+                                                               maxWidth="339.0" minWidth="10.0"
+                                                               prefWidth="59.0"/>
+                                        </columnConstraints>
+                                        <rowConstraints>
+                                            <RowConstraints minHeight="10.0" prefHeight="10.0"
+                                                            vgrow="SOMETIMES"/>
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                            vgrow="SOMETIMES"/>
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                            vgrow="SOMETIMES"/>
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                            vgrow="SOMETIMES"/>
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                            vgrow="SOMETIMES"/>
+                                        </rowConstraints>
+                                        <padding>
+                                            <Insets left="5.0" right="5.0"/>
+                                        </padding>
+                                        <NumericTextField fx:id="saleInvoiceNumber" prefHeight="25.0"
+                                                          prefWidth="228.0" GridPane.columnIndex="2">
+                                            <GridPane.margin>
+                                                <Insets left="5.0"/>
+                                            </GridPane.margin>
+                                        </NumericTextField>
+                                        <Label text="Nº Factura" textAlignment="CENTER"
+                                               GridPane.columnIndex="1"/>
+                                        <Label text="Fecha" GridPane.columnIndex="1"
+                                               GridPane.rowIndex="1"/>
+                                        <DatePicker fx:id="saleEmisionDate" prefHeight="23.0"
+                                                    prefWidth="389.0" GridPane.columnIndex="2"
+                                                    GridPane.rowIndex="1">
+                                            <GridPane.margin>
+                                                <Insets left="5.0"/>
+                                            </GridPane.margin>
+                                        </DatePicker>
+                                        <ChoiceBox fx:id="saleInvoiceType" prefHeight="23.0"
+                                                   prefWidth="453.0" GridPane.columnIndex="2"
+                                                   GridPane.rowIndex="2">
+                                            <GridPane.margin>
+                                                <Insets left="5.0"/>
+                                            </GridPane.margin>
+                                        </ChoiceBox>
+                                        <Label text="Tipo &#10;Factura" textAlignment="CENTER"
+                                               GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                        <Label text="Método&#10;Pago" textAlignment="CENTER"
+                                               GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                                        <ChoiceBox fx:id="salePaymentMethod" prefHeight="23.0"
+                                                   prefWidth="460.0" GridPane.columnIndex="2"
+                                                   GridPane.rowIndex="3">
+                                            <opaqueInsets>
+                                                <Insets left="5.0"/>
+                                            </opaqueInsets>
+                                            <GridPane.margin>
+                                                <Insets left="5.0"/>
+                                            </GridPane.margin>
+                                        </ChoiceBox>
+                                        <Spinner fx:id="saleShare" prefHeight="25.0" prefWidth="439.0"
+                                                 GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                            <GridPane.margin>
+                                                <Insets left="5.0"/>
+                                            </GridPane.margin>
+                                        </Spinner>
+                                        <Label text="Cuotas" GridPane.columnIndex="1"
+                                               GridPane.rowIndex="4"/>
+                                    </GridPane>
+                                </AnchorPane>
+                            </TitledPane>
+                            <TitledPane animated="false" prefWidth="419.0" text="Extra">
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="104.0"
+                                            prefWidth="202.0">
+                                    <GridPane prefHeight="454.0" prefWidth="412.0"
+                                              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0"
+                                              AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="0.0">
+                                        <columnConstraints>
+                                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES"
+                                                               minWidth="10.0" prefWidth="100.0"/>
+                                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES"
+                                                               minWidth="10.0" prefWidth="100.0"/>
+                                        </columnConstraints>
+                                        <rowConstraints>
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                            vgrow="SOMETIMES"/>
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                            vgrow="SOMETIMES"/>
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                            vgrow="SOMETIMES"/>
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                            vgrow="SOMETIMES"/>
+                                        </rowConstraints>
+                                        <SplitMenuButton fx:id="mbSaleSurcharge" mnemonicParsing="false"
+                                                         prefHeight="23.0" prefWidth="126.0" text="Recargo"
+                                                         GridPane.rowIndex="1">
+                                            <items>
+                                                <MenuItem fx:id="rvSinRecargo" mnemonicParsing="false"
+                                                          text="Sin Recargo"/>
+                                                <MenuItem fx:id="rvPorcentual" mnemonicParsing="false"
+                                                          text="Porcentual"/>
+                                                <MenuItem fx:id="rvNumerico" mnemonicParsing="false"
+                                                          text="Numérico"/>
+                                            </items>
+                                        </SplitMenuButton>
+                                        <SplitMenuButton fx:id="mbSaleDiscount" mnemonicParsing="false"
+                                                         prefHeight="23.0" prefWidth="127.0"
+                                                         text="Descuento" GridPane.rowIndex="2">
+                                            <items>
+                                                <MenuItem fx:id="dvSinDescuento" mnemonicParsing="false"
+                                                          text="Sin Recargo"/>
+                                                <MenuItem fx:id="dvPorcentual" mnemonicParsing="false"
+                                                          text="Porcentual"/>
+                                                <MenuItem fx:id="dvNumerico" mnemonicParsing="false"
+                                                          text="Numérico"/>
+                                            </items>
+                                        </SplitMenuButton>
+                                        <NumericTextField fx:id="txtSaleDiscount" disable="true"
+                                                          GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                        <NumericTextField fx:id="txtSaleSurcharge" disable="true"
+                                                          GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                    </GridPane>
+                                </AnchorPane>
+                            </TitledPane>
+                        </panes>
+                        <HBox.margin>
+                            <Insets bottom="2.0" left="2.0" right="1.0" top="2.0"/>
+                        </HBox.margin>
+                    </Accordion>
+                    <VBox HBox.hgrow="ALWAYS">
+                        <TitledPane animated="false" collapsible="false" text="Venta">
+                            <VBox.margin>
+                                <Insets left="1.0" right="2.0" top="2.0"/>
+                            </VBox.margin>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="308.0">
+                                <TableView fx:id="tvSellCart" prefHeight="164.0" prefWidth="443.0"
+                                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <columns>
+                                        <TableColumn fx:id="colSCDescription" prefWidth="146.0"
+                                                     text="Descripción"/>
+                                        <TableColumn fx:id="colSCPrice" prefWidth="111.0" text="Precio"/>
+                                        <TableColumn fx:id="colSCQuantity" prefWidth="95.0"
+                                                     text="Cantidad"/>
+                                        <TableColumn fx:id="colSubtotal" minWidth="0.0" prefWidth="146.0"
+                                                     text="Subtotal"/>
+                                        <TableColumn fx:id="colSCAction" prefWidth="127.0"
+                                                     text="Acción"/>
+                                    </columns>
+                                    <columnResizePolicy>
+                                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                                    </columnResizePolicy>
+                                </TableView>
+                            </AnchorPane>
+                        </TitledPane>
+                        <TitledPane animated="false" collapsible="false" text="Detalle">
+                            <VBox.margin>
+                                <Insets bottom="2.0" left="1.0" right="2.0" top="2.0"/>
+                            </VBox.margin>
+                            <GridPane prefHeight="247.0" prefWidth="441.0">
+                                <columnConstraints>
+                                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES"
+                                                       maxWidth="212.0" minWidth="10.0"
+                                                       prefWidth="144.0"/>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="395.0" minWidth="10.0"
+                                                       prefWidth="299.0"/>
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                    vgrow="SOMETIMES"/>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                    vgrow="SOMETIMES"/>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                    vgrow="SOMETIMES"/>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                    vgrow="SOMETIMES"/>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                    vgrow="SOMETIMES"/>
+                                </rowConstraints>
+                                <padding>
+                                    <Insets bottom="10.0" right="10.0" top="5.0"/>
+                                </padding>
+                                <Label text="Cliente"/>
+                                <Label text="Total de Cuotas" GridPane.rowIndex="1"/>
+                                <Label text="Valor Cuota" GridPane.rowIndex="2"/>
+                                <Label text="Subtotal" GridPane.rowIndex="3">
+                                    <font>
+                                        <Font name="System Bold" size="13.0"/>
+                                    </font>
+                                </Label>
+                                <Label text="Total" GridPane.rowIndex="4">
+                                    <font>
+                                        <Font name="System Bold" size="13.0"/>
+                                    </font>
+                                </Label>
+                                <TextField fx:id="txtClientName" editable="false"
+                                           GridPane.columnIndex="1"/>
+                                <NumericTextField fx:id="sellTotalShares" editable="false"
+                                                  GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"
+                                                  GridPane.rowIndex="1"/>
+                                <NumericTextField fx:id="sellShareAmount" editable="false"
+                                                  GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"
+                                                  GridPane.rowIndex="2"/>
+                                <NumericTextField fx:id="sellSubtotal" editable="false"
+                                                  GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"
+                                                  GridPane.rowIndex="3"/>
+                                <NumericTextField fx:id="sellTotal" editable="false"
+                                                  GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"
+                                                  GridPane.rowIndex="4"/>
+                            </GridPane>
+                        </TitledPane>
+                    </VBox>
+                </HBox>
+                <HBox prefHeight="54.0" prefWidth="866.0">
+                    <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0"
+                             HBox.hgrow="ALWAYS">
+                        <Button fx:id="acceptSell" mnemonicParsing="false" text="Aceptar"/>
+                        <Button fx:id="cancelSell" cancelButton="true" layoutX="10.0" layoutY="10.0"
+                                mnemonicParsing="false" text="Cancelar"/>
+                    </ToolBar>
+                </HBox>
+            </VBox>
+        </AnchorPane>
+    </Tab>
+    <Tab text="Compras">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+            <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                  AnchorPane.topAnchor="0.0">
+                <HBox>
+                    <Accordion nodeOrientation="LEFT_TO_RIGHT">
+                        <panes>
+                            <TitledPane prefHeight="257.0" prefWidth="419.0" text="Productos">
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="130.0"
+                                            prefWidth="369.0">
+                                    <TableView fx:id="tvBProduct" layoutX="14.0" layoutY="40.0"
+                                               prefHeight="188.0" prefWidth="415.0"
+                                               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+                                        <columns>
+                                            <TableColumn fx:id="colBDescription" prefWidth="195.0"
+                                                         text="Descripción"/>
+                                            <TableColumn fx:id="colBPrice" prefWidth="98.0" text="Precio"/>
+                                            <TableColumn fx:id="colBStock" prefWidth="106.0"
+                                                         text="Existencia"/>
+                                        </columns>
+                                    </TableView>
+                                    <ToolBar prefHeight="39.0" prefWidth="417.0">
+                                        <CustomTextField fx:id="txtBProduct" prefHeight="26.0"
+                                                         prefWidth="240.0"/>
+                                        <HBox alignment="CENTER">
+                                            <Button fx:id="clearBProductSearch"
+                                                    contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false"
+                                                    style="-fx-background-radius: 5 0 0 5;">
+                                                <graphic>
+                                                    <FontAwesomeIconView glyphName="ANGLE_DOUBLE_LEFT"/>
+                                                </graphic>
+                                                <tooltip>
+                                                    <Tooltip text="Borrar campo de búsqueda"
+                                                             wrapText="true"/>
+                                                </tooltip>
+                                            </Button>
+                                            <Button fx:id="searchBProduct" contentDisplay="GRAPHIC_ONLY"
+                                                    mnemonicParsing="false"
+                                                    style="-fx-background-radius: 0 5 5 0;">
+                                                <graphic>
+                                                    <FontAwesomeIconView glyphName="SEARCH" size="16"/>
+                                                </graphic>
+                                                <tooltip>
+                                                    <Tooltip text="Buscar un registro"/>
+                                                </tooltip>
+                                            </Button>
+                                        </HBox>
+                                        <HBox alignment="CENTER">
+                                            <Button fx:id="addBCart" contentDisplay="GRAPHIC_ONLY"
+                                                    mnemonicParsing="false">
+                                                <graphic>
+                                                    <FontAwesomeIconView glyphName="CART_PLUS"
+                                                                         size="16"/>
+                                                </graphic>
+                                                <tooltip>
+                                                    <Tooltip
+                                                            text="Añadir un registro &#10;al carro de compras"/>
+                                                </tooltip>
+                                            </Button>
+                                        </HBox>
+                                    </ToolBar>
+                                </AnchorPane>
+                            </TitledPane>
+                            <TitledPane layoutX="10.0" layoutY="10.0" prefHeight="257.0" prefWidth="419.0"
+                                        text="Proveedor">
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="130.0"
+                                            prefWidth="369.0">
+                                    <TableView fx:id="tvSupplier" layoutX="14.0" layoutY="40.0"
+                                               prefHeight="188.0" prefWidth="415.0"
+                                               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+                                        <columns>
+                                            <TableColumn fx:id="colSupplierName" prefWidth="195.0"
+                                                         text="Nombre"/>
+                                            <TableColumn fx:id="colDescription" prefWidth="98.0"
+                                                         text="Descripción"/>
+                                        </columns>
+                                        <columnResizePolicy>
+                                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                                        </columnResizePolicy>
+                                    </TableView>
+                                    <ToolBar prefHeight="39.0" prefWidth="417.0">
+                                        <CustomTextField fx:id="txtSupplier" prefHeight="26.0"
+                                                         prefWidth="240.0"/>
+                                        <HBox alignment="CENTER">
+                                            <Button fx:id="clearBProductSearch1"
+                                                    contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false"
+                                                    style="-fx-background-radius: 5 0 0 5;">
+                                                <graphic>
+                                                    <FontAwesomeIconView glyphName="ANGLE_DOUBLE_LEFT"/>
+                                                </graphic>
+                                                <tooltip>
+                                                    <Tooltip text="Borrar campo de búsqueda"
+                                                             wrapText="true"/>
+                                                </tooltip>
+                                            </Button>
+                                            <Button fx:id="searchBProduct1" contentDisplay="GRAPHIC_ONLY"
+                                                    mnemonicParsing="false"
+                                                    style="-fx-background-radius: 0 5 5 0;">
+                                                <graphic>
+                                                    <FontAwesomeIconView glyphName="SEARCH" size="16"/>
+                                                </graphic>
+                                                <tooltip>
+                                                    <Tooltip text="Buscar un registro"/>
+                                                </tooltip>
+                                            </Button>
+                                        </HBox>
+                                        <HBox alignment="CENTER">
+                                            <Button fx:id="delSupplier" contentDisplay="GRAPHIC_ONLY"
+                                                    mnemonicParsing="false"
+                                                    style="-fx-background-radius: 5 0 0 5;">
+                                                <graphic>
+                                                    <FontAwesomeIconView glyphName="MINUS_CIRCLE"/>
+                                                </graphic>
+                                                <tooltip>
+                                                    <Tooltip text="Eliminar proveedor"/>
+                                                </tooltip>
+                                            </Button>
+                                            <Button fx:id="addSupplier" contentDisplay="GRAPHIC_ONLY"
+                                                    mnemonicParsing="false"
+                                                    style="-fx-background-radius: 0 5 5 0;">
+                                                <graphic>
+                                                    <FontAwesomeIconView glyphName="TRUCK" size="16"/>
+                                                </graphic>
+                                                <tooltip>
+                                                    <Tooltip text="Añadir proveedor"/>
+                                                </tooltip>
+                                            </Button>
+                                        </HBox>
+                                    </ToolBar>
+                                </AnchorPane>
+                            </TitledPane>
+                            <TitledPane expanded="false" prefHeight="426.0" prefWidth="419.0" text="Factura">
+                                <AnchorPane prefWidth="200.0">
+                                    <GridPane hgap="5.0" prefHeight="100.0" vgap="5.0"
+                                              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                        <columnConstraints>
+                                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES"
+                                                               maxWidth="221.0" minWidth="10.0"
+                                                               prefWidth="46.0"/>
+                                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES"
+                                                               maxWidth="221.0" minWidth="10.0"
+                                                               prefWidth="110.0"/>
+                                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES"
+                                                               maxWidth="339.0" minWidth="10.0"
+                                                               prefWidth="260.0"/>
+                                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES"
+                                                               maxWidth="339.0" minWidth="10.0"
+                                                               prefWidth="59.0"/>
+                                        </columnConstraints>
+                                        <rowConstraints>
+                                            <RowConstraints minHeight="10.0" prefHeight="10.0"
+                                                            vgrow="SOMETIMES"/>
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                            vgrow="SOMETIMES"/>
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                            vgrow="SOMETIMES"/>
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                            vgrow="SOMETIMES"/>
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                            vgrow="SOMETIMES"/>
+                                        </rowConstraints>
+                                        <padding>
+                                            <Insets left="5.0" right="5.0"/>
+                                        </padding>
+                                        <NumericTextField fx:id="buyInvoiceNumber" prefHeight="25.0"
+                                                          prefWidth="228.0" GridPane.columnIndex="2">
+                                            <GridPane.margin>
+                                                <Insets left="5.0"/>
+                                            </GridPane.margin>
+                                        </NumericTextField>
+                                        <Label text="Nº Factura" textAlignment="CENTER"
+                                               GridPane.columnIndex="1"/>
+                                        <Label text="Fecha" GridPane.columnIndex="1"
+                                               GridPane.rowIndex="1"/>
+                                        <DatePicker fx:id="buyDate" prefHeight="23.0" prefWidth="389.0"
+                                                    GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                            <GridPane.margin>
+                                                <Insets left="5.0"/>
+                                            </GridPane.margin>
+                                        </DatePicker>
+                                        <ChoiceBox fx:id="buyInvoiceType" prefHeight="23.0"
+                                                   prefWidth="453.0" GridPane.columnIndex="2"
+                                                   GridPane.rowIndex="2">
+                                            <GridPane.margin>
+                                                <Insets left="5.0"/>
+                                            </GridPane.margin>
+                                        </ChoiceBox>
+                                        <Label text="Tipo &#10;Factura" textAlignment="CENTER"
+                                               GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                        <Label text="Método&#10;Pago" textAlignment="CENTER"
+                                               GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                                        <ChoiceBox fx:id="buyInvoiceMethod" prefHeight="23.0"
+                                                   prefWidth="460.0" GridPane.columnIndex="2"
+                                                   GridPane.rowIndex="3">
+                                            <opaqueInsets>
+                                                <Insets left="5.0"/>
+                                            </opaqueInsets>
+                                            <GridPane.margin>
+                                                <Insets left="5.0"/>
+                                            </GridPane.margin>
+                                        </ChoiceBox>
+                                        <Spinner fx:id="buyShares" prefHeight="25.0" prefWidth="439.0"
+                                                 GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                            <GridPane.margin>
+                                                <Insets left="5.0"/>
+                                            </GridPane.margin>
+                                        </Spinner>
+                                        <Label text="Cuotas" GridPane.columnIndex="1"
+                                               GridPane.rowIndex="4"/>
+                                    </GridPane>
+                                </AnchorPane>
+                            </TitledPane>
+                            <TitledPane animated="false" prefWidth="419.0" text="Extra">
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="104.0"
+                                            prefWidth="202.0">
+                                    <GridPane layoutX="33.0" layoutY="130.0" prefHeight="454.0"
+                                              prefWidth="412.0" AnchorPane.bottomAnchor="0.0"
+                                              AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0"
+                                              AnchorPane.topAnchor="0.0">
+                                        <columnConstraints>
+                                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES"
+                                                               minWidth="10.0" prefWidth="100.0"/>
+                                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES"
+                                                               minWidth="10.0" prefWidth="100.0"/>
+                                        </columnConstraints>
+                                        <rowConstraints>
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                            vgrow="SOMETIMES"/>
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                            vgrow="SOMETIMES"/>
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                            vgrow="SOMETIMES"/>
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                            vgrow="SOMETIMES"/>
+                                        </rowConstraints>
+                                        <SplitMenuButton fx:id="buySurcharge" mnemonicParsing="false"
+                                                         prefHeight="23.0" prefWidth="126.0" text="Recargo"
+                                                         GridPane.rowIndex="1">
+                                            <items>
+                                                <MenuItem fx:id="bcNoSurcharge" mnemonicParsing="false"
+                                                          text="Sin Recargo"/>
+                                                <MenuItem fx:id="bcPercentage" mnemonicParsing="false"
+                                                          text="Porcentual"/>
+                                                <MenuItem fx:id="bcNumeric" mnemonicParsing="false"
+                                                          text="Numérico"/>
+                                            </items>
+                                        </SplitMenuButton>
+                                        <SplitMenuButton fx:id="buyDiscount" mnemonicParsing="false"
+                                                         prefHeight="23.0" prefWidth="127.0"
+                                                         text="Descuento" GridPane.rowIndex="2">
+                                            <items>
+                                                <MenuItem fx:id="dcSinRecargo" mnemonicParsing="false"
+                                                          text="Sin Recargo"/>
+                                                <MenuItem fx:id="dcPorcentual" mnemonicParsing="false"
+                                                          text="Porcentual"/>
+                                                <MenuItem fx:id="dcNumerico" mnemonicParsing="false"
+                                                          text="Numérico"/>
+                                            </items>
+                                        </SplitMenuButton>
+                                        <NumericTextField fx:id="txtBuySurcharge" disable="true"
+                                                          GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                        <NumericTextField fx:id="txtBuyDiscount" disable="true"
+                                                          GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                    </GridPane>
+                                </AnchorPane>
+                            </TitledPane>
+                        </panes>
+                        <HBox.margin>
+                            <Insets bottom="2.0" left="2.0" right="1.0" top="2.0"/>
+                        </HBox.margin>
+                    </Accordion>
+                    <VBox HBox.hgrow="ALWAYS">
+                        <TitledPane animated="false" collapsible="false" text="Venta">
+                            <VBox.margin>
+                                <Insets left="1.0" right="2.0" top="2.0"/>
+                            </VBox.margin>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="308.0">
+                                <TableView fx:id="tvBCart" prefHeight="164.0" prefWidth="443.0"
+                                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <columns>
+                                        <TableColumn fx:id="colBCDescription" prefWidth="138.0"
+                                                     text="Descripción"/>
+                                        <TableColumn fx:id="colBCPrice" prefWidth="129.0" text="Precio"/>
+                                        <TableColumn fx:id="colBCQuantity" prefWidth="110.0"
+                                                     text="Cantidad"/>
+                                        <TableColumn fx:id="colBCAction" prefWidth="102.0"
+                                                     text="Acción"/>
+                                    </columns>
+                                    <columnResizePolicy>
+                                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                                    </columnResizePolicy>
+                                </TableView>
+                            </AnchorPane>
+                        </TitledPane>
+                        <TitledPane animated="false" collapsible="false" text="Detalle">
+                            <VBox.margin>
+                                <Insets bottom="2.0" left="1.0" right="2.0" top="2.0"/>
+                            </VBox.margin>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="308.0"
+                                        prefWidth="443.0">
+                                <VBox layoutX="-2.0" layoutY="290.0" prefHeight="181.0"
+                                      prefWidth="443.0" AnchorPane.bottomAnchor="0.0"
+                                      AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                      AnchorPane.topAnchor="0.0">
+                                    <GridPane VBox.vgrow="ALWAYS">
+                                        <columnConstraints>
+                                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES"
+                                                               maxWidth="212.0" minWidth="10.0"
+                                                               prefWidth="144.0"/>
+                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="395.0"
+                                                               minWidth="10.0" prefWidth="299.0"/>
+                                        </columnConstraints>
+                                        <rowConstraints>
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                            vgrow="SOMETIMES"/>
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                            vgrow="SOMETIMES"/>
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                            vgrow="SOMETIMES"/>
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                            vgrow="SOMETIMES"/>
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                            vgrow="SOMETIMES"/>
+                                        </rowConstraints>
+                                        <VBox.margin>
+                                            <Insets bottom="5.0" left="5.0" right="15.0" top="5.0"/>
+                                        </VBox.margin>
+                                        <Label text="Proveedor"/>
+                                        <Label text="Total de Cuotas" GridPane.rowIndex="1"/>
+                                        <Label text="Valor Cuota" GridPane.rowIndex="2"/>
+                                        <Label text="Subtotal" GridPane.rowIndex="3">
+                                            <font>
+                                                <Font name="System Bold" size="13.0"/>
+                                            </font>
+                                        </Label>
+                                        <Label text="Total" GridPane.rowIndex="4">
+                                            <font>
+                                                <Font name="System Bold" size="13.0"/>
+                                            </font>
+                                        </Label>
+                                        <TextField fx:id="txtSupplierName" editable="false"
+                                                   GridPane.columnIndex="1"/>
+                                        <NumericTextField fx:id="txtBTotalShares" editable="false"
+                                                          GridPane.columnIndex="1"
+                                                          GridPane.rowIndex="1"/>
+                                        <NumericTextField fx:id="txtBShareAmount" editable="false"
+                                                          GridPane.columnIndex="1"
+                                                          GridPane.rowIndex="2"/>
+                                        <NumericTextField fx:id="txtBSubtotal" editable="false"
+                                                          GridPane.columnIndex="1"
+                                                          GridPane.rowIndex="3"/>
+                                        <NumericTextField fx:id="txtBTotal" editable="false"
+                                                          GridPane.columnIndex="1"
+                                                          GridPane.rowIndex="4"/>
+                                    </GridPane>
+                                </VBox>
+                            </AnchorPane>
+                        </TitledPane>
+                    </VBox>
+                </HBox>
+                <HBox prefHeight="54.0" prefWidth="866.0">
+                    <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0"
+                             HBox.hgrow="ALWAYS">
+                        <Button fx:id="acceptBuy" mnemonicParsing="false" text="Aceptar"/>
+                        <Button fx:id="cancelBuy" cancelButton="true" layoutX="10.0" layoutY="10.0"
+                                mnemonicParsing="false" text="Cancelar"/>
+                    </ToolBar>
+                </HBox>
+            </VBox>
+        </AnchorPane>
+    </Tab>
+</TabPane>
