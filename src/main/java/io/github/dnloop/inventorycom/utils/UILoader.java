@@ -12,6 +12,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.HashMap;
 
 /**
@@ -100,8 +102,10 @@ public class UILoader {
             storedViews.put(route, pair);
         } catch (IOException e) {
             log.error("Main Application Node building failed: " + e.getCause());
-            log.debug(e.getStackTrace());
-            e.printStackTrace();
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            log.debug(sw.toString());
         }
         return scene;
     }
@@ -122,7 +126,10 @@ public class UILoader {
             storedViews.put(route, pair);
         } catch (IOException e) {
             log.error("Loading Dialog Node building failed: " + e.getCause());
-            log.debug(e.getStackTrace());
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            log.debug(sw.toString());
         }
         return controller;
     }
