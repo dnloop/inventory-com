@@ -13,14 +13,16 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
+import java.util.concurrent.Executor;
 
 public class JavaFXApplication extends Application implements AppReadyCallback {
 
     private static final Log log = LogFactory.getLog(JavaFXApplication.class);
 
     private ConfigurableApplicationContext applicationContext;
-
-    private TaskManager taskManager;
 
     private final BooleanProperty state = new SimpleBooleanProperty(false);
 
@@ -31,7 +33,6 @@ public class JavaFXApplication extends Application implements AppReadyCallback {
         this.applicationContext = new SpringApplicationBuilder().sources(InventoryComApplication.class).run(args);
 
         SceneManager.uiLoader = new UILoader();
-        taskManager = new TaskManager();
     }
 
     @Override
@@ -39,18 +40,16 @@ public class JavaFXApplication extends Application implements AppReadyCallback {
         log.info("[ Starting CommerceInventory application ]");
         initLoadingDialog();
         SceneManager.mainStage = primaryStage;
-        SceneManager.loadingDialog.showDialog();
-        state.addListener((ov, t, t1) -> {
-            if (Boolean.TRUE.equals(t1)) {
-                Platform.runLater(() -> {
-                    Scene scene = initMainPane();
-                    primaryStage.setTitle(" -·=[ Inventario Comercial ]=·-");
-                    primaryStage.setScene(scene);
-                    log.info("[ Application running ]");
-                    primaryStage.show();
-                });
-            }
+
+        Platform.runLater(() -> {
+            Scene scene = initMainPane();
+            primaryStage.setTitle(" -·=[ Inventario Comercial ]=·-");
+            primaryStage.setScene(scene);
+            log.info("[ Application running ]");
+            primaryStage.show();
         });
+
+
     }
 
     @Override
@@ -68,7 +67,6 @@ public class JavaFXApplication extends Application implements AppReadyCallback {
         SceneManager.loadingDialog = SceneManager.uiLoader.createLoadingDialog();
         Parent node = (Parent) SceneManager.uiLoader.getNode(Route.LOADING.display());
         Stage loading = SceneManager.uiLoader.buildStage("Diálogo de carga.", node);
-        SceneManager.loadingDialog.setTaskManager(taskManager);
         SceneManager.loadingDialog.setStage(loading);
         SceneManager.loadingDialog.setAppCallback(this);
     }
@@ -95,4 +93,15 @@ public class JavaFXApplication extends Application implements AppReadyCallback {
             state.setValue(Boolean.TRUE);
     }
 
+
+    @Bean
+    public Executor taskExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(10);
+        executor.setMaxPoolSize(20);
+        executor.setQueueCapacity(500);
+        executor.setThreadNamePrefix("DatabaseInitializer-");
+        executor.initialize();
+        return executor;
+    }
 }

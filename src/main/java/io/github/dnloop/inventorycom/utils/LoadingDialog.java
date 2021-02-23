@@ -2,11 +2,18 @@ package io.github.dnloop.inventorycom.utils;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.stage.Stage;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
+import java.util.List;
+
+@Component
+@Controller
 public class LoadingDialog {
 
     @FXML
@@ -18,7 +25,7 @@ public class LoadingDialog {
     @FXML
     private Label lblMessage;
 
-    private Stage stage = new Stage();
+    private Stage stage;
 
     private final BooleanProperty state = new SimpleBooleanProperty(false);
 
@@ -32,7 +39,7 @@ public class LoadingDialog {
     /**
      * The TaskManager must be previously loaded to use in this class.
      */
-    private TaskManager taskManager;
+    private TaskManager taskManager = new TaskManager();
 
     @FXML
     void initialize() {
@@ -56,8 +63,8 @@ public class LoadingDialog {
         this.stage = stage;
     }
 
-    public void setTaskManager(TaskManager taskManager) {
-        this.taskManager = taskManager;
+    public void setTaskList(List<Task<?>> taskList) {
+        this.taskManager.setTaskList(taskList);
     }
 
     public void setAppCallback(AppReadyCallback appCallback) {
