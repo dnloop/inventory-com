@@ -119,12 +119,14 @@ public class SceneManager {
 				modalStage.getScene().setRoot(node);
 				if (modalStage.getOwner() == null)
 					modalStage.initOwner(mainStage);
+				modalStage.showAndWait();
 			} else
 				modalStage = uiLoader.buildStage(title, node, mainStage);
 		} else {
 			if (modalStage != null) {
 				modalStage.setTitle(title);
 				modalStage.getScene().setRoot(node);
+				modalStage.showAndWait();
 			} else
 				modalStage = uiLoader.buildStage(title, node);
 		}

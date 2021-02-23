@@ -15,7 +15,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
+import org.springframework.stereotype.Controller;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
+@Controller
 public class Main {
 
     @FXML
@@ -136,7 +141,9 @@ public class Main {
 
     @FXML
     void initialize() {
-
+        Platform.runLater(()-> {
+            SceneManager.loadView(RouteMain.MAIN.dataEntry());
+        });
     }
 
     public void setView(Node node) {

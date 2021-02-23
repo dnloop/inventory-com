@@ -5,17 +5,17 @@ public enum RouteInvoice implements PathInvoice {
 
 		@Override
 		public String editInvoice() {
-			return "/fxml/buys/editInvoice.fxml";
+			return "/fxml/purchase/editInvoice.fxml";
 		}
 
 		@Override
 		public String editDetails() {
-			return "/fxml/buys/editDetails.fxml";
+			return "/fxml/purchase/editDetails.fxml";
 		}
 
 		@Override
 		public String display() {
-			return "/fxml/buys/invoice.fxml";
+			return "/fxml/purchase/invoice.fxml";
 		}
 
 	},

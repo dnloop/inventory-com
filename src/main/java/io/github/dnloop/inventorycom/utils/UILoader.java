@@ -97,7 +97,7 @@ public class UILoader {
         loader = new FXMLLoader(getClass().getResource(route));
         try {
             Parent node = loader.load();
-            scene = new Scene(node, 900, 500);
+            scene = new Scene(node, 1024, 700);
             pair = new Pair<T, Node>(loader.getController(), node);
             storedViews.put(route, pair);
         } catch (IOException e) {
