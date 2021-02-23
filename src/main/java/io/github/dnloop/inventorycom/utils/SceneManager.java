@@ -1,13 +1,12 @@
 package io.github.dnloop.inventorycom.utils;
 
-import javafx.util.Pair;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import io.github.dnloop.inventorycom.controller.main.Main;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
+import javafx.util.Pair;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.util.HashMap;
 
@@ -119,17 +118,18 @@ public class SceneManager {
 				modalStage.getScene().setRoot(node);
 				if (modalStage.getOwner() == null)
 					modalStage.initOwner(mainStage);
-				modalStage.showAndWait();
-			} else
+			} else {
 				modalStage = uiLoader.buildStage(title, node, mainStage);
+			}
 		} else {
 			if (modalStage != null) {
 				modalStage.setTitle(title);
 				modalStage.getScene().setRoot(node);
-				modalStage.showAndWait();
-			} else
+			} else {
 				modalStage = uiLoader.buildStage(title, node);
+			}
 		}
+		modalStage.showAndWait();
 		log.debug("Modal dialog loaded.");
 	}
 
