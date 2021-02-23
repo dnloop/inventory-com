@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -38,6 +39,11 @@ public class PurchaseService {
     }
 
     @Async
+    public CompletableFuture<Optional<PurchaseInvoice>> findById(Integer id) {
+        return CompletableFuture.completedFuture(invoiceRepository.findById(id));
+    }
+
+    @Async
     public CompletableFuture<Page<PurchaseInvoice>> findAll() {
         return CompletableFuture.completedFuture(invoiceRepository.findAll(pageableFifty));
     }
@@ -56,13 +62,13 @@ public class PurchaseService {
     public void delete(PurchaseInvoice invoice) {
         invoiceRepository.delete(invoice);
 
-        invoice.getPurchaseDetailsById().forEach(purchaseDetail -> {
-            invoiceDetail.deleteById(purchaseDetail.getId());
-        });
+        invoice.getPurchaseDetailsById().forEach(purchaseDetail -> invoiceDetail
+                .deleteById(purchaseDetail.getId())
+        );
 
-        invoice.getPurchaseSharesById().forEach(purchaseShare -> {
-            purchaseShareRepository.deleteById(purchaseShare.getId());
-        });
+        invoice.getPurchaseSharesById().forEach(purchaseShare -> purchaseShareRepository
+                .deleteById(purchaseShare.getId())
+        );
     }
 
     @Async
