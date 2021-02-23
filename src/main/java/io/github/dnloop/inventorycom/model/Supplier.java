@@ -1,9 +1,6 @@
 package io.github.dnloop.inventorycom.model;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -19,6 +16,7 @@ public class Supplier {
     private Timestamp deletedAt;
     private String domicilio;
     private String cuit;
+    private Locality localityByLocalityId;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -137,5 +135,16 @@ public class Supplier {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, description, mail, deleted, createdAt, modifiedAt, deletedAt, domicilio, cuit);
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "locality_id", referencedColumnName = "id", nullable = false, insertable = false,
+                updatable = false)
+    public Locality getLocalityByLocalityId() {
+        return localityByLocalityId;
+    }
+
+    public void setLocalityByLocalityId(Locality localityByLocalityId) {
+        this.localityByLocalityId = localityByLocalityId;
     }
 }

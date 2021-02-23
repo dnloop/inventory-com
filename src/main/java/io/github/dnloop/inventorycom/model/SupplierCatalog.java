@@ -14,6 +14,7 @@ public class SupplierCatalog {
     private String catalogCode;
     private Integer id;
     private Supplier supplierBySupplierId;
+    private Product productByProductId;
 
     @Basic
     @Column(name = "modified_at")
@@ -101,4 +102,14 @@ public class SupplierCatalog {
     public void setSupplierBySupplierId(Supplier supplierBySupplierId) {
         this.supplierBySupplierId = supplierBySupplierId;
     }
+
+    @ManyToOne
+    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false, insertable = false,
+                updatable = false)
+    public Product getProductByProductId() { return productByProductId; }
+
+    public void setProductByProductId(Product productByProductId) {
+        this.productByProductId = productByProductId;
+    }
+
 }
