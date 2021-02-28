@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.*?>
 <?import org.controlsfx.control.textfield.CustomTextField?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
             prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="io.github.dnloop.inventorycom.controller.clients.Phone">
@@ -70,7 +70,7 @@
                         <Insets left="10.0"/>
                     </HBox.margin>
                     <graphic>
-                        <FontAwesomeIconView glyphName="PLUS"/>
+                        <FontIcon iconLiteral="fa-plus"/>
                     </graphic>
                     <tooltip>
                         <Tooltip text="Añadir Teléfono"/>
@@ -80,7 +80,7 @@
                 <Button fx:id="btnDel" mnemonicParsing="false" onAction="#removePhone"
                         style="-fx-background-radius: 5 0 0 5;">
                     <graphic>
-                        <FontAwesomeIconView glyphName="REMOVE"/>
+                        <FontIcon iconLiteral="fa-remove"/>
                     </graphic>
                     <tooltip>
                         <Tooltip text="Eliminar registro."/>
@@ -89,7 +89,7 @@
                 <Button fx:id="btnEdit" mnemonicParsing="false" onAction="#editPhone"
                         style="-fx-background-radius: 0;">
                     <graphic>
-                        <FontAwesomeIconView glyphName="EDIT"/>
+                        <FontIcon iconLiteral="fa-edit"/>
                     </graphic>
                     <tooltip>
                         <Tooltip text="Editar registro."/>
@@ -98,7 +98,7 @@
                 <Button fx:id="btnDelAll" mnemonicParsing="false" onAction="#removeAll"
                         style="-fx-background-radius: 0 5 5 0;">
                     <graphic>
-                        <FontAwesomeIconView glyphName="TRASH" textAlignment="JUSTIFY"/>
+                        <FontIcon iconLiteral="fa-trash"/>
                     </graphic>
                     <tooltip>
                         <Tooltip text="Eliminar todos los registros."/>

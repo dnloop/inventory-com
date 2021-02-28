@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import impl.com.calendarfx.view.NumericTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.*?>
 <?import org.controlsfx.control.textfield.CustomTextField?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0"
             prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="io.github.dnloop.inventorycom.controller.sales.EditDetails">
@@ -63,7 +63,7 @@
                             <Button fx:id="clearSProductSearch" contentDisplay="GRAPHIC_ONLY"
                                     mnemonicParsing="false" style="-fx-background-radius: 5 0 0 5;">
                                 <graphic>
-                                    <FontAwesomeIconView glyphName="ANGLE_DOUBLE_LEFT"/>
+                                    <FontIcon iconLiteral="fa-angle-double-left"/>
                                 </graphic>
                                 <tooltip>
                                     <Tooltip text="Borrar campo de búsqueda" wrapText="true"/>
@@ -72,7 +72,7 @@
                             <Button fx:id="searchSProduct" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false"
                                     style="-fx-background-radius: 0 5 5 0;">
                                 <graphic>
-                                    <FontAwesomeIconView glyphName="SEARCH" size="16"/>
+                                    <FontIcon iconLiteral="fa-search" iconSize="16"/>
                                 </graphic>
                                 <tooltip>
                                     <Tooltip text="Buscar un registro"/>
@@ -82,7 +82,7 @@
                         <HBox alignment="CENTER" layoutX="332.0" layoutY="10.0">
                             <Button fx:id="addSCart" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false">
                                 <graphic>
-                                    <FontAwesomeIconView glyphName="CART_PLUS" size="16"/>
+                                    <FontIcon iconLiteral="fa-cart-plus" iconSize="16"/>
                                 </graphic>
                                 <tooltip>
                                     <Tooltip text="Añadir un registro &#10;al carro de ventas"/>

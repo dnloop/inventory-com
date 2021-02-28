@@ -1,85 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
-
-<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.dnloop.inventorycom.controller.main.Main">
+<?import org.kordamp.ikonli.javafx.*?>
+<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="700.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="io.github.dnloop.inventorycom.controller.main.Main">
     <top>
         <VBox BorderPane.alignment="CENTER">
             <MenuBar>
                 <Menu text="_Inicio">
                     <Menu mnemonicParsing="false" text="Nuevo">
-                        <MenuItem fx:id="newClient" mnemonicParsing="false" onAction="#newClient" text="Cliente" />
-                        <MenuItem fx:id="newSupplier" mnemonicParsing="false" onAction="#newSupplier" text="Proveedor" />
-                        <MenuItem fx:id="newProduct" mnemonicParsing="false" onAction="#newProduct" text="Producto" />
-                        <MenuItem fx:id="newCategory" mnemonicParsing="false" onAction="#newCategory" text="Categoría" />
+                        <MenuItem fx:id="newClient" mnemonicParsing="false" onAction="#newClient" text="Cliente"/>
+                        <MenuItem fx:id="newSupplier" mnemonicParsing="false" onAction="#newSupplier" text="Proveedor"/>
+                        <MenuItem fx:id="newProduct" mnemonicParsing="false" onAction="#newProduct" text="Producto"/>
+                        <MenuItem fx:id="newCategory" mnemonicParsing="false" onAction="#newCategory" text="Categoría"/>
                     </Menu>
                     <MenuItem fx:id="miExit" mnemonicParsing="false" onAction="#exit" text="Salir">
                         <accelerator>
-                            <KeyCodeCombination alt="UP" code="X" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            <KeyCodeCombination alt="UP" code="X" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
                         </accelerator>
                     </MenuItem>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Ayuda">
-                    <MenuItem mnemonicParsing="false" onAction="#about" text="Acerca de" />
+                    <MenuItem mnemonicParsing="false" onAction="#about" text="Acerca de"/>
                 </Menu>
             </MenuBar>
             <ToolBar prefWidth="200.0">
                 <Button fx:id="btnMain" mnemonicParsing="false" onAction="#showMain" text="Principal">
                     <graphic>
-                        <FontAwesomeIconView glyphName="HOME" />
+                        <FontIcon iconLiteral="fa-home"/>
                     </graphic>
                     <tooltip>
-                        <Tooltip text="Vista Principal" />
+                        <Tooltip text="Vista Principal"/>
                     </tooltip>
                 </Button>
                 <MenuButton fx:id="btnInvoice" mnemonicParsing="false" text="Facturas">
                     <items>
-                        <MenuItem fx:id="miSales" mnemonicParsing="false" onAction="#showSales" text="Ventas" />
-                        <MenuItem fx:id="miBuys" mnemonicParsing="false" onAction="#showBuys" text="Compras" />
+                        <MenuItem fx:id="miSales" mnemonicParsing="false" onAction="#showSales" text="Ventas"/>
+                        <MenuItem fx:id="miBuys" mnemonicParsing="false" onAction="#showBuys" text="Compras"/>
                     </items>
                     <graphic>
-                        <FontAwesomeIconView glyphName="DOLLAR" />
+                        <FontIcon iconLiteral="fa-dollar"/>
                     </graphic>
                     <tooltip>
-                        <Tooltip text="Vista de Ventas" />
+                        <Tooltip text="Vista de Ventas"/>
                     </tooltip>
                 </MenuButton>
                 <Button fx:id="btnClients" mnemonicParsing="false" onAction="#showClients" text="Clientes">
                     <graphic>
-                        <FontAwesomeIconView glyphName="USERS" />
+                        <FontIcon iconLiteral="fa-users"/>
                     </graphic>
                     <tooltip>
-                        <Tooltip text="Vista de Clientes" />
+                        <Tooltip text="Vista de Clientes"/>
                     </tooltip>
                 </Button>
                 <Button fx:id="btnSuppliers" mnemonicParsing="false" onAction="#showSuppliers" text="Proveedores">
                     <graphic>
-                        <FontAwesomeIconView glyphName="TRUCK" />
+                        <FontIcon iconLiteral="fa-truck"/>
                     </graphic>
                     <tooltip>
-                        <Tooltip text="Vista de Proveedores" />
+                        <Tooltip text="Vista de Proveedores"/>
                     </tooltip>
                 </Button>
                 <MenuButton fx:id="btnProducts" mnemonicParsing="false" text="Productos">
                     <items>
-                        <MenuItem fx:id="miInventory" mnemonicParsing="false" onAction="#showInventory" text="Inventario" />
-                        <MenuItem fx:id="miCategory" mnemonicParsing="false" onAction="#showCategory" text="Categoría" />
+                        <MenuItem fx:id="miInventory" mnemonicParsing="false" onAction="#showInventory"
+                                  text="Inventario"/>
+                        <MenuItem fx:id="miCategory" mnemonicParsing="false" onAction="#showCategory" text="Categoría"/>
                     </items>
                     <tooltip>
-                        <Tooltip text="Vista de Prodctoss" />
+                        <Tooltip text="Vista de Productos"/>
                     </tooltip>
                     <graphic>
-                        <FontAwesomeIconView glyphName="CUBES" />
+                        <FontIcon iconLiteral="fa-cubes"/>
                     </graphic>
                 </MenuButton>
             </ToolBar>

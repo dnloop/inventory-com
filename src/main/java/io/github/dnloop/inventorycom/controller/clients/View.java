@@ -1,8 +1,5 @@
 package io.github.dnloop.inventorycom.controller.clients;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
@@ -93,19 +90,19 @@ public class View {
     private CustomTextField txtSearch;
 
     @FXML
-    private JFXTextField txtFilter;
+    private CustomTextField txtFilter;
 
     @FXML
-    private JFXTextField txtPay;
+    private CustomTextField txtPay;
 
     @FXML
-    private JFXTextField txtTotal;
+    private CustomTextField txtTotal;
 
     @FXML
-    private JFXTextField txtSubCA;
+    private CustomTextField txtSubCA;
 
     @FXML
-    private JFXTextField txtSubPay;
+    private CustomTextField txtSubPay;
 
     @FXML
     private Button btnClearSearch;
@@ -114,16 +111,16 @@ public class View {
     private Button btnSearch;
 
     @FXML
-    private JFXButton btnEdit;
+    private Button btnEdit;
 
     @FXML
-    private JFXButton btnDelete;
+    private Button btnDelete;
 
     @FXML
-    private JFXButton btnPay;
+    private Button btnPay;
 
     @FXML
-    private JFXButton btnCancelDebt;
+    private Button btnCancelDebt;
 
     @FXML
     private TableView<?> tvClient;
@@ -172,7 +169,7 @@ public class View {
     private Button btnHelp;
 
     @FXML
-    private JFXComboBox comboType;
+    private ComboBox comboType;
 
     @FXML
     private Accordion details;

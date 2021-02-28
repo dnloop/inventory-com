@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import de.jensd.fx.glyphs.fontawesome.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.*?>
 <?import org.controlsfx.control.textfield.*?>
+<?import org.kordamp.ikonli.javafx.*?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
             prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="io.github.dnloop.inventorycom.controller.clients.New">
@@ -79,7 +78,7 @@
                                 <Button fx:id="btnDelTel" mnemonicParsing="false"
                                         style="-fx-background-radius: 5 0 0 5;">
                                     <graphic>
-                                        <FontAwesomeIconView glyphName="REMOVE"/>
+                                        <FontIcon iconLiteral="fa-remove"/>
                                     </graphic>
                                     <tooltip>
                                         <Tooltip text="Eliminar registro."/>
@@ -90,13 +89,13 @@
                                         <Tooltip text="Editar registro."/>
                                     </tooltip>
                                     <graphic>
-                                        <FontAwesomeIconView glyphName="EDIT"/>
+                                        <FontIcon iconLiteral="fa-edit"/>
                                     </graphic>
                                 </Button>
                                 <Button fx:id="btnDelAllTel" mnemonicParsing="false"
                                         style="-fx-background-radius: 0 5 5 0;">
                                     <graphic>
-                                        <FontAwesomeIconView glyphName="TRASH" textAlignment="JUSTIFY"/>
+                                        <FontIcon iconLiteral="fa-trash"/>
                                     </graphic>
                                     <tooltip>
                                         <Tooltip text="Eliminar todos los registros."/>
@@ -117,7 +116,7 @@
                                 </CustomTextField>
                                 <Button fx:id="btnAddTel" alignment="CENTER_RIGHT" mnemonicParsing="false">
                                     <graphic>
-                                        <FontAwesomeIconView glyphName="PLUS"/>
+                                        <FontIcon iconLiteral="fa-plus"/>
                                     </graphic>
                                     <tooltip>
                                         <Tooltip text="Añadir Teléfono"/>
@@ -138,7 +137,7 @@
                             </CustomTextField>
                             <Button fx:id="btnAddMail" alignment="CENTER_RIGHT" mnemonicParsing="false">
                                 <graphic>
-                                    <FontAwesomeIconView glyphName="PLUS"/>
+                                    <FontIcon iconLiteral="fa-plus"/>
                                 </graphic>
                                 <tooltip>
                                     <Tooltip text="Añadir Teléfono"/>
