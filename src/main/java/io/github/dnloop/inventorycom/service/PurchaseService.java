@@ -22,19 +22,19 @@ public class PurchaseService {
 
     private final PurchaseInvoiceRepository invoiceRepository;
 
-    private final PurchaseInvoiceDetailsRepository invoiceDetail;
+    private final PurchaseInvoiceDetailsRepository invoiceDetailRepository;
 
     private final PurchaseShareRepository purchaseShareRepository;
 
     private final Pageable pageableFifty = PageRequest.of(0, 50);
 
     public PurchaseService(
-            PurchaseInvoiceRepository invoice,
-            PurchaseInvoiceDetailsRepository invoiceDetails,
+            PurchaseInvoiceRepository invoiceRepository,
+            PurchaseInvoiceDetailsRepository invoiceDetailRepository,
             PurchaseShareRepository purchaseShareRepository
     ) {
-        this.invoiceRepository = invoice;
-        this.invoiceDetail = invoiceDetails;
+        this.invoiceRepository = invoiceRepository;
+        this.invoiceDetailRepository = invoiceDetailRepository;
         this.purchaseShareRepository = purchaseShareRepository;
     }
 
@@ -49,8 +49,18 @@ public class PurchaseService {
     }
 
     @Async
+    public CompletableFuture<Page<PurchaseInvoice>> findAll(Pageable pageable) {
+        return CompletableFuture.completedFuture(invoiceRepository.findAll(pageable));
+    }
+
+    @Async
     public CompletableFuture<Page<PurchaseInvoice>> findAllDeleted() {
         return CompletableFuture.completedFuture(invoiceRepository.findAllDeleted(pageableFifty));
+    }
+
+    @Async
+    public CompletableFuture<Page<PurchaseInvoice>> findAllDeleted(Pageable pageable) {
+        return CompletableFuture.completedFuture(invoiceRepository.findAllDeleted(pageable));
     }
 
     @Async
@@ -62,7 +72,7 @@ public class PurchaseService {
     public void delete(PurchaseInvoice invoice) {
         invoiceRepository.delete(invoice);
 
-        invoice.getPurchaseDetailsById().forEach(purchaseDetail -> invoiceDetail
+        invoice.getPurchaseDetailsById().forEach(purchaseDetail -> invoiceDetailRepository
                 .deleteById(purchaseDetail.getId())
         );
 
