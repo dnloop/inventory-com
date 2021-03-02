@@ -2,6 +2,7 @@ package io.github.dnloop.inventorycom.model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -17,6 +18,7 @@ public class Supplier {
     private String domicilio;
     private String cuit;
     private Locality localityByLocalityId;
+    private Collection<SupplierPhone> supplierPhonesById;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -146,5 +148,14 @@ public class Supplier {
 
     public void setLocalityByLocalityId(Locality localityByLocalityId) {
         this.localityByLocalityId = localityByLocalityId;
+    }
+
+    @OneToMany(mappedBy = "supplier_id")
+    public Collection<SupplierPhone> getSupplierPhonesById() {
+        return supplierPhonesById;
+    }
+
+    public void setSupplierPhonesById(Collection<SupplierPhone> supplierPhonesById) {
+        this.supplierPhonesById = supplierPhonesById;
     }
 }
