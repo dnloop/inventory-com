@@ -25,7 +25,7 @@ dependencies {
     implementation 'org.controlsfx:controlsfx:11.0.0'
     implementation 'com.calendarfx:view:11.8.1'
     implementation 'org.kordamp.ikonli:ikonli-javafx:12.2.0'
-    implementation 'org.kordamp.ikonli:ikonli-fontawesome5-pack:12.2.0'
+    implementation 'org.kordamp.ikonli:ikonli-fontawesome-pack:12.2.0'
 
 }
 
