@@ -150,7 +150,7 @@ public class Supplier {
         this.localityByLocalityId = localityByLocalityId;
     }
 
-    @OneToMany(mappedBy = "supplier_id")
+    @OneToMany(mappedBy = "supplierBySupplierId")
     public Collection<SupplierPhone> getSupplierPhonesById() {
         return supplierPhonesById;
     }
