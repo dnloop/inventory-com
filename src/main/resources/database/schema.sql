@@ -94,7 +94,7 @@ create table if not exists client
 )
     collate = utf8mb4_bin;
 
-create index if not exists localidad_id
+create index localidad_id
     on client (locality_id);
 
 create table if not exists client_phone
@@ -112,16 +112,16 @@ create table if not exists client_phone
 )
     collate = utf8mb4_bin;
 
-create index if not exists fk_telefono_cliente_clientes1_idx
+create index fk_telefono_cliente_clientes1_idx
     on client_phone (client_id);
 
-create index if not exists departamento_id
+create index departamento_id
     on locality (departament_id);
 
-create index if not exists municipio_id
+create index municipio_id
     on locality (municipality_id);
 
-create index if not exists provincia_id
+create index provincia_id
     on locality (province_id);
 
 create table if not exists sale_invoice
@@ -163,13 +163,13 @@ create table if not exists sale_detail
 )
     collate = utf8mb4_bin;
 
-create index if not exists factura_venta_id
+create index factura_venta_id
     on sale_detail (sale_invoice_id);
 
-create index if not exists producto_id
+create index producto_id
     on sale_detail (product_id);
 
-create index if not exists fk_factura_venta_clientes1_idx
+create index fk_factura_venta_clientes1_idx
     on sale_invoice (client_id);
 
 create table if not exists sale_share
@@ -189,7 +189,7 @@ create table if not exists sale_share
 )
     collate = utf8mb4_bin;
 
-create index if not exists fk_cuota_factura1_idx
+create index fk_cuota_factura1_idx
     on sale_share (sale_invoice_id);
 
 create table if not exists supplier
@@ -253,13 +253,13 @@ create table if not exists purchase_detail
 )
     collate = utf8mb4_bin;
 
-create index if not exists factura_venta_id
+create index factura_venta_id
     on purchase_detail (purchase_invoice_id);
 
-create index if not exists producto_id
+create index producto_id
     on purchase_detail (product_id);
 
-create index if not exists fk_factura_compra_proveedores1_idx
+create index fk_factura_compra_proveedores1_idx
     on purchase_invoice (supplier_id);
 
 create table if not exists purchase_share
@@ -279,10 +279,10 @@ create table if not exists purchase_share
 )
     collate = utf8mb4_bin;
 
-create index if not exists fk_cuota_venta_copy1_factura_compra1_idx
+create index fk_cuota_venta_copy1_factura_compra1_idx
     on purchase_share (purchase_invoice_id);
 
-create index if not exists localidad_id
+create index localidad_id
     on supplier (locality_id);
 
 create table if not exists supplier_catalog
@@ -320,10 +320,10 @@ create table if not exists supplier_phone
 )
     collate = utf8mb4_bin;
 
-create index if not exists fk_telefono_proveedor_proveedores1_idx
+create index fk_telefono_proveedor_proveedores1_idx
     on supplier_phone (supplier_id);
 
-create index if not exists proveedores_id
+create index proveedores_id
     on supplier_phone (supplier_id);
 
 
