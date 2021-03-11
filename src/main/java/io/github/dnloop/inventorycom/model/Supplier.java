@@ -9,8 +9,8 @@ import java.util.Objects;
 @Table(name = "supplier", schema = "inventario_comercial")
 public class Supplier {
     private Integer id;
-    private Object name;
-    private Object description;
+    private String name;
+    private String description;
     private String mail;
     private Integer localityId;
     private Byte deleted;
@@ -37,21 +37,21 @@ public class Supplier {
 
     @Basic
     @Column(name = "name", nullable = false)
-    public Object getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(Object name) {
+    public void setName(String name) {
         this.name = name;
     }
 
     @Basic
     @Column(name = "description")
-    public Object getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(Object description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -138,19 +138,20 @@ public class Supplier {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Supplier that = (Supplier) o;
-        return Objects.equals(id, that.id) &&
-               Objects.equals(name, that.name) &&
-               Objects.equals(description, that.description) &&
-               Objects.equals(mail, that.mail) &&
-               Objects.equals(localityId, that.localityId) &&
-               Objects.equals(deleted, that.deleted) &&
-               Objects.equals(createdAt, that.createdAt) &&
-               Objects.equals(modifiedAt, that.modifiedAt) &&
-               Objects.equals(deletedAt, that.deletedAt) &&
-               Objects.equals(address, that.address) &&
-               Objects.equals(cuit, that.cuit);
+        if (!(o instanceof Supplier)) return false;
+        Supplier supplier = (Supplier) o;
+        return getId().equals(supplier.getId()) &&
+               getName().equals(supplier.getName()) &&
+               getDescription().equals(supplier.getDescription()) &&
+               getMail().equals(supplier.getMail()) &&
+               getLocalityId().equals(supplier.getLocalityId()) &&
+               getDeleted().equals(supplier.getDeleted()) &&
+               getCreatedAt().equals(supplier.getCreatedAt()) &&
+               getModifiedAt().equals(supplier.getModifiedAt()) &&
+               getDeletedAt().equals(supplier.getDeletedAt()) &&
+               getAddress().equals(supplier.getAddress()) &&
+               getCuit().equals(supplier.getCuit()) &&
+               getLocalityByLocalityId().equals(supplier.getLocalityByLocalityId());
     }
 
     @Override
