@@ -2,19 +2,20 @@ package io.github.dnloop.inventorycom.model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "supplier_phone", schema = "inventario_comercial")
-public class SupplierPhone {
+@Table(name = "presentation", schema = "inventario_comercial")
+public class Presentation {
     private Integer id;
-    private String number;
+    private String description;
     private Byte deleted;
     private Timestamp createdAt;
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
-    private Integer supplierId;
-    private Supplier supplierBySupplierId;
+    private Integer units;
+    private Collection<ProductDetail> productDetailsById;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -27,13 +28,13 @@ public class SupplierPhone {
     }
 
     @Basic
-    @Column(name = "number", nullable = false, length = 12)
-    public String getNumber() {
-        return number;
+    @Column(name = "description", nullable = false, length = 140)
+    public String getDescription() {
+        return description;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Basic
@@ -47,7 +48,7 @@ public class SupplierPhone {
     }
 
     @Basic
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     public Timestamp getCreatedAt() {
         return createdAt;
     }
@@ -77,39 +78,42 @@ public class SupplierPhone {
     }
 
     @Basic
-    @Column(name = "supplier_id", nullable = false)
-    public Integer getSupplierId() {
-        return supplierId;
+    @Column(name = "units", nullable = false)
+    public Integer getUnits() {
+        return units;
     }
 
-    public void setSupplierId(Integer supplierId) {
-        this.supplierId = supplierId;
+    public void setUnits(Integer units) {
+        this.units = units;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SupplierPhone that = (SupplierPhone) o;
-        return Objects.equals(id, that.id) && Objects.equals(number, that.number) &&
-               Objects.equals(deleted, that.deleted) && Objects.equals(createdAt, that.createdAt) &&
+        Presentation that = (Presentation) o;
+        return Objects.equals(id, that.id) &&
+               Objects.equals(description, that.description) &&
+               Objects.equals(deleted, that.deleted) &&
+               Objects.equals(createdAt, that.createdAt) &&
                Objects.equals(modifiedAt, that.modifiedAt) &&
-               Objects.equals(deletedAt, that.deletedAt) && Objects.equals(supplierId, that.supplierId);
+               Objects.equals(deletedAt, that.deletedAt) &&
+               Objects.equals(units, that.units);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, number, deleted, createdAt, modifiedAt, deletedAt, supplierId);
+        return Objects.hash(id, description, deleted, createdAt, modifiedAt, deletedAt, units);
     }
 
-    @ManyToOne
-    @JoinColumn(name = "supplier_id", referencedColumnName = "id", nullable = false,
-                table = "supplier_phone", insertable = false, updatable = false)
-    public Supplier getSupplierBySupplierId() {
-        return supplierBySupplierId;
+    @OneToMany(mappedBy = "presentationByPresentationId")
+    public Collection<ProductDetail> getProductDetailsById() {
+        return productDetailsById;
     }
 
-    public void setSupplierBySupplierId(Supplier supplierBySupplierId) {
-        this.supplierBySupplierId = supplierBySupplierId;
+    public void setProductDetailsById(
+            Collection<ProductDetail> productDetailsById
+    ) {
+        this.productDetailsById = productDetailsById;
     }
 }

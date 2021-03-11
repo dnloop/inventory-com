@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
+@Table(name = "category", schema = "inventario_comercial")
 public class Category {
     private Integer id;
     private String description;
@@ -14,6 +15,7 @@ public class Category {
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
     private Collection<Product> productsById;
+    private Collection<SubCategory> subCategoriesById;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -80,7 +82,8 @@ public class Category {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
-        return Objects.equals(id, category.id) && Objects.equals(description, category.description) &&
+        return Objects.equals(id, category.id) &&
+               Objects.equals(description, category.description) &&
                Objects.equals(deleted, category.deleted) &&
                Objects.equals(createdAt, category.createdAt) &&
                Objects.equals(modifiedAt, category.modifiedAt) &&
@@ -99,5 +102,14 @@ public class Category {
 
     public void setProductsById(Collection<Product> productsById) {
         this.productsById = productsById;
+    }
+
+    @OneToMany(mappedBy = "categoryByCategoryId")
+    public Collection<SubCategory> getSubCategoriesById() {
+        return subCategoriesById;
+    }
+
+    public void setSubCategoriesById(Collection<SubCategory> subCategoriesById) {
+        this.subCategoriesById = subCategoriesById;
     }
 }

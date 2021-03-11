@@ -160,8 +160,8 @@ public class PurchaseDetail {
     }
 
     @ManyToOne
-    @JoinColumn(name = "purchase_invoice_id", referencedColumnName = "id", nullable = false, insertable = false,
-                updatable = false)
+    @JoinColumn(name = "purchase_invoice_id", referencedColumnName = "id", nullable = false,
+                table = "purchase_detail", insertable = false, updatable = false)
     public PurchaseInvoice getPurchaseInvoiceByPurchaseInvoiceId() {
         return purchaseInvoiceByPurchaseInvoiceId;
     }
@@ -173,8 +173,8 @@ public class PurchaseDetail {
     }
 
     @ManyToOne
-    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false, insertable = false,
-                updatable = false)
+    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false,
+                table = "purchase_detail", insertable = false, updatable = false)
     public Product getProductByProductId() {
         return productByProductId;
     }

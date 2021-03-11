@@ -2,19 +2,20 @@ package io.github.dnloop.inventorycom.model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "supplier_phone", schema = "inventario_comercial")
-public class SupplierPhone {
+@Table(name = "material", schema = "inventario_comercial")
+public class Material {
     private Integer id;
-    private String number;
+    private String type;
     private Byte deleted;
     private Timestamp createdAt;
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
-    private Integer supplierId;
-    private Supplier supplierBySupplierId;
+    private String color;
+    private Collection<ProductDetail> productDetailsById;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -27,13 +28,13 @@ public class SupplierPhone {
     }
 
     @Basic
-    @Column(name = "number", nullable = false, length = 12)
-    public String getNumber() {
-        return number;
+    @Column(name = "type", nullable = false, length = 320)
+    public String getType() {
+        return type;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Basic
@@ -47,7 +48,7 @@ public class SupplierPhone {
     }
 
     @Basic
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     public Timestamp getCreatedAt() {
         return createdAt;
     }
@@ -77,39 +78,42 @@ public class SupplierPhone {
     }
 
     @Basic
-    @Column(name = "supplier_id", nullable = false)
-    public Integer getSupplierId() {
-        return supplierId;
+    @Column(name = "color", length = 320)
+    public String getColor() {
+        return color;
     }
 
-    public void setSupplierId(Integer supplierId) {
-        this.supplierId = supplierId;
+    public void setColor(String color) {
+        this.color = color;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SupplierPhone that = (SupplierPhone) o;
-        return Objects.equals(id, that.id) && Objects.equals(number, that.number) &&
-               Objects.equals(deleted, that.deleted) && Objects.equals(createdAt, that.createdAt) &&
+        Material that = (Material) o;
+        return Objects.equals(id, that.id) &&
+               Objects.equals(type, that.type) &&
+               Objects.equals(deleted, that.deleted) &&
+               Objects.equals(createdAt, that.createdAt) &&
                Objects.equals(modifiedAt, that.modifiedAt) &&
-               Objects.equals(deletedAt, that.deletedAt) && Objects.equals(supplierId, that.supplierId);
+               Objects.equals(deletedAt, that.deletedAt) &&
+               Objects.equals(color, that.color);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, number, deleted, createdAt, modifiedAt, deletedAt, supplierId);
+        return Objects.hash(id, type, deleted, createdAt, modifiedAt, deletedAt, color);
     }
 
-    @ManyToOne
-    @JoinColumn(name = "supplier_id", referencedColumnName = "id", nullable = false,
-                table = "supplier_phone", insertable = false, updatable = false)
-    public Supplier getSupplierBySupplierId() {
-        return supplierBySupplierId;
+    @OneToMany(mappedBy = "materialByMaterialId")
+    public Collection<ProductDetail> getProductDetailsById() {
+        return productDetailsById;
     }
 
-    public void setSupplierBySupplierId(Supplier supplierBySupplierId) {
-        this.supplierBySupplierId = supplierBySupplierId;
+    public void setProductDetailsById(
+            Collection<ProductDetail> productDetailsById
+    ) {
+        this.productDetailsById = productDetailsById;
     }
 }

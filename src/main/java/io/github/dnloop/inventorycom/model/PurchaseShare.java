@@ -134,8 +134,8 @@ public class PurchaseShare {
     }
 
     @ManyToOne
-    @JoinColumn(name = "purchase_invoice_id", referencedColumnName = "id", nullable = false, insertable = false,
-                updatable = false)
+    @JoinColumn(name = "purchase_invoice_id", referencedColumnName = "id", nullable = false,
+                table = "purchase_share", insertable = false, updatable = false)
     public PurchaseInvoice getPurchaseInvoiceByPurchaseInvoiceId() {
         return purchaseInvoiceByPurchaseInvoiceId;
     }

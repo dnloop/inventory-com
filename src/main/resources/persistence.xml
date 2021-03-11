@@ -10,8 +10,12 @@
     <class>io.github.dnloop.inventorycom.model.ClientPhone</class>
     <class>io.github.dnloop.inventorycom.model.Departments</class>
     <class>io.github.dnloop.inventorycom.model.Locality</class>
+    <class>io.github.dnloop.inventorycom.model.Material</class>
+    <class>io.github.dnloop.inventorycom.model.Measure</class>
     <class>io.github.dnloop.inventorycom.model.Municipality</class>
+    <class>io.github.dnloop.inventorycom.model.Presentation</class>
     <class>io.github.dnloop.inventorycom.model.Product</class>
+    <class>io.github.dnloop.inventorycom.model.ProductDetail</class>
     <class>io.github.dnloop.inventorycom.model.Province</class>
     <class>io.github.dnloop.inventorycom.model.PurchaseDetail</class>
     <class>io.github.dnloop.inventorycom.model.PurchaseInvoice</class>
@@ -19,6 +23,7 @@
     <class>io.github.dnloop.inventorycom.model.SaleDetail</class>
     <class>io.github.dnloop.inventorycom.model.SaleInvoice</class>
     <class>io.github.dnloop.inventorycom.model.SaleShare</class>
+    <class>io.github.dnloop.inventorycom.model.SubCategory</class>
     <class>io.github.dnloop.inventorycom.model.Supplier</class>
     <class>io.github.dnloop.inventorycom.model.SupplierCatalog</class>
     <class>io.github.dnloop.inventorycom.model.SupplierPhone</class>

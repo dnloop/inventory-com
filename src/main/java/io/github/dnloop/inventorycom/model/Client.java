@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
+@Table(name = "client", schema = "inventario_comercial")
 public class Client {
     private Integer id;
     private String name;
@@ -165,8 +166,8 @@ public class Client {
     }
 
     @ManyToOne
-    @JoinColumn(name = "locality_id", referencedColumnName = "id", nullable = false, insertable = false,
-                updatable = false)
+    @JoinColumn(name = "locality_id", referencedColumnName = "id", nullable = false,
+                table = "client", insertable = false, updatable = false)
     public Locality getLocalityByLocalityId() {
         return localityByLocalityId;
     }

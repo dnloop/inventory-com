@@ -5,16 +5,15 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-@Table(name = "supplier_phone", schema = "inventario_comercial")
-public class SupplierPhone {
+@Table(name = "sub_category", schema = "inventario_comercial")
+public class SubCategory {
     private Integer id;
-    private String number;
+    private Integer categoryId;
     private Byte deleted;
     private Timestamp createdAt;
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
-    private Integer supplierId;
-    private Supplier supplierBySupplierId;
+    private Category categoryByCategoryId;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -27,13 +26,13 @@ public class SupplierPhone {
     }
 
     @Basic
-    @Column(name = "number", nullable = false, length = 12)
-    public String getNumber() {
-        return number;
+    @Column(name = "category_id", nullable = false)
+    public Integer getCategoryId() {
+        return categoryId;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
     }
 
     @Basic
@@ -76,40 +75,32 @@ public class SupplierPhone {
         this.deletedAt = deletedAt;
     }
 
-    @Basic
-    @Column(name = "supplier_id", nullable = false)
-    public Integer getSupplierId() {
-        return supplierId;
-    }
-
-    public void setSupplierId(Integer supplierId) {
-        this.supplierId = supplierId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SupplierPhone that = (SupplierPhone) o;
-        return Objects.equals(id, that.id) && Objects.equals(number, that.number) &&
-               Objects.equals(deleted, that.deleted) && Objects.equals(createdAt, that.createdAt) &&
+        SubCategory that = (SubCategory) o;
+        return Objects.equals(id, that.id) &&
+               Objects.equals(categoryId, that.categoryId) &&
+               Objects.equals(deleted, that.deleted) &&
+               Objects.equals(createdAt, that.createdAt) &&
                Objects.equals(modifiedAt, that.modifiedAt) &&
-               Objects.equals(deletedAt, that.deletedAt) && Objects.equals(supplierId, that.supplierId);
+               Objects.equals(deletedAt, that.deletedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, number, deleted, createdAt, modifiedAt, deletedAt, supplierId);
+        return Objects.hash(id, categoryId, deleted, createdAt, modifiedAt, deletedAt);
     }
 
     @ManyToOne
-    @JoinColumn(name = "supplier_id", referencedColumnName = "id", nullable = false,
-                table = "supplier_phone", insertable = false, updatable = false)
-    public Supplier getSupplierBySupplierId() {
-        return supplierBySupplierId;
+    @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false,
+                table = "sub_category", insertable = false, updatable = false)
+    public Category getCategoryByCategoryId() {
+        return categoryByCategoryId;
     }
 
-    public void setSupplierBySupplierId(Supplier supplierBySupplierId) {
-        this.supplierBySupplierId = supplierBySupplierId;
+    public void setCategoryByCategoryId(Category categoryByCategoryId) {
+        this.categoryByCategoryId = categoryByCategoryId;
     }
 }

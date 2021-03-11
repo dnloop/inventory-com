@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
+@Table(name = "product", schema = "inventario_comercial")
 public class Product {
     private Integer id;
     private String description;
@@ -18,8 +19,9 @@ public class Product {
     private Integer categoryId;
     private Timestamp deletedAt;
     private String image;
-    private String presentation;
+    private Integer detailId;
     private Category categoryByCategoryId;
+    private ProductDetail productDetailByDetailId;
     private Collection<PurchaseDetail> purchaseDetailsById;
     private Collection<SaleDetail> saleDetailsById;
     private Collection<SupplierCatalog> supplierCatalogsById;
@@ -75,7 +77,7 @@ public class Product {
     }
 
     @Basic
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     public Timestamp getCreatedAt() {
         return createdAt;
     }
@@ -125,46 +127,60 @@ public class Product {
     }
 
     @Basic
-    @Column(name = "presentation", length = 100)
-    public String getPresentation() {
-        return presentation;
+    @Column(name = "detail_id", nullable = false)
+    public Integer getDetailId() {
+        return detailId;
     }
 
-    public void setPresentation(String presentation) {
-        this.presentation = presentation;
+    public void setDetailId(Integer detailId) {
+        this.detailId = detailId;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return Objects.equals(id, product.id) && Objects.equals(description, product.description) &&
-               Objects.equals(stock, product.stock) && Objects.equals(price, product.price) &&
-               Objects.equals(deleted, product.deleted) &&
-               Objects.equals(createdAt, product.createdAt) &&
-               Objects.equals(modifiedAt, product.modifiedAt) &&
-               Objects.equals(categoryId, product.categoryId) &&
-               Objects.equals(deletedAt, product.deletedAt) && Objects.equals(image, product.image) &&
-               Objects.equals(presentation, product.presentation);
+        Product that = (Product) o;
+        return Objects.equals(id, that.id) &&
+               Objects.equals(description, that.description) &&
+               Objects.equals(stock, that.stock) &&
+               Objects.equals(price, that.price) &&
+               Objects.equals(deleted, that.deleted) &&
+               Objects.equals(createdAt, that.createdAt) &&
+               Objects.equals(modifiedAt, that.modifiedAt) &&
+               Objects.equals(categoryId, that.categoryId) &&
+               Objects.equals(deletedAt, that.deletedAt) &&
+               Objects.equals(image, that.image) &&
+               Objects.equals(detailId, that.detailId);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, description, stock, price, deleted, createdAt, modifiedAt, categoryId, deletedAt, image,
-                            presentation
+                            detailId
         );
     }
 
     @ManyToOne
-    @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false, insertable = false,
-                updatable = false)
+    @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false,
+                table = "product")
     public Category getCategoryByCategoryId() {
         return categoryByCategoryId;
     }
 
     public void setCategoryByCategoryId(Category categoryByCategoryId) {
         this.categoryByCategoryId = categoryByCategoryId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "detail_id", referencedColumnName = "id", nullable = false,
+                table = "product", insertable = false, updatable = false)
+    public ProductDetail getProductDetailByDetailId() {
+        return productDetailByDetailId;
+    }
+
+    public void setProductDetailByDetailId(ProductDetail productDetailByDetailId) {
+        this.productDetailByDetailId = productDetailByDetailId;
     }
 
     @OneToMany(mappedBy = "productByProductId")

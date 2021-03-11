@@ -6,18 +6,23 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
+@Table(name = "supplier", schema = "inventario_comercial")
 public class Supplier {
     private Integer id;
-    private String name;
-    private String description;
+    private Object name;
+    private Object description;
     private String mail;
+    private Integer localityId;
     private Byte deleted;
     private Timestamp createdAt;
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
-    private String domicilio;
+    private String address;
     private String cuit;
+    private Collection<PurchaseInvoice
+            > purchaseInvoicesById;
     private Locality localityByLocalityId;
+    private Collection<SupplierCatalog> supplierCatalogsById;
     private Collection<SupplierPhone> supplierPhonesById;
 
     @Id
@@ -32,21 +37,21 @@ public class Supplier {
 
     @Basic
     @Column(name = "name", nullable = false)
-    public String getName() {
+    public Object getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(Object name) {
         this.name = name;
     }
 
     @Basic
     @Column(name = "description")
-    public String getDescription() {
+    public Object getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(Object description) {
         this.description = description;
     }
 
@@ -61,6 +66,16 @@ public class Supplier {
     }
 
     @Basic
+    @Column(name = "locality_id", nullable = false)
+    public Integer getLocalityId() {
+        return localityId;
+    }
+
+    public void setLocalityId(Integer localityId) {
+        this.localityId = localityId;
+    }
+
+    @Basic
     @Column(name = "deleted")
     public Byte getDeleted() {
         return deleted;
@@ -71,7 +86,7 @@ public class Supplier {
     }
 
     @Basic
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     public Timestamp getCreatedAt() {
         return createdAt;
     }
@@ -101,13 +116,13 @@ public class Supplier {
     }
 
     @Basic
-    @Column(name = "domicilio", nullable = false, length = -1)
-    public String getDomicilio() {
-        return domicilio;
+    @Column(name = "address", nullable = false)
+    public String getAddress() {
+        return address;
     }
 
-    public void setDomicilio(String domicilio) {
-        this.domicilio = domicilio;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Basic
@@ -124,24 +139,44 @@ public class Supplier {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Supplier supplier = (Supplier) o;
-        return Objects.equals(id, supplier.id) && Objects.equals(name, supplier.name) &&
-               Objects.equals(description, supplier.description) &&
-               Objects.equals(mail, supplier.mail) && Objects.equals(deleted, supplier.deleted) &&
-               Objects.equals(createdAt, supplier.createdAt) &&
-               Objects.equals(modifiedAt, supplier.modifiedAt) &&
-               Objects.equals(deletedAt, supplier.deletedAt) &&
-               Objects.equals(domicilio, supplier.domicilio) && Objects.equals(cuit, supplier.cuit);
+        Supplier that = (Supplier) o;
+        return Objects.equals(id, that.id) &&
+               Objects.equals(name, that.name) &&
+               Objects.equals(description, that.description) &&
+               Objects.equals(mail, that.mail) &&
+               Objects.equals(localityId, that.localityId) &&
+               Objects.equals(deleted, that.deleted) &&
+               Objects.equals(createdAt, that.createdAt) &&
+               Objects.equals(modifiedAt, that.modifiedAt) &&
+               Objects.equals(deletedAt, that.deletedAt) &&
+               Objects.equals(address, that.address) &&
+               Objects.equals(cuit, that.cuit);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, mail, deleted, createdAt, modifiedAt, deletedAt, domicilio, cuit);
+        return Objects.hash(
+                id, name, description,
+                mail, localityId, deleted,
+                createdAt, modifiedAt, deletedAt,
+                address, cuit
+        );
+    }
+
+    @OneToMany(mappedBy = "supplierBySupplierId")
+    public Collection<PurchaseInvoice> getPurchaseInvoicesById() {
+        return purchaseInvoicesById;
+    }
+
+    public void setPurchaseInvoicesById(
+            Collection<PurchaseInvoice> purchaseInvoicesById
+    ) {
+        this.purchaseInvoicesById = purchaseInvoicesById;
     }
 
     @ManyToOne
-    @JoinColumn(name = "locality_id", referencedColumnName = "id", nullable = false, insertable = false,
-                updatable = false)
+    @JoinColumn(name = "locality_id", referencedColumnName = "id", nullable = false,
+                table = "supplier", insertable = false, updatable = false)
     public Locality getLocalityByLocalityId() {
         return localityByLocalityId;
     }
@@ -151,11 +186,24 @@ public class Supplier {
     }
 
     @OneToMany(mappedBy = "supplierBySupplierId")
+    public Collection<SupplierCatalog> getSupplierCatalogsById() {
+        return supplierCatalogsById;
+    }
+
+    public void setSupplierCatalogsById(
+            Collection<SupplierCatalog> supplierCatalogsById
+    ) {
+        this.supplierCatalogsById = supplierCatalogsById;
+    }
+
+    @OneToMany(mappedBy = "supplierBySupplierId")
     public Collection<SupplierPhone> getSupplierPhonesById() {
         return supplierPhonesById;
     }
 
-    public void setSupplierPhonesById(Collection<SupplierPhone> supplierPhonesById) {
+    public void setSupplierPhonesById(
+            Collection<SupplierPhone> supplierPhonesById
+    ) {
         this.supplierPhonesById = supplierPhonesById;
     }
 }
