@@ -163,7 +163,7 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false,
-                table = "product")
+                insertable = false, updatable = false)
     public Category getCategoryByCategoryId() {
         return categoryByCategoryId;
     }
@@ -174,7 +174,7 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "detail_id", referencedColumnName = "id", nullable = false,
-                table = "product", insertable = false, updatable = false)
+                insertable = false, updatable = false)
     public ProductDetail getProductDetailByDetailId() {
         return productDetailByDetailId;
     }
