@@ -199,7 +199,7 @@ public class PurchaseInvoice {
 
     @ManyToOne
     @JoinColumn(name = "supplier_id", referencedColumnName = "id", nullable = false,
-                table = "purchase_invoice", insertable = false, updatable = false)
+                insertable = false, updatable = false)
     public Supplier getSupplierBySupplierId() {
         return supplierBySupplierId;
     }

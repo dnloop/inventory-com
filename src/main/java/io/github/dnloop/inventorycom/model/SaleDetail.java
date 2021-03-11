@@ -143,7 +143,7 @@ public class SaleDetail {
 
     @ManyToOne
     @JoinColumn(name = "sale_invoice_id", referencedColumnName = "id", nullable = false,
-                table = "sale_detail", insertable = false, updatable = false)
+                insertable = false, updatable = false)
     public SaleInvoice getSaleInvoiceBySaleInvoiceId() {
         return saleInvoiceBySaleInvoiceId;
     }
@@ -154,7 +154,7 @@ public class SaleDetail {
 
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false,
-                table = "sale_detail", insertable = false, updatable = false)
+                insertable = false, updatable = false)
     public Product getProductByProductId() {
         return productByProductId;
     }

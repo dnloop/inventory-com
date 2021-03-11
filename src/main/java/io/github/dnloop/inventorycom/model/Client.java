@@ -167,7 +167,7 @@ public class Client {
 
     @ManyToOne
     @JoinColumn(name = "locality_id", referencedColumnName = "id", nullable = false,
-                table = "client", insertable = false, updatable = false)
+                insertable = false, updatable = false)
     public Locality getLocalityByLocalityId() {
         return localityByLocalityId;
     }

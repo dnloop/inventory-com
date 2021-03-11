@@ -95,7 +95,7 @@ public class SubCategory {
 
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false,
-                table = "sub_category", insertable = false, updatable = false)
+                insertable = false, updatable = false)
     public Category getCategoryByCategoryId() {
         return categoryByCategoryId;
     }

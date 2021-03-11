@@ -145,7 +145,7 @@ public class ProductDetail {
 
     @ManyToOne
     @JoinColumn(name = "measure_id", referencedColumnName = "id", nullable = false,
-                table = "measure", insertable = false, updatable = false)
+                insertable = false, updatable = false)
     public Measure getMeasureByMeasureId() {
         return measureByMeasureId;
     }
@@ -156,7 +156,7 @@ public class ProductDetail {
 
     @ManyToOne
     @JoinColumn(name = "presentation_id", referencedColumnName = "id", nullable = false,
-                table = "presentation", insertable = false, updatable = false)
+                insertable = false, updatable = false)
     public Presentation getPresentationByPresentationId() {
         return presentationByPresentationId;
     }
@@ -167,7 +167,7 @@ public class ProductDetail {
 
     @ManyToOne
     @JoinColumn(name = "material_id", referencedColumnName = "id", nullable = false,
-                table = "product_detail", insertable = false, updatable = false)
+                insertable = false, updatable = false)
     public Material getMaterialByMaterialId() {
         return materialByMaterialId;
     }

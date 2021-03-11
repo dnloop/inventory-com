@@ -104,7 +104,7 @@ public class SupplierPhone {
 
     @ManyToOne
     @JoinColumn(name = "supplier_id", referencedColumnName = "id", nullable = false,
-                table = "supplier_phone", insertable = false, updatable = false)
+                insertable = false, updatable = false)
     public Supplier getSupplierBySupplierId() {
         return supplierBySupplierId;
     }

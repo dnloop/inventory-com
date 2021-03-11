@@ -176,7 +176,7 @@ public class Supplier {
 
     @ManyToOne
     @JoinColumn(name = "locality_id", referencedColumnName = "id", nullable = false,
-                table = "supplier", insertable = false, updatable = false)
+                insertable = false, updatable = false)
     public Locality getLocalityByLocalityId() {
         return localityByLocalityId;
     }

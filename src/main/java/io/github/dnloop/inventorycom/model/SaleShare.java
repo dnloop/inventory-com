@@ -131,7 +131,7 @@ public class SaleShare {
 
     @ManyToOne
     @JoinColumn(name = "sale_invoice_id", referencedColumnName = "id", nullable = false,
-                table = "sale_share", insertable = false, updatable = false)
+                insertable = false, updatable = false)
     public SaleInvoice getSaleInvoiceBySaleInvoiceId() {
         return saleInvoiceBySaleInvoiceId;
     }
