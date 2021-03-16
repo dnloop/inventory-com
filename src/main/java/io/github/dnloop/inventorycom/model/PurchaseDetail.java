@@ -10,8 +10,8 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "purchase_detail", schema = "inventario_comercial")
-@Where(clause = "deleted = 0")
 @SQLDelete(sql = "UPDATE purchase_detail SET deleted = 1 WHERE id= ?")
+@Where(clause = "deleted = 0")
 public class PurchaseDetail {
     private Integer id;
     private Integer amount;

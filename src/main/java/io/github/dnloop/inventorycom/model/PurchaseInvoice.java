@@ -11,8 +11,8 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "purchase_invoice", schema = "inventario_comercial")
-@Where(clause = "deleted = 0")
 @SQLDelete(sql = "UPDATE purchase_invoice SET deleted = 1 WHERE id= ?")
+@Where(clause = "deleted = 0")
 public class PurchaseInvoice {
     private Integer id;
     private Integer number;
@@ -217,3 +217,4 @@ public class PurchaseInvoice {
         this.purchaseSharesById = purchaseSharesById;
     }
 }
+

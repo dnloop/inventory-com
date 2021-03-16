@@ -1,5 +1,8 @@
 package io.github.dnloop.inventorycom.model;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -7,6 +10,8 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "category", schema = "inventario_comercial")
+@SQLDelete(sql = "UPDATE category SET deleted=0 WHERE id=?")
+@Where(clause = "deleted = 0")
 public class Category {
     private Integer id;
     private String description;
