@@ -18,7 +18,7 @@ public class Supplier {
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
     private String address;
-    private String cuit;
+    private Long cuit;
     private Collection<PurchaseInvoice
             > purchaseInvoicesById;
     private Locality localityByLocalityId;
@@ -127,11 +127,11 @@ public class Supplier {
 
     @Basic
     @Column(name = "cuit", nullable = false, length = 11)
-    public String getCuit() {
+    public Long getCuit() {
         return cuit;
     }
 
-    public void setCuit(String cuit) {
+    public void setCuit(Long cuit) {
         this.cuit = cuit;
     }
 

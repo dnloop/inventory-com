@@ -12,7 +12,7 @@ public class Client {
     private String name;
     private String surname;
     private String address;
-    private Integer cuit;
+    private Long cuit;
     private String dni;
     private Integer localityId;
     private Byte deleted;
@@ -65,11 +65,11 @@ public class Client {
 
     @Basic
     @Column(name = "cuit")
-    public Integer getCuit() {
+    public Long getCuit() {
         return cuit;
     }
 
-    public void setCuit(Integer cuit) {
+    public void setCuit(Long cuit) {
         this.cuit = cuit;
     }
 
