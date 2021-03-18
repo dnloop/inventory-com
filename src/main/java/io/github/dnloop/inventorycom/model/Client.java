@@ -28,6 +28,31 @@ public class Client {
     private Locality localityByLocalityId;
     private Collection<ClientPhone> clientPhonesById;
 
+    public Client() {}
+
+    public Client(
+            Integer id, String name, String surname, String address,
+            Long cuit, String dni, Integer localityId,
+            Byte deleted,
+            Timestamp createdAt,
+            Timestamp modifiedAt,
+            Timestamp deletedAt,
+            String mail
+    ) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.address = address;
+        this.cuit = cuit;
+        this.dni = dni;
+        this.localityId = localityId;
+        this.deleted = deleted;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+        this.deletedAt = deletedAt;
+        this.mail = mail;
+    }
+
     @Id
     @Column(name = "id", nullable = false)
     public Integer getId() {
