@@ -195,7 +195,7 @@ public class Client {
         );
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "locality_id", referencedColumnName = "id", nullable = false,
                 insertable = false, updatable = false)
     public Locality getLocalityByLocalityId() {
