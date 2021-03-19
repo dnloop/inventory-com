@@ -41,28 +41,28 @@ create table inventario_comercial.locality
 
 create table inventario_comercial.category
 (
-    id          integer      not null,
+    id          integer auto_increment not null,
     created_at  timestamp,
     deleted     tinyint,
     deleted_at  timestamp,
-    description varchar(140) not null,
+    description varchar(140)           not null,
     modified_at timestamp,
     primary key (id)
 );
 
 create table inventario_comercial.client
 (
-    id          integer     not null,
+    id          integer auto_increment not null,
     address     varchar(280),
     created_at  timestamp,
     cuit        bigint(20),
     deleted     tinyint,
     deleted_at  timestamp,
     dni         varchar(8),
-    locality_id integer     not null,
+    locality_id integer                not null,
     mail        varchar(320),
     modified_at timestamp,
-    name        varchar(60) not null,
+    name        varchar(60)            not null,
     surname     varchar(140),
     primary key (id),
 
@@ -71,13 +71,13 @@ create table inventario_comercial.client
 
 create table inventario_comercial.client_phone
 (
-    id          integer     not null,
-    client_id   integer     not null,
+    id          integer auto_increment not null,
+    client_id   integer                not null,
     created_at  timestamp,
     deleted     tinyint,
     deleted_at  timestamp,
     modified_at timestamp,
-    number      varchar(12) not null,
+    number      varchar(12)            not null,
     primary key (id),
 
     constraint FKnhe87dbv9sos43hos3gekhjpq foreign key (client_id) references inventario_comercial.client
@@ -85,53 +85,53 @@ create table inventario_comercial.client_phone
 
 create table inventario_comercial.material
 (
-    id          integer      not null,
+    id          integer auto_increment not null,
     color       varchar(320),
-    created_at  timestamp    not null,
+    created_at  timestamp              not null,
     deleted     tinyint,
     deleted_at  timestamp,
     modified_at timestamp,
-    type        varchar(320) not null,
+    type        varchar(320)           not null,
     primary key (id)
 );
 
 create table inventario_comercial.measure
 (
-    id          integer    not null,
-    created_at  timestamp  not null,
+    id          integer auto_increment not null,
+    created_at  timestamp              not null,
     deleted     tinyint,
     deleted_at  timestamp,
     diameter    double,
     lenght      double,
     modified_at timestamp,
-    type        varchar(4) not null,
+    type        varchar(4)             not null,
     width       double,
     primary key (id)
 );
 
 create table inventario_comercial.presentation
 (
-    id          integer      not null,
-    created_at  timestamp    not null,
+    id          integer auto_increment not null,
+    created_at  timestamp              not null,
     deleted     tinyint,
     deleted_at  timestamp,
-    description varchar(140) not null,
+    description varchar(140)           not null,
     modified_at timestamp,
-    units       integer      not null,
+    units       integer                not null,
     primary key (id)
 );
 
 create table inventario_comercial.product_detail
 (
-    id              integer      not null,
-    brand           varchar(140) not null,
+    id              integer auto_increment not null,
+    brand           varchar(140)           not null,
     created_at      timestamp,
     deleted         tinyint,
     deleted_at      timestamp,
-    material_id     integer      not null,
-    measure_id      integer      not null,
+    material_id     integer                not null,
+    measure_id      integer                not null,
     modified_at     timestamp,
-    presentation_id integer      not null,
+    presentation_id integer                not null,
     primary key (id),
 
     constraint FKelrbk54wt31vv07h3us1gap2c foreign key (material_id) references inventario_comercial.material,
@@ -141,17 +141,17 @@ create table inventario_comercial.product_detail
 
 create table inventario_comercial.product
 (
-    id          integer       not null,
-    category_id integer       not null,
-    created_at  timestamp     not null,
+    id          integer auto_increment not null,
+    category_id integer                not null,
+    created_at  timestamp              not null,
     deleted     tinyint,
     deleted_at  timestamp,
-    description varchar(140)  not null,
-    detail_id   integer       not null,
+    description varchar(140)           not null,
+    detail_id   integer                not null,
     image       varchar(500),
     modified_at timestamp,
-    price       decimal(4, 0) not null,
-    stock       integer       not null,
+    price       decimal(4, 0)          not null,
+    stock       integer                not null,
     primary key (id),
 
     constraint FK1mtsbur82frn64de7balymq9s foreign key (category_id) references inventario_comercial.category,
@@ -161,17 +161,17 @@ create table inventario_comercial.product
 
 create table inventario_comercial.supplier
 (
-    id          integer      not null,
-    address     varchar(255) not null,
-    created_at  timestamp    not null,
-    cuit        bigint(20)  not null,
+    id          integer auto_increment not null,
+    address     varchar(255)           not null,
+    created_at  timestamp              not null,
+    cuit        bigint(20)             not null,
     deleted     tinyint,
     deleted_at  timestamp,
     description varchar(255),
-    locality_id integer      not null,
+    locality_id integer                not null,
     mail        varchar(320),
     modified_at timestamp,
-    name        varchar(255) not null,
+    name        varchar(255)           not null,
     primary key (id),
 
     constraint FKo8tkgxhgfy0hqhuoaspeaqgpc foreign key (locality_id) references locality
@@ -179,19 +179,19 @@ create table inventario_comercial.supplier
 
 create table inventario_comercial.purchase_invoice
 (
-    id              integer       not null,
+    id              integer auto_increment not null,
     created_at      timestamp,
     deleted         tinyint,
     deleted_at      timestamp,
     discount        decimal(5, 0),
-    generation_date timestamp     not null,
+    generation_date timestamp              not null,
     invoice_type    varchar(3),
     modified_at     timestamp,
-    number          integer       not null,
+    number          integer                not null,
     payment_type    varchar(8),
-    supplier_id     integer       not null,
+    supplier_id     integer                not null,
     surcharge       decimal(5, 0),
-    total           decimal(5, 0) not null,
+    total           decimal(5, 0)          not null,
     primary key (id),
 
     constraint FKqtx4kjstn77n9v4wowt0mlxkx foreign key (supplier_id) references inventario_comercial.supplier
@@ -199,17 +199,17 @@ create table inventario_comercial.purchase_invoice
 
 create table inventario_comercial.purchase_detail
 (
-    id                  integer       not null,
-    amount              integer       not null,
+    id                  integer auto_increment not null,
+    amount              integer                not null,
     created_at          timestamp,
     deleted             tinyint,
     deleted_at          timestamp,
     iva                 tinyint,
     modified_at         timestamp,
-    product_id          integer       not null,
-    purchase_invoice_id integer       not null,
-    subtotal            decimal(5, 0) not null,
-    unit_price          decimal(5, 0) not null,
+    product_id          integer                not null,
+    purchase_invoice_id integer                not null,
+    subtotal            decimal(5, 0)          not null,
+    unit_price          decimal(5, 0)          not null,
     primary key (id),
 
     constraint FK79a6tsn4e9qfillme2u9kr3i2 foreign key (product_id) references inventario_comercial.product,
@@ -218,15 +218,15 @@ create table inventario_comercial.purchase_detail
 
 create table inventario_comercial.purchase_share
 (
-    id                  integer not null,
+    id                  integer auto_increment not null,
     created_at          timestamp,
     deleted             tinyint,
     deleted_at          timestamp,
-    due_date            date    not null,
+    due_date            date                   not null,
     modified_at         timestamp,
-    number              integer not null,
+    number              integer                not null,
     payment_date        date,
-    purchase_invoice_id integer not null,
+    purchase_invoice_id integer                not null,
     primary key (id),
 
     constraint FK10soyhcwf4nt4xaoi5epitcmd foreign key (purchase_invoice_id) references inventario_comercial.purchase_invoice
@@ -234,34 +234,34 @@ create table inventario_comercial.purchase_share
 
 create table inventario_comercial.sale_invoice
 (
-    id              integer       not null,
-    client_id       integer       not null,
+    id              integer auto_increment not null,
+    client_id       integer                not null,
     created_at      timestamp,
     deleted         tinyint,
     deleted_at      timestamp,
     discount        decimal(4, 0),
-    generation_date timestamp     not null,
+    generation_date timestamp              not null,
     invoice_type    varchar(3),
     modified_at     timestamp,
-    number          integer       not null,
+    number          integer                not null,
     payment_type    varchar(8),
     surcharge       decimal(5, 0),
-    total           decimal(5, 0) not null,
+    total           decimal(5, 0)          not null,
     primary key (id)
 );
 
 create table inventario_comercial.sale_detail
 (
-    id              integer       not null,
-    amount          integer       not null,
+    id              integer auto_increment not null,
+    amount          integer                not null,
     created_at      timestamp,
     deleted         tinyint,
     deleted_at      timestamp,
     iva             tinyint,
     modified_at     timestamp,
-    product_id      integer       not null,
-    sale_invoice_id integer       not null,
-    unit_price      decimal(5, 0) not null,
+    product_id      integer                not null,
+    sale_invoice_id integer                not null,
+    unit_price      decimal(5, 0)          not null,
     primary key (id),
 
     constraint FK2k26c5k0qkdm1srkiwn7q5009 foreign key (product_id) references inventario_comercial.product,
@@ -271,15 +271,15 @@ create table inventario_comercial.sale_detail
 
 create table inventario_comercial.sale_share
 (
-    id              integer not null,
+    id              integer auto_increment not null,
     created_at      timestamp,
     deleted         tinyint,
     deleted_at      timestamp,
-    due_date        date    not null,
+    due_date        date                   not null,
     modified_at     timestamp,
-    number          integer not null,
+    number          integer                not null,
     payment_date    date,
-    sale_invoice_id integer not null,
+    sale_invoice_id integer                not null,
     primary key (id),
 
     constraint FKde77s9nnikqfax26c9l4kqlx8 foreign key (sale_invoice_id) references inventario_comercial.sale_invoice
@@ -287,8 +287,8 @@ create table inventario_comercial.sale_share
 
 create table inventario_comercial.sub_category
 (
-    id          integer not null,
-    category_id integer not null,
+    id          integer auto_increment not null,
+    category_id integer                not null,
     created_at  timestamp,
     deleted     tinyint,
     deleted_at  timestamp,
@@ -300,14 +300,14 @@ create table inventario_comercial.sub_category
 
 create table inventario_comercial.supplier_catalog
 (
-    id           integer     not null,
-    catalog_code varchar(20) not null,
+    id           integer auto_increment not null,
+    catalog_code varchar(20)            not null,
     created_at   timestamp,
     deleted      tinyint,
     deleted_at   timestamp,
     modified_at  timestamp,
-    product_id   integer     not null,
-    supplier_id  integer     not null,
+    product_id   integer                not null,
+    supplier_id  integer                not null,
     primary key (id),
 
     constraint FKgyb98usq8v4sfgjcn7dubkuek foreign key (product_id) references inventario_comercial.product,
@@ -317,12 +317,12 @@ create table inventario_comercial.supplier_catalog
 
 create table inventario_comercial.supplier_phone
 (
-    id          integer     not null,
+    id          integer auto_increment not null,
     created_at  timestamp,
     deleted     tinyint,
     deleted_at  timestamp,
     modified_at timestamp,
-    number      varchar(12) not null,
-    supplier_id integer     not null,
+    number      varchar(12)            not null,
+    supplier_id integer                not null,
     primary key (id)
 );
