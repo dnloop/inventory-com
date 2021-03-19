@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -34,8 +35,13 @@ public class ClientService {
     }
 
     @Async
-    public CompletableFuture<Optional<Client>> findById(Integer id) {
+    public CompletableFuture<Optional<Client>> findById(int id) {
         return CompletableFuture.completedFuture(clientRepository.findById(id));
+    }
+
+    @Async
+    public CompletableFuture<Optional<Client>> findDeleted(Integer id) {
+        return CompletableFuture.completedFuture(clientRepository.findDeleted(id));
     }
 
     @Async
@@ -59,21 +65,24 @@ public class ClientService {
     }
 
     @Async
-    public void save(Client client) {
-        clientRepository.save(client);
+    public CompletableFuture<Client> save(Client client) {
+        return CompletableFuture.completedFuture(clientRepository.save(client));
     }
 
-    @Async
+    @Transactional
     public void delete(Client client) {
         clientRepository.delete(client);
-
-        client.getClientPhonesById().forEach(phoneNumber -> phoneRepository
-                .deleteById(phoneNumber.getId())
-        );
+        log.debug("Record Deleted: " + client.toString());
+        log.debug("Deleting Relationships");
+        client.getClientPhonesById().forEach(phoneNumber -> {
+            phoneRepository.deleteById(phoneNumber.getId());
+            log.debug("Record Deleted: " + phoneNumber.toString());
+        });
     }
 
     @Async
     public void deleteAll(Collection<Client> collectionClient) {
         collectionClient.forEach(this::delete);
+        log.debug("Records Deleted: " + collectionClient.size());
     }
 }
