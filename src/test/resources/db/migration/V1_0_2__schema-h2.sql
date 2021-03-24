@@ -1,27 +1,25 @@
-create schema if not exists inventario_comercial;
-
-create table inventario_comercial.departments
+create table PUBLIC.departments
 (
     id   integer     not null,
     name varchar(34) not null,
     primary key (id)
 );
 
-create table inventario_comercial.municipality
+create table PUBLIC.municipality
 (
     id   integer     not null,
     name varchar(38) not null,
     primary key (id)
 );
 
-create table inventario_comercial.province
+create table PUBLIC.province
 (
     id   integer     not null,
     name varchar(55) not null,
     primary key (id)
 );
 
-create table inventario_comercial.locality
+create table PUBLIC.locality
 (
     id              integer     not null,
     category        varchar(33),
@@ -39,7 +37,7 @@ create table inventario_comercial.locality
     constraint FKr0h7og8lyw8n6u9fqr59lmye7 foreign key (province_id) references province
 );
 
-create table inventario_comercial.category
+create table PUBLIC.category
 (
     id          integer auto_increment not null,
     created_at  timestamp,
@@ -50,7 +48,7 @@ create table inventario_comercial.category
     primary key (id)
 );
 
-create table inventario_comercial.client
+create table PUBLIC.client
 (
     id          integer auto_increment not null,
     address     varchar(280),
@@ -69,7 +67,7 @@ create table inventario_comercial.client
     constraint FKr491vdinbljmrdbrkjlr3k5wl foreign key (locality_id) references locality
 );
 
-create table inventario_comercial.client_phone
+create table PUBLIC.client_phone
 (
     id          integer auto_increment not null,
     client_id   integer                not null,
@@ -80,10 +78,10 @@ create table inventario_comercial.client_phone
     number      varchar(12)            not null,
     primary key (id),
 
-    constraint FKnhe87dbv9sos43hos3gekhjpq foreign key (client_id) references inventario_comercial.client
+    constraint FKnhe87dbv9sos43hos3gekhjpq foreign key (client_id) references PUBLIC.client
 );
 
-create table inventario_comercial.material
+create table PUBLIC.material
 (
     id          integer auto_increment not null,
     color       varchar(320),
@@ -95,7 +93,7 @@ create table inventario_comercial.material
     primary key (id)
 );
 
-create table inventario_comercial.measure
+create table PUBLIC.measure
 (
     id          integer auto_increment not null,
     created_at  timestamp              not null,
@@ -109,7 +107,7 @@ create table inventario_comercial.measure
     primary key (id)
 );
 
-create table inventario_comercial.presentation
+create table PUBLIC.presentation
 (
     id          integer auto_increment not null,
     created_at  timestamp              not null,
@@ -121,7 +119,7 @@ create table inventario_comercial.presentation
     primary key (id)
 );
 
-create table inventario_comercial.product_detail
+create table PUBLIC.product_detail
 (
     id              integer auto_increment not null,
     brand           varchar(140)           not null,
@@ -134,12 +132,12 @@ create table inventario_comercial.product_detail
     presentation_id integer                not null,
     primary key (id),
 
-    constraint FKelrbk54wt31vv07h3us1gap2c foreign key (material_id) references inventario_comercial.material,
-    constraint FKosdydvosy05yp2frifoyy35j5 foreign key (measure_id) references inventario_comercial.measure,
-    constraint FK5c9gtif7vw4me7cr7wysxatd1 foreign key (presentation_id) references inventario_comercial.presentation
+    constraint FKelrbk54wt31vv07h3us1gap2c foreign key (material_id) references PUBLIC.material,
+    constraint FKosdydvosy05yp2frifoyy35j5 foreign key (measure_id) references PUBLIC.measure,
+    constraint FK5c9gtif7vw4me7cr7wysxatd1 foreign key (presentation_id) references PUBLIC.presentation
 );
 
-create table inventario_comercial.product
+create table PUBLIC.product
 (
     id          integer auto_increment not null,
     category_id integer                not null,
@@ -154,12 +152,12 @@ create table inventario_comercial.product
     stock       integer                not null,
     primary key (id),
 
-    constraint FK1mtsbur82frn64de7balymq9s foreign key (category_id) references inventario_comercial.category,
-    constraint FKjb0cih1rr1wsbsxmjo7bcd45i foreign key (detail_id) references inventario_comercial.product_detail
+    constraint FK1mtsbur82frn64de7balymq9s foreign key (category_id) references PUBLIC.category,
+    constraint FKjb0cih1rr1wsbsxmjo7bcd45i foreign key (detail_id) references PUBLIC.product_detail
 
 );
 
-create table inventario_comercial.supplier
+create table PUBLIC.supplier
 (
     id          integer auto_increment not null,
     address     varchar(255)           not null,
@@ -177,7 +175,7 @@ create table inventario_comercial.supplier
     constraint FKo8tkgxhgfy0hqhuoaspeaqgpc foreign key (locality_id) references locality
 );
 
-create table inventario_comercial.purchase_invoice
+create table PUBLIC.purchase_invoice
 (
     id              integer auto_increment not null,
     created_at      timestamp,
@@ -194,10 +192,10 @@ create table inventario_comercial.purchase_invoice
     total           decimal(5, 0)          not null,
     primary key (id),
 
-    constraint FKqtx4kjstn77n9v4wowt0mlxkx foreign key (supplier_id) references inventario_comercial.supplier
+    constraint FKqtx4kjstn77n9v4wowt0mlxkx foreign key (supplier_id) references PUBLIC.supplier
 );
 
-create table inventario_comercial.purchase_detail
+create table PUBLIC.purchase_detail
 (
     id                  integer auto_increment not null,
     amount              integer                not null,
@@ -212,11 +210,11 @@ create table inventario_comercial.purchase_detail
     unit_price          decimal(5, 0)          not null,
     primary key (id),
 
-    constraint FK79a6tsn4e9qfillme2u9kr3i2 foreign key (product_id) references inventario_comercial.product,
-    constraint FKp7961anxbc2gfd45x203yfn2 foreign key (purchase_invoice_id) references inventario_comercial.purchase_invoice
+    constraint FK79a6tsn4e9qfillme2u9kr3i2 foreign key (product_id) references PUBLIC.product,
+    constraint FKp7961anxbc2gfd45x203yfn2 foreign key (purchase_invoice_id) references PUBLIC.purchase_invoice
 );
 
-create table inventario_comercial.purchase_share
+create table PUBLIC.purchase_share
 (
     id                  integer auto_increment not null,
     created_at          timestamp,
@@ -229,10 +227,10 @@ create table inventario_comercial.purchase_share
     purchase_invoice_id integer                not null,
     primary key (id),
 
-    constraint FK10soyhcwf4nt4xaoi5epitcmd foreign key (purchase_invoice_id) references inventario_comercial.purchase_invoice
+    constraint FK10soyhcwf4nt4xaoi5epitcmd foreign key (purchase_invoice_id) references PUBLIC.purchase_invoice
 );
 
-create table inventario_comercial.sale_invoice
+create table PUBLIC.sale_invoice
 (
     id              integer auto_increment not null,
     client_id       integer                not null,
@@ -250,7 +248,7 @@ create table inventario_comercial.sale_invoice
     primary key (id)
 );
 
-create table inventario_comercial.sale_detail
+create table PUBLIC.sale_detail
 (
     id              integer auto_increment not null,
     amount          integer                not null,
@@ -264,12 +262,12 @@ create table inventario_comercial.sale_detail
     unit_price      decimal(5, 0)          not null,
     primary key (id),
 
-    constraint FK2k26c5k0qkdm1srkiwn7q5009 foreign key (product_id) references inventario_comercial.product,
-    constraint FKh1e5sj1nud0pv62qot0jemdrt foreign key (sale_invoice_id) references inventario_comercial.sale_invoice
+    constraint FK2k26c5k0qkdm1srkiwn7q5009 foreign key (product_id) references PUBLIC.product,
+    constraint FKh1e5sj1nud0pv62qot0jemdrt foreign key (sale_invoice_id) references PUBLIC.sale_invoice
 
 );
 
-create table inventario_comercial.sale_share
+create table PUBLIC.sale_share
 (
     id              integer auto_increment not null,
     created_at      timestamp,
@@ -282,10 +280,10 @@ create table inventario_comercial.sale_share
     sale_invoice_id integer                not null,
     primary key (id),
 
-    constraint FKde77s9nnikqfax26c9l4kqlx8 foreign key (sale_invoice_id) references inventario_comercial.sale_invoice
+    constraint FKde77s9nnikqfax26c9l4kqlx8 foreign key (sale_invoice_id) references PUBLIC.sale_invoice
 );
 
-create table inventario_comercial.sub_category
+create table PUBLIC.sub_category
 (
     id          integer auto_increment not null,
     category_id integer                not null,
@@ -295,10 +293,10 @@ create table inventario_comercial.sub_category
     modified_at timestamp,
     primary key (id),
 
-    constraint FKl65dyy5me2ypoyj8ou1hnt64e foreign key (category_id) references inventario_comercial.category
+    constraint FKl65dyy5me2ypoyj8ou1hnt64e foreign key (category_id) references PUBLIC.category
 );
 
-create table inventario_comercial.supplier_catalog
+create table PUBLIC.supplier_catalog
 (
     id           integer auto_increment not null,
     catalog_code varchar(20)            not null,
@@ -310,12 +308,12 @@ create table inventario_comercial.supplier_catalog
     supplier_id  integer                not null,
     primary key (id),
 
-    constraint FKgyb98usq8v4sfgjcn7dubkuek foreign key (product_id) references inventario_comercial.product,
-    constraint FKqpd8eph20l0ogo4rj3bbts5pi foreign key (supplier_id) references inventario_comercial.supplier,
-    constraint FK1f0x81egyt4uenf0nsu1ux078 foreign key (supplier_id) references inventario_comercial.supplier
+    constraint FKgyb98usq8v4sfgjcn7dubkuek foreign key (product_id) references PUBLIC.product,
+    constraint FKqpd8eph20l0ogo4rj3bbts5pi foreign key (supplier_id) references PUBLIC.supplier,
+    constraint FK1f0x81egyt4uenf0nsu1ux078 foreign key (supplier_id) references PUBLIC.supplier
 );
 
-create table inventario_comercial.supplier_phone
+create table PUBLIC.supplier_phone
 (
     id          integer auto_increment not null,
     created_at  timestamp,
