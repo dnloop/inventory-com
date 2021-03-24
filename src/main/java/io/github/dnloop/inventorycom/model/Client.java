@@ -9,9 +9,8 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "client", schema = "inventario_comercial")
+@Table(name = "client")
 @SQLDelete(sql = "UPDATE client SET deleted=1 WHERE id=?")
-@Where(clause = "deleted = 0")
 public class Client {
     private Integer id;
     private String name;
@@ -206,7 +205,7 @@ public class Client {
         this.localityByLocalityId = localityByLocalityId;
     }
 
-    @OneToMany(mappedBy = "clientByClientId")
+    @OneToMany(mappedBy = "clientByClientId", fetch = FetchType.LAZY)
     public Collection<ClientPhone> getClientPhonesById() {
         return clientPhonesById;
     }
