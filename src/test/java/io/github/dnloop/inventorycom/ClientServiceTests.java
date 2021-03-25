@@ -4,9 +4,11 @@ import io.github.dnloop.inventorycom.model.Client;
 import io.github.dnloop.inventorycom.service.ClientService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.sql.Timestamp;
@@ -18,9 +20,16 @@ import java.util.concurrent.ExecutionException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Basic client service tests units. Some methods that are meant to be async are executed sequentially in the
+ * background due to the nature of the operation such as saving a record and retrieving its results in the same
+ * call.
+ */
 @SpringBootTest
 @EnableAsync
-public class ClientServiceTests {
+@AutoConfigureTestDatabase
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+class ClientServiceTests {
 
     @Autowired
     private ClientService clientService;
@@ -29,12 +38,12 @@ public class ClientServiceTests {
     void contextLoads() {}
 
     @Test
-    void clientNull() {
-        final CompletableFuture<Optional<Client>> client = clientService.findById(1);
+    void clientNull() throws ExecutionException, InterruptedException {
+        final CompletableFuture<Optional<Client>> client = clientService.findById(6);
 
-        assertThat(client)
-                .isCompleted()
-                .isCompletedWithValueMatching(Optional::isEmpty);
+        assertThat(
+                client.get()
+        ).matches(Optional::isEmpty, "is present");
     }
 
 
@@ -42,7 +51,7 @@ public class ClientServiceTests {
     @Sql({"/db/data/localities.sql"})
     void insertClient() throws ExecutionException, InterruptedException {
         Client newClient = new Client(
-                1, "Berengaria", "Hanigan",
+                6, "Berengaria", "Hanigan",
                 "ADDRESS-1", 123456789L, "12345678",
                 1, (byte) 0, Timestamp.from(Instant.now()),
                 null, null,
@@ -50,9 +59,9 @@ public class ClientServiceTests {
         );
 
         final CompletableFuture<Optional<Client>> client =
-                clientService.save(newClient).thenApply(unused -> {
+                clientService.save(newClient).thenApply(cli -> {
                     try {
-                        return clientService.findById(1).get();
+                        return clientService.findById(cli.getId()).get();
                     } catch (InterruptedException | ExecutionException e) {
                         return Optional.empty();
                     }
@@ -79,89 +88,79 @@ public class ClientServiceTests {
 
     @Test
     @Sql({"/db/data/localities.sql", "/db/data/clients.sql"})
-    void modifyClient() {
-        final CompletableFuture<Optional<Client>> client = clientService.findById(1);
-
-        Client editClient = client.join().orElse(null);
+    void modifyClient() throws ExecutionException, InterruptedException {
         final Timestamp ts = Timestamp.from(Instant.now());
+        final Client editClient = clientService.findById(1).join().orElse(null);
+
         Objects.requireNonNull(editClient).setModifiedAt(ts);
 
-        CompletableFuture.runAsync(
-                () -> clientService.save(editClient)
-        );
-
-        final CompletableFuture<Optional<Client>> modifiedClient = clientService.findById(1);
-
-        assertThat(modifiedClient)
-                .isCompleted()
-                .isCompletedWithValueMatching(
-                        result -> result.map(
-                                value -> value.getModifiedAt().equals(ts)
-                        ).orElse(false)
+        final CompletableFuture<Optional<Client>> modifiedClient =
+                clientService.save(editClient).thenCompose(
+                        cli -> clientService.findById(cli.getId())
                 );
+
+        final Timestamp result;
+
+        if (modifiedClient.get().isPresent())
+            result = modifiedClient.get().get().getModifiedAt();
+        else
+            result = Timestamp.from(Instant.ofEpochSecond(0L));
+
+        assertThat(result)
+                .as("TimeStamp should be equal to %s", result)
+                .isEqualTo(ts);
     }
 
     @Test
     @Sql({"/db/data/localities.sql", "/db/data/clients.sql"})
-    void findAll() {
+    void findAll() throws ExecutionException, InterruptedException {
         final CompletableFuture<Page<Client>> clients = clientService.findAll();
 
-        assertThat(clients)
-                .isCompleted()
-                .isCompletedWithValueMatching(
-                        result -> result.getTotalElements() == 5L
-                );
+        assertThat(clients.get()).hasSize(3);
     }
 
     @Test
     @Sql({"/db/data/localities.sql", "/db/data/clients.sql"})
-    void findAllDeleted() {
+    void findAllDeleted() throws ExecutionException, InterruptedException {
         final CompletableFuture<Page<Client>> clients = clientService.findAllDeleted();
 
-        assertThat(clients)
-                .isCompleted()
-                .isCompletedWithValueMatching(
-                        result -> result.getTotalElements() == 2L
-                );
+        assertThat(clients.get()).hasSize(2);
     }
 
     @Test
     @Sql({"/db/data/localities.sql", "/db/data/clients.sql"})
-    void deleteClient() {
-        Client client = new Client(
-                1, "Berengaria", "Hanigan",
-                "ADDRESS-1", 123456789L, "12345678",
-                1, (byte) 0, Timestamp.from(Instant.now()),
-                null, null,
-                "Joe@dora.biz"
+    void deleteClient() throws ExecutionException, InterruptedException {
+        final CompletableFuture<Void> client =
+                clientService.findById(1).thenAccept(client1 -> client1.ifPresent(
+                        value -> clientService.delete(value)
+                ));
+
+
+        final CompletableFuture<Optional<Client>> clientDeleted =
+                client.thenCompose(
+                        unused -> clientService.findDeleted(1)
+                );
+
+        assertThat(
+                clientDeleted.get()
+        ).matches(Optional::isPresent, "is empty");
+    }
+
+    @Test
+    @Sql({"/db/data/localities.sql", "/db/data/clients.sql"})
+    void deleteClientCollection() throws ExecutionException, InterruptedException {
+
+        final CompletableFuture<Void> clients =
+                clientService.findAll().thenAccept(
+                        clients1 -> clientService.deleteAll(clients1.getContent())
+                );
+
+        final CompletableFuture<Page<Client>> clientsDeleted = clients.thenApply(
+                unused -> clientService.findAllDeleted().join()
         );
 
-        clientService.delete(client);
-
-        final CompletableFuture<Optional<Client>> clientDeleted = clientService.findDeleted(1);
-
-        assertThat(clientDeleted)
-                .isCompleted()
-                .isCompletedWithValueMatching(
-                        result -> result.map(
-                                value -> value.getDeleted() == 0
-                        ).orElse(false)
-                );
-    }
-
-    @Test
-    @Sql({"/db/data/localities.sql", "/db/data/clients.sql"})
-    void deleteClientCollection() {
-        CompletableFuture<Page<Client>> collection = clientService.findAll();
-
-        clientService.deleteAll(collection.join().getContent());
-
-        final CompletableFuture<Page<Client>> clientDeleted = clientService.findAllDeleted();
-
-        assertThat(clientDeleted)
-                .isCompleted()
-                .isCompletedWithValueMatching(
-                        result -> result.getTotalElements() == 5L
-                );
+        assertThat(
+                clientsDeleted.get().getContent()
+        ).hasSize(5);
     }
 }
