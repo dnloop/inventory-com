@@ -1,5 +1,6 @@
 package io.github.dnloop.inventorycom.model;
 
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -8,7 +9,7 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-@Table(name = "client_phone", schema = "inventario_comercial")
+@Table(name = "client_phone")
 @SQLDelete(sql = "UPDATE client_phone SET deleted=1 WHERE id=?")
 @Where(clause = "deleted = 0")
 public class ClientPhone {
@@ -107,7 +108,7 @@ public class ClientPhone {
         return Objects.hash(id, number, deleted, createdAt, modifiedAt, deletedAt, clientId);
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false, insertable = false,
                 updatable = false)
     public Client getClientByClientId() {
