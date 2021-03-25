@@ -1,7 +1,6 @@
 package io.github.dnloop.inventorycom.model;
 
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -205,7 +204,7 @@ public class Client {
         this.localityByLocalityId = localityByLocalityId;
     }
 
-    @OneToMany(mappedBy = "clientByClientId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "clientByClientId", fetch = FetchType.EAGER)
     public Collection<ClientPhone> getClientPhonesById() {
         return clientPhonesById;
     }
