@@ -2,6 +2,7 @@ package io.github.dnloop.inventorycom;
 
 import io.github.dnloop.inventorycom.model.Client;
 import io.github.dnloop.inventorycom.service.ClientService;
+import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -114,17 +115,31 @@ class ClientServiceTests {
     @Test
     @Sql({"/db/data/localities.sql", "/db/data/clients.sql"})
     void findAll() throws ExecutionException, InterruptedException {
+        final Condition<Client> firstClient = new Condition<>(
+                client -> client.getSurname().equalsIgnoreCase("Benson"),
+                "[Surname] - Benson"
+        );
         final CompletableFuture<Page<Client>> clients = clientService.findAll();
+        final Page<Client> result = clients.get();
 
-        assertThat(clients.get()).hasSize(3);
+        assertThat(result).hasSize(3);
+        assertThat(
+                result.getContent().get(0)
+        ).has(firstClient);
     }
 
     @Test
     @Sql({"/db/data/localities.sql", "/db/data/clients.sql"})
     void findAllDeleted() throws ExecutionException, InterruptedException {
         final CompletableFuture<Page<Client>> clients = clientService.findAllDeleted();
+        final Page<Client> result = clients.get();
+        final Condition<Client> surname = new Condition<>(
+                client -> client.getSurname().equalsIgnoreCase("Ayers"),
+                "[Surname] - Ayers "
+        );
 
-        assertThat(clients.get()).hasSize(2);
+        assertThat(result).hasSize(2);
+        assertThat(result.getContent().get(0)).has(surname);
     }
 
     @Test
