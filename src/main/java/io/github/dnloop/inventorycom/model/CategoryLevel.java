@@ -8,12 +8,15 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-@Table(name = "sub_category", schema = "inventario_comercial")
+@Table(name = "category_level", schema = "inventario_comercial")
 @SQLDelete(sql = "UPDATE sub_category SET deleted=1 WHERE id=?")
-@Where(clause = "deleted = 0")
-public class SubCategory {
+public class CategoryLevel {
     private Integer id;
     private Integer categoryId;
+    private Integer l1;
+    private Integer l2;
+    private Integer l3;
+    private Integer l4;
     private Byte deleted;
     private Timestamp createdAt;
     private Timestamp modifiedAt;
@@ -39,6 +42,30 @@ public class SubCategory {
     public void setCategoryId(Integer categoryId) {
         this.categoryId = categoryId;
     }
+
+    @Basic
+    @Column(name = "L1")
+    public Integer getL1() { return l1; }
+
+    public void setL1(Integer l1) { this.l1 = l1; }
+
+    @Basic
+    @Column(name = "L2")
+    public Integer getL2() { return l2; }
+
+    public void setL2(Integer l2) { this.l2 = l2; }
+
+    @Basic
+    @Column(name = "L3")
+    public Integer getL3() { return l3; }
+
+    public void setL3(Integer l3) { this.l3 = l3; }
+
+    @Basic
+    @Column(name = "L4")
+    public Integer getL4() { return l4; }
+
+    public void setL4(Integer l4) { this.l4 = l4; }
 
     @Basic
     @Column(name = "deleted")
@@ -84,7 +111,7 @@ public class SubCategory {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SubCategory that = (SubCategory) o;
+        CategoryLevel that = (CategoryLevel) o;
         return Objects.equals(id, that.id) &&
                Objects.equals(categoryId, that.categoryId) &&
                Objects.equals(deleted, that.deleted) &&

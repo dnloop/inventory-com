@@ -40,8 +40,8 @@ create table PUBLIC.locality
 create table PUBLIC.category
 (
     id          integer auto_increment not null,
-    created_at  timestamp,
-    deleted     tinyint,
+    created_at  timestamp default current_timestamp,
+    deleted     tinyint   default 0,
     deleted_at  timestamp,
     description varchar(140)           not null,
     modified_at timestamp,
@@ -52,9 +52,9 @@ create table PUBLIC.client
 (
     id          integer auto_increment not null,
     address     varchar(280),
-    created_at  timestamp,
+    created_at  timestamp default current_timestamp,
     cuit        bigint(20),
-    deleted     tinyint,
+    deleted     tinyint   default 0,
     deleted_at  timestamp,
     dni         varchar(8),
     locality_id integer                not null,
@@ -71,8 +71,8 @@ create table PUBLIC.client_phone
 (
     id          integer auto_increment not null,
     client_id   integer                not null,
-    created_at  timestamp,
-    deleted     tinyint,
+    created_at  timestamp default current_timestamp,
+    deleted     tinyint   default 0,
     deleted_at  timestamp,
     modified_at timestamp,
     number      varchar(12)            not null,
@@ -83,39 +83,39 @@ create table PUBLIC.client_phone
 
 create table PUBLIC.material
 (
-    id          integer auto_increment not null,
+    id          integer auto_increment              not null,
     color       varchar(320),
-    created_at  timestamp              not null,
-    deleted     tinyint,
+    created_at  timestamp default current_timestamp not null,
+    deleted     tinyint   default 0,
     deleted_at  timestamp,
     modified_at timestamp,
-    type        varchar(320)           not null,
+    type        varchar(320)                        not null,
     primary key (id)
 );
 
 create table PUBLIC.measure
 (
-    id          integer auto_increment not null,
-    created_at  timestamp              not null,
-    deleted     tinyint,
+    id          integer auto_increment              not null,
+    created_at  timestamp default current_timestamp not null,
+    deleted     tinyint   default 0,
     deleted_at  timestamp,
     diameter    double,
     lenght      double,
     modified_at timestamp,
-    type        varchar(4)             not null,
+    type        varchar(4)                          not null,
     width       double,
     primary key (id)
 );
 
 create table PUBLIC.presentation
 (
-    id          integer auto_increment not null,
-    created_at  timestamp              not null,
-    deleted     tinyint,
+    id          integer auto_increment              not null,
+    created_at  timestamp default current_timestamp not null,
+    deleted     tinyint   default 0,
     deleted_at  timestamp,
-    description varchar(140)           not null,
+    description varchar(140)                        not null,
     modified_at timestamp,
-    units       integer                not null,
+    units       integer                             not null,
     primary key (id)
 );
 
@@ -139,17 +139,17 @@ create table PUBLIC.product_detail
 
 create table PUBLIC.product
 (
-    id          integer auto_increment not null,
-    category_id integer                not null,
-    created_at  timestamp              not null,
-    deleted     tinyint,
+    id          integer auto_increment              not null,
+    category_id integer                             not null,
+    created_at  timestamp default current_timestamp not null,
+    deleted     tinyint   default 0,
     deleted_at  timestamp,
-    description varchar(140)           not null,
-    detail_id   integer                not null,
+    description varchar(140)                        not null,
+    detail_id   integer                             not null,
     image       varchar(500),
     modified_at timestamp,
-    price       decimal(4, 0)          not null,
-    stock       integer                not null,
+    price       decimal(4, 0)                       not null,
+    stock       integer                             not null,
     primary key (id),
 
     constraint FK1mtsbur82frn64de7balymq9s foreign key (category_id) references PUBLIC.category,
@@ -159,17 +159,17 @@ create table PUBLIC.product
 
 create table PUBLIC.supplier
 (
-    id          integer auto_increment not null,
-    address     varchar(255)           not null,
-    created_at  timestamp              not null,
-    cuit        bigint(20)             not null,
-    deleted     tinyint,
+    id          integer auto_increment              not null,
+    address     varchar(255)                        not null,
+    created_at  timestamp default current_timestamp not null,
+    cuit        bigint(20)                          not null,
+    deleted     tinyint   default 0,
     deleted_at  timestamp,
     description varchar(255),
-    locality_id integer                not null,
+    locality_id integer                             not null,
     mail        varchar(320),
     modified_at timestamp,
-    name        varchar(255)           not null,
+    name        varchar(255)                        not null,
     primary key (id),
 
     constraint FKo8tkgxhgfy0hqhuoaspeaqgpc foreign key (locality_id) references locality
@@ -283,12 +283,16 @@ create table PUBLIC.sale_share
     constraint FKde77s9nnikqfax26c9l4kqlx8 foreign key (sale_invoice_id) references PUBLIC.sale_invoice
 );
 
-create table PUBLIC.sub_category
+create table PUBLIC.category_level
 (
     id          integer auto_increment not null,
     category_id integer                not null,
-    created_at  timestamp,
-    deleted     tinyint,
+    L1          integer   default 0,
+    L2          integer   default 0,
+    L3          integer   default 0,
+    L4          integer   default 0,
+    created_at  timestamp default current_timestamp,
+    deleted     tinyint   default 0,
     deleted_at  timestamp,
     modified_at timestamp,
     primary key (id),
@@ -316,8 +320,8 @@ create table PUBLIC.supplier_catalog
 create table PUBLIC.supplier_phone
 (
     id          integer auto_increment not null,
-    created_at  timestamp,
-    deleted     tinyint,
+    created_at  timestamp default current_timestamp,
+    deleted     tinyint   default 0,
     deleted_at  timestamp,
     modified_at timestamp,
     number      varchar(12)            not null,

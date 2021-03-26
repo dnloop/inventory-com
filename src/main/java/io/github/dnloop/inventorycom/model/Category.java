@@ -20,7 +20,7 @@ public class Category {
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
     private Collection<Product> productsById;
-    private Collection<SubCategory> subCategoriesById;
+    private Collection<CategoryLevel> categoryLevelsById;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -110,11 +110,11 @@ public class Category {
     }
 
     @OneToMany(mappedBy = "categoryByCategoryId")
-    public Collection<SubCategory> getSubCategoriesById() {
-        return subCategoriesById;
+    public Collection<CategoryLevel> getCategoryLevelsById() {
+        return categoryLevelsById;
     }
 
-    public void setSubCategoriesById(Collection<SubCategory> subCategoriesById) {
-        this.subCategoriesById = subCategoriesById;
+    public void setCategoryLevelsById(Collection<CategoryLevel> categoryLevelsById) {
+        this.categoryLevelsById = categoryLevelsById;
     }
 }

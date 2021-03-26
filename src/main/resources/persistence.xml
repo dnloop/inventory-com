@@ -23,7 +23,7 @@
     <class>io.github.dnloop.inventorycom.model.SaleDetail</class>
     <class>io.github.dnloop.inventorycom.model.SaleInvoice</class>
     <class>io.github.dnloop.inventorycom.model.SaleShare</class>
-    <class>io.github.dnloop.inventorycom.model.SubCategory</class>
+    <class>io.github.dnloop.inventorycom.model.CategoryLevel</class>
     <class>io.github.dnloop.inventorycom.model.Supplier</class>
     <class>io.github.dnloop.inventorycom.model.SupplierCatalog</class>
     <class>io.github.dnloop.inventorycom.model.SupplierPhone</class>
