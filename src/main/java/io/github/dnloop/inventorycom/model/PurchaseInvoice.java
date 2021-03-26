@@ -1,7 +1,6 @@
 package io.github.dnloop.inventorycom.model;
 
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -10,9 +9,8 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "purchase_invoice", schema = "inventario_comercial")
+@Table(name = "purchase_invoice")
 @SQLDelete(sql = "UPDATE purchase_invoice SET deleted = 1 WHERE id= ?")
-@Where(clause = "deleted = 0")
 public class PurchaseInvoice {
     private Integer id;
     private Integer number;
