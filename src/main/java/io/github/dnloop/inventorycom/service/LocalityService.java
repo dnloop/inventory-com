@@ -2,7 +2,6 @@ package io.github.dnloop.inventorycom.service;
 
 import io.github.dnloop.inventorycom.model.Departments;
 import io.github.dnloop.inventorycom.model.Locality;
-import io.github.dnloop.inventorycom.model.Municipality;
 import io.github.dnloop.inventorycom.model.Province;
 import io.github.dnloop.inventorycom.repository.DepartmentRepository;
 import io.github.dnloop.inventorycom.repository.LocalityRepository;
@@ -51,7 +50,7 @@ public class LocalityService {
     }
 
     @Async
-    public CompletableFuture<Optional<Locality>> findLocalityById(Integer id) {
+    public CompletableFuture<Optional<Locality>> findLocalityById(int id) {
         return CompletableFuture.completedFuture(localityRepository.findById(id));
     }
 
@@ -77,7 +76,7 @@ public class LocalityService {
     }
 
     @Async
-    public CompletableFuture<Optional<Departments>> findDepartmentById(Integer id) {
+    public CompletableFuture<Optional<Departments>> findDepartmentById(int id) {
         return CompletableFuture.completedFuture(departmentRepository.findById(id));
     }
 
@@ -90,7 +89,7 @@ public class LocalityService {
 
 
     @Async
-    public CompletableFuture<Optional<Province>> findProvinceById(Integer id) {
+    public CompletableFuture<Optional<Province>> findProvinceById(int id) {
         return CompletableFuture.completedFuture(provinceRepository.findById(id));
     }
 
