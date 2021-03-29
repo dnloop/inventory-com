@@ -7,5 +7,5 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DepartmentRepository extends JpaRepository<Departments, Integer> {
-    Page<Departments> findAllByLocalitiesById(Locality id);
+    Page<Departments> findAllByLocalitiesById(Locality id, Pageable pageable);
 }

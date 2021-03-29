@@ -8,5 +8,5 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MunicipalityRepository extends JpaRepository<Municipality, Integer> {
-    Page<Municipality> findAllByLocalitiesById(Locality id);
+    Page<Municipality> findAllByLocalitiesById(Locality id, Pageable pageable);
 }
