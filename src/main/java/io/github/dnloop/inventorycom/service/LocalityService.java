@@ -2,6 +2,7 @@ package io.github.dnloop.inventorycom.service;
 
 import io.github.dnloop.inventorycom.model.Departments;
 import io.github.dnloop.inventorycom.model.Locality;
+import io.github.dnloop.inventorycom.model.Municipality;
 import io.github.dnloop.inventorycom.model.Province;
 import io.github.dnloop.inventorycom.repository.DepartmentRepository;
 import io.github.dnloop.inventorycom.repository.LocalityRepository;
@@ -9,7 +10,6 @@ import io.github.dnloop.inventorycom.repository.ProvinceRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +17,18 @@ import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
+
+/**
+ * By default province is set according the initial application set up to ease
+ * data loading for clients.
+ * <p>
+ * Data hierarchy is as follows:
+ * <p>
+ * 1. Province
+ * 2. Departments
+ * 3. Municipality
+ * 4. Locality
+ */
 @Service
 public class LocalityService {
 
@@ -44,27 +56,24 @@ public class LocalityService {
     }
 
     @Async
-    public CompletableFuture<Slice<Locality>> findLocalityByProvinceId(Province id) {
+    public CompletableFuture<Page<Locality>> findLocalityByMunicipality(int id, Pageable pageable) {
         return CompletableFuture.completedFuture(
-                localityRepository.findLocalityByProvinceByProvinceId(id, pageableFifty)
+                localityRepository.findLocalitiesByMunicipalityId(id, pageable)
         );
     }
 
     @Async
-    public CompletableFuture<Slice<Locality>> findLocalityByProvinceId(Province id, Pageable pageable) {
+    public CompletableFuture<Page<Locality>> findLocalitiesByDepartment(int id) {
         return CompletableFuture.completedFuture(
-                localityRepository.findLocalityByProvinceByProvinceId(id, pageable)
+                localityRepository.findLocalitiesByDepartamentId(id, pageableFifty)
         );
     }
 
     @Async
-    public CompletableFuture<Page<Locality>> findAllLocalitites() {
-        return CompletableFuture.completedFuture(localityRepository.findAll(pageableFifty));
-    }
-
-    @Async
-    public CompletableFuture<Page<Locality>> findAllLocalitites(Pageable pageable) {
-        return CompletableFuture.completedFuture(localityRepository.findAll(pageable));
+    public CompletableFuture<Page<Locality>> findLocalitiesByProvince(int id) {
+        return CompletableFuture.completedFuture(
+                localityRepository.findLocalitiesByProvinceId(id, pageableFifty)
+        );
     }
 
     @Async
@@ -73,18 +82,12 @@ public class LocalityService {
     }
 
     @Async
-    public CompletableFuture<Slice<Departments>> findDepartmentByLocality(Locality id) {
+    public CompletableFuture<Page<Departments>> findDepartments() {
         return CompletableFuture.completedFuture(
-                departmentRepository.findAllByLocalitiesById(id, pageableFifty)
+                departmentRepository.findAll(pageableFifty)
         );
     }
 
-    @Async
-    public CompletableFuture<Slice<Departments>> findDepartmentByLocality(Locality id, Pageable pageable) {
-        return CompletableFuture.completedFuture(
-                departmentRepository.findAllByLocalitiesById(id, pageable)
-        );
-    }
 
     @Async
     public CompletableFuture<Optional<Province>> findProvinceById(Integer id) {
@@ -92,7 +95,7 @@ public class LocalityService {
     }
 
     @Async
-    public CompletableFuture<LinkedHashSet<Province>> findAllProvinceByLocality() {
+    public CompletableFuture<LinkedHashSet<Province>> findProvinces() {
         return CompletableFuture.completedFuture(provinceRepository.findAllByOrderByName());
     }
 }
