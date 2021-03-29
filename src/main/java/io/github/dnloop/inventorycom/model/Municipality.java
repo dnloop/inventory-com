@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
+@Table(name = "municipality")
 public class Municipality {
     private String name;
     private Integer id;
