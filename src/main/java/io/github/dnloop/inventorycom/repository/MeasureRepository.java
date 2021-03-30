@@ -16,7 +16,7 @@ public interface MeasureRepository extends JpaRepository<Measure, Integer> {
 
     @Query("SELECT measure from Measure measure" +
            " WHERE measure.deleted = 0")
-    Page<Measure> findByProductDetailsById(int id);
+    Optional<Measure> findByProductDetailsById(int id);
 
     @Query("SELECT measure FROM Measure measure" +
            " WHERE measure.deleted = 1" +

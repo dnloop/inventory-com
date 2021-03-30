@@ -16,7 +16,7 @@ public interface PresentationRepository extends JpaRepository<Presentation, Inte
 
     @Query("SELECT presentation from Presentation presentation" +
            " WHERE presentation.deleted = 0")
-    Page<Presentation> findByProductDetailsById(int id);
+    Optional<Presentation> findByProductDetailsById(int id);
 
     @Query("SELECT presentation FROM Presentation presentation" +
            " WHERE presentation.deleted = 1" +

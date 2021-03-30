@@ -16,7 +16,7 @@ public interface MaterialRepository extends JpaRepository<Material, Integer> {
 
     @Query("SELECT material from Material material" +
            " WHERE material.deleted = 0")
-    Page<Material> findByProductDetailsById(int id);
+    Optional<Material> findByProductDetailsById(int id);
 
     @Query("SELECT material FROM Material material" +
            " WHERE material.deleted = 1" +
