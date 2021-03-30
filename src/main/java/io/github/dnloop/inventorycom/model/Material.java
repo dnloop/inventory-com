@@ -11,7 +11,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "material", schema = "inventario_comercial")
 @SQLDelete(sql = "UPDATE material SET deleted=1 WHERE id=?")
-@Where(clause = "deleted = 0")
 public class Material {
     private Integer id;
     private String type;

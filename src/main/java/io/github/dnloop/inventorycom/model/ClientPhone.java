@@ -11,7 +11,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "client_phone")
 @SQLDelete(sql = "UPDATE client_phone SET deleted=1 WHERE id=?")
-@Where(clause = "deleted = 0")
 public class ClientPhone {
     private Integer id;
     private String number;
