@@ -9,10 +9,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.function.Function;
+
 public interface LocalityRepository extends JpaRepository<Locality, Integer> {
-    Page<Locality> findLocalitiesByMunicipalityId(int id, Pageable pageable);
 
-    Page<Locality> findLocalitiesByDepartamentId(int id, Pageable pageable);
+    Page<Locality> findAll(Pageable pageable);
 
-    Page<Locality> findLocalitiesByProvinceId(int id, Pageable pageable);
+    Page<Locality> findAllByMunicipalityId(int id, Pageable pageable);
+
+    Page<Locality> findAllByDepartamentId(int id, Pageable pageable);
+
+    Page<Locality> findAllByProvinceId(int id, Pageable pageable);
 }

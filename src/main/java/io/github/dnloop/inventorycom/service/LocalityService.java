@@ -9,6 +9,7 @@ import io.github.dnloop.inventorycom.repository.ProvinceRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +38,10 @@ public class LocalityService {
 
     private final LocalityRepository localityRepository;
 
-    private final Pageable pageableFifty = PageRequest.of(0, 50);
+    private final Pageable pageableFifty = PageRequest.of(
+            0, 50,
+            Sort.by("name").ascending()
+    );
 
     public LocalityService(
             ProvinceRepository provinceRepository,
@@ -50,6 +54,16 @@ public class LocalityService {
     }
 
     @Async
+    public CompletableFuture<Page<Locality>> findAllLocalities() {
+        return CompletableFuture.completedFuture(localityRepository.findAll(pageableFifty));
+    }
+
+    @Async
+    public CompletableFuture<Page<Locality>> findAllLocalities(Pageable pageable) {
+        return CompletableFuture.completedFuture(localityRepository.findAll(pageable));
+    }
+
+    @Async
     public CompletableFuture<Optional<Locality>> findLocalityById(int id) {
         return CompletableFuture.completedFuture(localityRepository.findById(id));
     }
@@ -57,21 +71,21 @@ public class LocalityService {
     @Async
     public CompletableFuture<Page<Locality>> findLocalityByMunicipality(int id, Pageable pageable) {
         return CompletableFuture.completedFuture(
-                localityRepository.findLocalitiesByMunicipalityId(id, pageable)
+                localityRepository.findAllByMunicipalityId(id, pageable)
         );
     }
 
     @Async
     public CompletableFuture<Page<Locality>> findLocalitiesByDepartment(int id) {
         return CompletableFuture.completedFuture(
-                localityRepository.findLocalitiesByDepartamentId(id, pageableFifty)
+                localityRepository.findAllByDepartamentId(id, pageableFifty)
         );
     }
 
     @Async
     public CompletableFuture<Page<Locality>> findLocalitiesByProvince(int id) {
         return CompletableFuture.completedFuture(
-                localityRepository.findLocalitiesByProvinceId(id, pageableFifty)
+                localityRepository.findAllByProvinceId(id, pageableFifty)
         );
     }
 
