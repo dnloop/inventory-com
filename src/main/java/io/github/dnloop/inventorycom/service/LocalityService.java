@@ -69,6 +69,13 @@ public class LocalityService {
     }
 
     @Async
+    public CompletableFuture<Page<Locality>> findLocalityByMunicipality(int id) {
+        return CompletableFuture.completedFuture(
+                localityRepository.findAllByMunicipalityId(id, pageableFifty)
+        );
+    }
+
+    @Async
     public CompletableFuture<Page<Locality>> findLocalityByMunicipality(int id, Pageable pageable) {
         return CompletableFuture.completedFuture(
                 localityRepository.findAllByMunicipalityId(id, pageable)
@@ -79,6 +86,13 @@ public class LocalityService {
     public CompletableFuture<Page<Locality>> findLocalitiesByDepartment(int id) {
         return CompletableFuture.completedFuture(
                 localityRepository.findAllByDepartamentId(id, pageableFifty)
+        );
+    }
+
+    @Async
+    public CompletableFuture<Page<Locality>> findLocalitiesByDepartment(int id, Pageable pageable) {
+        return CompletableFuture.completedFuture(
+                localityRepository.findAllByDepartamentId(id, pageable)
         );
     }
 
@@ -95,7 +109,7 @@ public class LocalityService {
     }
 
     @Async
-    public CompletableFuture<Page<Departments>> findDepartments() {
+    public CompletableFuture<Page<Departments>> findAllDepartments() {
         return CompletableFuture.completedFuture(
                 departmentRepository.findAll(pageableFifty)
         );
@@ -108,7 +122,7 @@ public class LocalityService {
     }
 
     @Async
-    public CompletableFuture<LinkedHashSet<Province>> findProvinces() {
-        return CompletableFuture.completedFuture(provinceRepository.findAllByOrderByName());
+    public CompletableFuture<LinkedHashSet<Province>> findAllProvinces() {
+        return CompletableFuture.completedFuture(provinceRepository.findAllByOrderByNameAsc());
     }
 }
