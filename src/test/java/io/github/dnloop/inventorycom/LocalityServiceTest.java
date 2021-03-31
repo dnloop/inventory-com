@@ -138,9 +138,7 @@ public class LocalityServiceTest {
         assertThat(result).hasSize(3);
         assertThat(
                 Objects.requireNonNull(
-                        result.stream().reduce(
-                                (first, second) -> first
-                        ).orElse(null)
+                        result.stream().findFirst().orElse(null)
                 )
         ).has(firstProvince);
     }
