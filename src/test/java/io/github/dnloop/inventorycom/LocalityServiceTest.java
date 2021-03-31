@@ -53,7 +53,7 @@ public class LocalityServiceTest {
     @Sql({"/db/data/localities-relation.sql"})
     void findAll() throws ExecutionException, InterruptedException {
         final Condition<Locality> firstLocality = new Condition<>(
-                client -> client.getName().equalsIgnoreCase("LOCALITY-1"),
+                locality -> locality.getName().equalsIgnoreCase("LOCALITY-1"),
                 "[Name] - LOCALITY-1"
         );
         final CompletableFuture<Page<Locality>> locality = localityService.findAllLocalities();
@@ -67,7 +67,9 @@ public class LocalityServiceTest {
 
     @Test
     @Sql({"/db/data/localities-relation.sql"})
-    void findLocalityByMunicipality() {}
+    void findLocalityByMunicipality() {
+
+    }
 
     @Test
     @Sql({"/db/data/localities-relation.sql"})
