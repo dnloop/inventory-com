@@ -1,6 +1,8 @@
 package io.github.dnloop.inventorycom;
 
+import io.github.dnloop.inventorycom.model.Departments;
 import io.github.dnloop.inventorycom.model.Locality;
+import io.github.dnloop.inventorycom.model.Province;
 import io.github.dnloop.inventorycom.service.LocalityService;
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.Test;
@@ -12,6 +14,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -37,7 +41,7 @@ public class LocalityServiceTest {
     @Test
     @Sql({"/db/data/localities-relation.sql"})
     void findById() throws ExecutionException, InterruptedException {
-        final CompletableFuture<Optional<Locality>> client = CompletableFuture.supplyAsync(() -> {
+        final CompletableFuture<Optional<Locality>> locality = CompletableFuture.supplyAsync(() -> {
             try {
                 return localityService.findLocalityById(1).get();
             } catch (InterruptedException | ExecutionException e) {
@@ -45,7 +49,7 @@ public class LocalityServiceTest {
             }
         });
 
-        assertThat(client.get())
+        assertThat(locality.get())
                 .matches(Optional::isPresent, "is empty");
     }
 
@@ -67,31 +71,108 @@ public class LocalityServiceTest {
 
     @Test
     @Sql({"/db/data/localities-relation.sql"})
-    void findLocalityByMunicipality() {
+    void findLocalityByMunicipality() throws ExecutionException, InterruptedException {
+        final Condition<Locality> name = new Condition<>(
+                locality -> locality.getName().equalsIgnoreCase("LOCALITY-3"),
+                "[Name] - LOCALITY-3"
+        );
+        final CompletableFuture<Page<Locality>> locality = localityService.findLocalityByMunicipality(2);
+        final Page<Locality> result = locality.get();
 
+        assertThat(result).hasSize(2);
+        assertThat(
+                result.getContent().get(0)
+        ).has(name);
     }
 
     @Test
     @Sql({"/db/data/localities-relation.sql"})
-    void findLocalitiesByDepartment() {}
+    void findLocalitiesByDepartment() throws ExecutionException, InterruptedException {
+        final Condition<Locality> name = new Condition<>(
+                locality -> locality.getName().equalsIgnoreCase("LOCALITY-3"),
+                "[Name] - LOCALITY-3"
+        );
+        final CompletableFuture<Page<Locality>> locality = localityService.findLocalitiesByDepartment(2);
+        final Page<Locality> result = locality.get();
+
+        assertThat(result).hasSize(3);
+        assertThat(
+                result.getContent().get(0)
+        ).has(name);
+    }
 
     @Test
     @Sql({"/db/data/localities-relation.sql"})
-    void findLocalitiesByProvince() {}
+    void findLocalitiesByProvince() throws ExecutionException, InterruptedException {
+        final CompletableFuture<Page<Locality>> locality = localityService.findLocalitiesByDepartment(2);
+        final Page<Locality> result = locality.get();
+
+        assertThat(result).hasSize(1);
+    }
 
     @Test
     @Sql({"/db/data/localities-relation.sql"})
-    void findProvinceById() {}
+    void findProvinceById() throws ExecutionException, InterruptedException {
+        final CompletableFuture<Optional<Province>> province = CompletableFuture.supplyAsync(() -> {
+            try {
+                return localityService.findProvinceById(1).get();
+            } catch (InterruptedException | ExecutionException e) {
+                return Optional.empty();
+            }
+        });
+
+        assertThat(province.get())
+                .matches(Optional::isPresent, "is empty");
+    }
 
     @Test
     @Sql({"/db/data/localities-relation.sql"})
-    void findProvinces() {}
+    void findProvinces() throws ExecutionException, InterruptedException {
+        final Condition<Province> firstProvince = new Condition<>(
+                province -> province.getName().equalsIgnoreCase("PROVINCE-1"),
+                "[Name] - PROVINCE-1"
+        );
+        final CompletableFuture<LinkedHashSet<Province>> province = localityService.findAllProvinces();
+        final LinkedHashSet<Province> result = province.get();
+
+        assertThat(result).hasSize(3);
+        assertThat(
+                Objects.requireNonNull(
+                        result.stream().reduce(
+                                (first, second) -> first
+                        ).orElse(null)
+                )
+        ).has(firstProvince);
+    }
 
     @Test
     @Sql({"/db/data/localities-relation.sql"})
-    void findDepartmentById() {}
+    void findDepartmentById() throws ExecutionException, InterruptedException {
+        final CompletableFuture<Optional<Departments>> province = CompletableFuture.supplyAsync(() -> {
+            try {
+                return localityService.findDepartmentById(1).get();
+            } catch (InterruptedException | ExecutionException e) {
+                return Optional.empty();
+            }
+        });
+
+        assertThat(province.get())
+                .matches(Optional::isPresent, "is empty");
+    }
 
     @Test
     @Sql({"/db/data/localities-relation.sql"})
-    void findDepartments() {}
+    void findDepartments() throws ExecutionException, InterruptedException {
+        final Condition<Departments> firstDepartment = new Condition<>(
+                department -> department.getName().equalsIgnoreCase("DEPARTMENT-1"),
+                "[Name] - DEPARTMENT-1"
+        );
+        final CompletableFuture<Page<Departments>> department = localityService.findAllDepartments();
+        final Page<Departments> result = department.get();
+
+        assertThat(result).hasSize(5);
+        assertThat(
+                result.getContent().get(0)
+        ).has(firstDepartment);
+    }
 }
