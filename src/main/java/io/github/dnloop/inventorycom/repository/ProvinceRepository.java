@@ -7,5 +7,5 @@ import java.util.LinkedHashSet;
 
 
 public interface ProvinceRepository extends CrudRepository<Province, Integer> {
-    LinkedHashSet<Province> findAllByOrderByName();
+    LinkedHashSet<Province> findAllByOrderByNameAsc();
 }
