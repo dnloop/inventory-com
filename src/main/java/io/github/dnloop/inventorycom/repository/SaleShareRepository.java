@@ -5,10 +5,25 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.LinkedHashSet;
+import java.util.Optional;
 
 public interface SaleShareRepository extends CrudRepository<SaleShare, Integer> {
+
+    @Query("SELECT saleShare FROM SaleShare saleShare" +
+           " WHERE saleShare.deleted = 0")
     LinkedHashSet<SaleShare> findAll();
 
-    @Query("SELECT saleShare FROM SaleShare saleShare WHERE saleShare.deleted = 1")
+    @Query("SELECT saleShare FROM SaleShare saleShare" +
+           " WHERE saleShare.id = :id" +
+           " AND saleShare.deleted = 0")
+    Optional<SaleShare> findById(int id);
+
+    @Query("SELECT saleShare FROM SaleShare saleShare" +
+           " WHERE saleShare.deleted = 1")
     LinkedHashSet<SaleShare> findAllDeleted();
+
+    @Query("SELECT saleShare FROM SaleShare saleShare" +
+           " WHERE saleShare.id = :id" +
+           " AND saleShare.deleted = 1")
+    Optional<SaleShare> findDeleted(int id);
 }

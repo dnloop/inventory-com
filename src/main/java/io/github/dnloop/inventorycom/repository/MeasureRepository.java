@@ -14,9 +14,10 @@ public interface MeasureRepository extends JpaRepository<Measure, Integer> {
            " WHERE measure.deleted = 0")
     Page<Measure> findAll(Pageable pageable);
 
-    @Query("SELECT measure from Measure measure" +
-           " WHERE measure.deleted = 0")
-    Optional<Measure> findByProductDetailsById(int id);
+    @Query("SELECT measure FROM Measure measure" +
+           " WHERE measure.id = :id" +
+           " AND measure.deleted = 0")
+    Optional<Measure> findById(int id);
 
     @Query("SELECT measure FROM Measure measure" +
            " WHERE measure.deleted = 1" +
@@ -24,6 +25,7 @@ public interface MeasureRepository extends JpaRepository<Measure, Integer> {
     Page<Measure> findAllDeleted(Pageable pageable);
 
     @Query("SELECT measure FROM Measure measure" +
-           " WHERE measure.id = :id AND measure.deleted = 1")
+           " WHERE measure.id = :id" +
+           " AND measure.deleted = 1")
     Optional<Measure> findDeleted(int id);
 }

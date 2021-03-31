@@ -15,11 +15,17 @@ public interface ClientRepository extends JpaRepository<Client, Integer> {
     Page<Client> findAll(Pageable pageable);
 
     @Query("SELECT client FROM Client client" +
+           " WHERE client.id = :id" +
+           " AND client.deleted = 0")
+    Optional<Client> findById(int id);
+
+    @Query("SELECT client FROM Client client" +
            " WHERE client.deleted = 1" +
            " ORDER BY client.deletedAt")
     Page<Client> findAllDeleted(Pageable pageable);
 
     @Query("SELECT client FROM Client client" +
-           " WHERE client.id = :id AND client.deleted = 1")
+           " WHERE client.id = :id" +
+           " AND client.deleted = 1")
     Optional<Client> findDeleted(int id);
 }

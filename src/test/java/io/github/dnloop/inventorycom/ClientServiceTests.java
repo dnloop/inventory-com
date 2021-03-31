@@ -89,6 +89,21 @@ class ClientServiceTests {
 
     @Test
     @Sql({"/db/data/localities.sql", "/db/data/clients.sql"})
+    void findByIdDeleted() throws ExecutionException, InterruptedException {
+        final CompletableFuture<Optional<Client>> client = CompletableFuture.supplyAsync(() -> {
+            try {
+                return clientService.findById(5).get();
+            } catch (InterruptedException | ExecutionException e) {
+                return Optional.empty();
+            }
+        });
+
+        assertThat(client.get())
+                .matches(Optional::isEmpty, "is present");
+    }
+
+    @Test
+    @Sql({"/db/data/localities.sql", "/db/data/clients.sql"})
     void modifyClient() throws ExecutionException, InterruptedException {
         final Timestamp ts = Timestamp.from(Instant.now());
         final Client editClient = clientService.findById(1).join().orElse(null);

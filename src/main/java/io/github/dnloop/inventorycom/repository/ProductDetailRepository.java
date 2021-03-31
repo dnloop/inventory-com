@@ -15,11 +15,17 @@ public interface ProductDetailRepository extends JpaRepository<ProductDetail, In
     Page<ProductDetail> findAll(Pageable pageable);
 
     @Query("SELECT productDetail FROM ProductDetail productDetail" +
+           " WHERE productDetail.id = :id" +
+           " AND productDetail.deleted = 0")
+    Optional<ProductDetail> findById(int id);
+    
+    @Query("SELECT productDetail FROM ProductDetail productDetail" +
            " WHERE productDetail.deleted = 1" +
            " ORDER BY productDetail.deletedAt")
     Page<ProductDetail> findAllDeleted(Pageable pageable);
 
     @Query("SELECT productDetail FROM ProductDetail productDetail" +
-           " WHERE productDetail.id = :id AND productDetail.deleted = 1")
+           " WHERE productDetail.id = :id" +
+           " AND productDetail.deleted = 1")
     Optional<ProductDetail> findDeleted(int id);
 }

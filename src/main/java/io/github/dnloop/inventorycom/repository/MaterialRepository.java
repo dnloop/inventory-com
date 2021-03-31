@@ -14,9 +14,10 @@ public interface MaterialRepository extends JpaRepository<Material, Integer> {
            " WHERE material.deleted = 0")
     Page<Material> findAll(Pageable pageable);
 
-    @Query("SELECT material from Material material" +
-           " WHERE material.deleted = 0")
-    Optional<Material> findByProductDetailsById(int id);
+    @Query("SELECT material FROM Material material" +
+           " WHERE material.id = :id" +
+           " AND material.deleted = 0")
+    Optional<Material> findById(int id);
 
     @Query("SELECT material FROM Material material" +
            " WHERE material.deleted = 1" +
@@ -24,6 +25,7 @@ public interface MaterialRepository extends JpaRepository<Material, Integer> {
     Page<Material> findAllDeleted(Pageable pageable);
 
     @Query("SELECT material FROM Material material" +
-           " WHERE material.id = :id AND material.deleted = 1")
+           " WHERE material.id = :id" +
+           " AND material.deleted = 1")
     Optional<Material> findDeleted(int id);
 }
