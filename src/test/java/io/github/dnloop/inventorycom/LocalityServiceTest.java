@@ -59,7 +59,7 @@ public class LocalityServiceTest {
         final CompletableFuture<Page<Locality>> locality = localityService.findAllLocalities();
         final Page<Locality> result = locality.get();
 
-        assertThat(result).hasSize(3);
+        assertThat(result).hasSize(5);
         assertThat(
                 result.getContent().get(0)
         ).has(firstLocality);
