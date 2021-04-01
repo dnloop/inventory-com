@@ -10,7 +10,8 @@ import java.util.Optional;
 public interface CategoryRepository extends CrudRepository<Category, Integer> {
 
     @Query("SELECT category FROM Category category" +
-           " WHERE category.deleted = 0")
+           " WHERE category.deleted = 0" +
+           " ORDER BY category.description ASC")
     HashSet<Category> findAll();
 
     @Query("SELECT category FROM Category category" +
@@ -19,7 +20,8 @@ public interface CategoryRepository extends CrudRepository<Category, Integer> {
     Optional<Category> findById(int id);
 
     @Query("SELECT category FROM Category category" +
-           " WHERE category.deleted = 1")
+           " WHERE category.deleted = 1 " +
+           " ORDER BY category.description ASC")
     HashSet<Category> findAllDeleted();
 
     @Query("SELECT category FROM Category category" +
