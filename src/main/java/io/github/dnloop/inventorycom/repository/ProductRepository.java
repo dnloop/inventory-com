@@ -12,7 +12,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Query("SELECT product FROM Product product" +
            " WHERE product.deleted = 0")
-    Page<Product> findAllByOrderByDescriptionAsc(Pageable pageable);
+    Page<Product> findAll(Pageable pageable);
 
     @Query("SELECT product FROM Product product" +
            " WHERE product.id = :id" +
