@@ -88,17 +88,10 @@ public class LocalityServiceTest {
     @Test
     @Sql({"/db/data/localities-relation.sql"})
     void findLocalitiesByDepartment() throws ExecutionException, InterruptedException {
-        final Condition<Locality> name = new Condition<>(
-                locality -> locality.getName().equalsIgnoreCase("LOCALITY-3"),
-                "[Name] - LOCALITY-3"
-        );
         final CompletableFuture<Page<Locality>> locality = localityService.findLocalitiesByDepartment(2);
         final Page<Locality> result = locality.get();
 
-        assertThat(result).hasSize(3);
-        assertThat(
-                result.getContent().get(0)
-        ).has(name);
+        assertThat(result).hasSize(2);
     }
 
     @Test
@@ -107,7 +100,7 @@ public class LocalityServiceTest {
         final CompletableFuture<Page<Locality>> locality = localityService.findLocalitiesByDepartment(2);
         final Page<Locality> result = locality.get();
 
-        assertThat(result).hasSize(1);
+        assertThat(result).hasSize(2);
     }
 
     @Test
@@ -168,7 +161,7 @@ public class LocalityServiceTest {
         final CompletableFuture<Page<Departments>> department = localityService.findAllDepartments();
         final Page<Departments> result = department.get();
 
-        assertThat(result).hasSize(5);
+        assertThat(result).hasSize(2);
         assertThat(
                 result.getContent().get(0)
         ).has(firstDepartment);
