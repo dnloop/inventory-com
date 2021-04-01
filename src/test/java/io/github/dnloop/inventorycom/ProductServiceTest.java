@@ -8,8 +8,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.test.annotation.DirtiesContext;
 
 /**
- * Basic locality service tests units. The main purpose is to access related fields
- * by optimizing the search of large elements.
+ * Basic product service tests units. Perform CRUD operations and test relationships with dependencies.
  */
 @SpringBootTest
 @EnableAsync
