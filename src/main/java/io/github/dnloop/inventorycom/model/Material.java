@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "material", schema = "inventario_comercial")
+@Table(name = "material")
 @SQLDelete(sql = "UPDATE material SET deleted=1 WHERE id=?")
 public class Material {
     private Integer id;

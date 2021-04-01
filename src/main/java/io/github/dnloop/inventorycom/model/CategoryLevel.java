@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-@Table(name = "category_level", schema = "inventario_comercial")
+@Table(name = "category_level")
 @SQLDelete(sql = "UPDATE sub_category SET deleted=1 WHERE id=?")
 public class CategoryLevel {
     private Integer id;
