@@ -265,37 +265,37 @@ public class ProductService {
     /* Material */
 
     @Async
-    public CompletableFuture<Optional<Material>> findById(int id) {
+    public CompletableFuture<Optional<Material>> findMaterialById(int id) {
         return CompletableFuture.completedFuture(materialRepository.findById(id));
     }
 
     @Async
-    public CompletableFuture<Optional<Material>> findDeleted(Integer id) {
+    public CompletableFuture<Optional<Material>> findDeletedMaterial(Integer id) {
         return CompletableFuture.completedFuture(materialRepository.findDeleted(id));
     }
 
     @Async
-    public CompletableFuture<Page<Material>> findAll() {
+    public CompletableFuture<Page<Material>> findAllMaterials() {
         return CompletableFuture.completedFuture(materialRepository.findAll(pageableFifty));
     }
 
     @Async
-    public CompletableFuture<Page<Material>> findAll(Pageable pageable) {
+    public CompletableFuture<Page<Material>> findAllMaterials(Pageable pageable) {
         return CompletableFuture.completedFuture(materialRepository.findAll(pageable));
     }
 
     @Async
-    public CompletableFuture<Page<Material>> findAllDeleted() {
+    public CompletableFuture<Page<Material>> findAllDeletedMaterials() {
         return CompletableFuture.completedFuture(materialRepository.findAllDeleted(pageableFiftyDeleted));
     }
 
     @Async
-    public CompletableFuture<Material> save(Material material) {
+    public CompletableFuture<Material> saveMaterial(Material material) {
         return CompletableFuture.completedFuture(materialRepository.save(material));
     }
 
     @Transactional
-    public void delete(Material material) {
+    public void deleteMaterial(Material material) {
         materialRepository.delete(material);
         log.debug("Record Deleted: " + material.toString());
     }
