@@ -73,7 +73,7 @@ public class ProductService {
     }
 
     @Async
-    public CompletableFuture<Optional<Product>> findProductDeleted(Integer id) {
+    public CompletableFuture<Optional<Product>> findDeletedProduct(Integer id) {
         return CompletableFuture.completedFuture(productRepository.findDeleted(id));
     }
 
@@ -88,12 +88,12 @@ public class ProductService {
     }
 
     @Async
-    public CompletableFuture<Page<Product>> findProductAllDeleted() {
+    public CompletableFuture<Page<Product>> findAllDeletedProducts() {
         return CompletableFuture.completedFuture(productRepository.findAllDeleted(pageableFiftyDeleted));
     }
 
     @Async
-    public CompletableFuture<Page<Product>> findProductAllDeleted(Pageable pageable) {
+    public CompletableFuture<Page<Product>> findAllDeletedProducts(Pageable pageable) {
         return CompletableFuture.completedFuture(productRepository.findAllDeleted(pageable));
     }
 
@@ -189,12 +189,12 @@ public class ProductService {
     /* Measure */
 
     @Async
-    public CompletableFuture<Optional<Measure>> findMeasureById(int id) {
+    public CompletableFuture<Optional<Measure>> findMeasuresById(int id) {
         return CompletableFuture.completedFuture(measureRepository.findById(id));
     }
 
     @Async
-    public CompletableFuture<Optional<Measure>> findDeletedMeasure(Integer id) {
+    public CompletableFuture<Optional<Measure>> findDeletedMeasures(Integer id) {
         return CompletableFuture.completedFuture(measureRepository.findDeleted(id));
     }
 
