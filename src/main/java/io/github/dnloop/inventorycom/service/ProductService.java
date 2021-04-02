@@ -189,7 +189,7 @@ public class ProductService {
     /* Measure */
 
     @Async
-    public CompletableFuture<Optional<Measure>> findMeasrueById(int id) {
+    public CompletableFuture<Optional<Measure>> findMeasureById(int id) {
         return CompletableFuture.completedFuture(measureRepository.findById(id));
     }
 
