@@ -12,6 +12,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -144,7 +145,12 @@ public class ProductService {
         categoryRepository.delete(category);
         log.debug("Record Deleted: " + category.toString());
         log.debug("Deleting Relationships");
-        log.debug("Record Deleted: ");
+        final Collection<CategoryLevel> catLevels = category.getCategoryLevelsById();
+        catLevels.forEach(categoryLevel -> {
+            categoryLevelRepository.delete(categoryLevel);
+            log.debug("Record Deleted: " + categoryLevel.toString());
+        });
+        log.debug("Records Deleted: " + catLevels.size());
     }
 
     /* Category Level */
@@ -178,8 +184,6 @@ public class ProductService {
     public void deleteCategoryLevel(CategoryLevel category) {
         categoryLevelRepository.delete(category);
         log.debug("Record Deleted: " + category.toString());
-        log.debug("Deleting Relationships");
-        log.debug("Record Deleted: ");
     }
 
     /* Measure */
@@ -218,8 +222,6 @@ public class ProductService {
     public void deleteMeasures(Measure measure) {
         measureRepository.delete(measure);
         log.debug("Record Deleted: " + measure.toString());
-        log.debug("Deleting Relationships");
-        log.debug("Record Deleted: ");
     }
 
     /* Presentation */
@@ -258,8 +260,6 @@ public class ProductService {
     public void deletePresentation(Presentation presentation) {
         presentationRepository.delete(presentation);
         log.debug("Record Deleted: " + presentation.toString());
-        log.debug("Deleting Relationships");
-        log.debug("Record Deleted: ");
     }
 
     /* Material */
@@ -298,7 +298,5 @@ public class ProductService {
     public void delete(Material material) {
         materialRepository.delete(material);
         log.debug("Record Deleted: " + material.toString());
-        log.debug("Deleting Relationships");
-        log.debug("Record Deleted: ");
     }
 }
