@@ -102,6 +102,7 @@ create table PUBLIC.measure
     diameter    double,
     lenght      double,
     modified_at timestamp,
+    type        varchar(4)                          not null,
     width       double,
     primary key (id)
 );
