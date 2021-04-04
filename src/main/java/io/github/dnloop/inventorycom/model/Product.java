@@ -5,6 +5,7 @@ import org.hibernate.annotations.SQLDelete;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -17,7 +18,7 @@ public class Product {
     private Integer stock = 0;
     private BigDecimal price;
     private Byte deleted = 0;
-    private Timestamp createdAt;
+    private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
     private Integer categoryId;
     private Timestamp deletedAt;
@@ -29,13 +30,12 @@ public class Product {
     private Collection<SaleDetail> saleDetailsById;
     private Collection<SupplierCatalog> supplierCatalogsById;
 
-    public Product(){}
+    public Product() {}
 
-    public Product(String description, Integer stock, BigDecimal price, Timestamp createdAt) {
+    public Product(String description, Integer stock, BigDecimal price) {
         this.description = description;
         this.stock = stock;
         this.price = price;
-        this.createdAt = createdAt;
     }
 
     @Id
