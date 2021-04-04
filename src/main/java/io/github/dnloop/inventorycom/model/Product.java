@@ -14,20 +14,29 @@ import java.util.Objects;
 public class Product {
     private Integer id;
     private String description;
-    private Integer stock;
+    private Integer stock = 0;
     private BigDecimal price;
-    private Byte deleted;
+    private Byte deleted = 0;
     private Timestamp createdAt;
     private Timestamp modifiedAt;
     private Integer categoryId;
     private Timestamp deletedAt;
-    private String image;
-    private Integer detailId;
+    private String image = "";
+    private Integer detailId = 1;
     private Category categoryByCategoryId;
     private ProductDetail productDetailByDetailId;
     private Collection<PurchaseDetail> purchaseDetailsById;
     private Collection<SaleDetail> saleDetailsById;
     private Collection<SupplierCatalog> supplierCatalogsById;
+
+    public Product(){}
+
+    public Product(String description, Integer stock, BigDecimal price, Timestamp createdAt) {
+        this.description = description;
+        this.stock = stock;
+        this.price = price;
+        this.createdAt = createdAt;
+    }
 
     @Id
     @Column(name = "id", nullable = false)
