@@ -1,7 +1,6 @@
 package io.github.dnloop.inventorycom.model;
 
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -13,7 +12,6 @@ import java.util.Objects;
 @SQLDelete(sql = "UPDATE measure SET deleted=1 WHERE id=?")
 public class Measure {
     private Integer id;
-    private String type;
     private Byte deleted;
     private Timestamp createdAt;
     private Timestamp modifiedAt;
@@ -31,16 +29,6 @@ public class Measure {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    @Basic
-    @Column(name = "type", nullable = false, length = 4)
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     @Basic
@@ -119,7 +107,6 @@ public class Measure {
         if (o == null || getClass() != o.getClass()) return false;
         Measure that = (Measure) o;
         return Objects.equals(id, that.id) &&
-               Objects.equals(type, that.type) &&
                Objects.equals(deleted, that.deleted) &&
                Objects.equals(createdAt, that.createdAt) &&
                Objects.equals(modifiedAt, that.modifiedAt) &&
@@ -131,7 +118,7 @@ public class Measure {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, type, deleted, createdAt, modifiedAt, deletedAt, lenght, width, diameter);
+        return Objects.hash(id, deleted, createdAt, modifiedAt, deletedAt, lenght, width, diameter);
     }
 
     @OneToMany(mappedBy = "measureByMeasureId")
