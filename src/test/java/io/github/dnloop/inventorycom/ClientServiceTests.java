@@ -25,6 +25,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Basic client service tests units. Some methods that are meant to be async are executed sequentially in the
  * background due to the nature of the operation such as saving a record and retrieving its results in the same
  * call.
+ *
+ * TODO test auto increment
  */
 @SpringBootTest
 @EnableAsync
@@ -46,7 +48,6 @@ class ClientServiceTests {
                 client.get()
         ).matches(Optional::isEmpty, "is present");
     }
-
 
     @Test
     @Sql({"/db/data/localities.sql"})
@@ -87,6 +88,10 @@ class ClientServiceTests {
                 .matches(Optional::isPresent, "is empty");
     }
 
+    /**
+     * Query a deleted record with a non-delete clause
+     * TODO missing find deleted record by ID
+     */
     @Test
     @Sql({"/db/data/localities.sql", "/db/data/clients.sql"})
     void findByIdDeleted() throws ExecutionException, InterruptedException {

@@ -5,6 +5,7 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -14,12 +15,18 @@ import java.util.Objects;
 public class Material {
     private Integer id;
     private String type;
-    private Byte deleted;
-    private Timestamp createdAt;
+    private Byte deleted = 0;
+    private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
-    private String color;
+    private String color = "";
     private Collection<ProductDetail> productDetailsById;
+
+    public Material() {}
+
+    public Material(String type) {
+        this.type = type;
+    }
 
     @Id
     @Column(name = "id", nullable = false)

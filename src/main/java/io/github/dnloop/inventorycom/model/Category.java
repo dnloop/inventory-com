@@ -5,6 +5,7 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -14,12 +15,18 @@ import java.util.Objects;
 public class Category {
     private Integer id;
     private String description;
-    private Byte deleted;
-    private Timestamp createdAt;
+    private Byte deleted = 0;
+    private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
     private Collection<Product> productsById;
     private Collection<CategoryLevel> categoryLevelsById;
+
+    public Category() {}
+
+    public Category(String description) {
+        this.description = description;
+    }
 
     @Id
     @Column(name = "id", nullable = false)

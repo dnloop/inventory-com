@@ -1,6 +1,8 @@
 package io.github.dnloop.inventorycom;
 
+import io.github.dnloop.inventorycom.model.Presentation;
 import io.github.dnloop.inventorycom.model.Product;
+import io.github.dnloop.inventorycom.repository.PresentationRepository;
 import io.github.dnloop.inventorycom.service.ProductService;
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.Test;
@@ -22,42 +24,29 @@ import java.util.concurrent.ExecutionException;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Basic product service tests units. Perform CRUD operations and test relationships with dependencies.
- * TODO load test data
+ * Test {@link PresentationRepository} property in  {@link ProductService}.
  * TODO adjust test values according to test data
  */
 @SpringBootTest
 @EnableAsync
 @AutoConfigureTestDatabase
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class ProductServiceTest {
+public class PresentationRepositoryTest {
 
     @Autowired
     ProductService productService;
 
     @Test
-    void contextLoads() {}
-
-    @Test
-    void productNull() throws ExecutionException, InterruptedException {
-        final CompletableFuture<Optional<Product>> product = productService.findProductById(6);
-
-        assertThat(
-                product.get()
-        ).matches(Optional::isEmpty, "is present");
-    }
-
-    @Test
-    void findProductById() throws ExecutionException, InterruptedException {
-        final CompletableFuture<Optional<Product>> product = CompletableFuture.supplyAsync(() -> {
+    void findPresentationById() throws ExecutionException, InterruptedException {
+        final CompletableFuture<Optional<Presentation>> presentation = CompletableFuture.supplyAsync(() -> {
             try {
-                return productService.findProductById(1).get();
+                return productService.findPresentationById(1).get();
             } catch (InterruptedException | ExecutionException e) {
                 return Optional.empty();
             }
         });
 
-        assertThat(product.get())
+        assertThat(presentation.get())
                 .matches(Optional::isPresent, "is empty");
     }
 
@@ -65,66 +54,66 @@ public class ProductServiceTest {
      * Query a deleted record with a non-delete clause
      */
     @Test
-    void findProductByIdDeleted() throws ExecutionException, InterruptedException {
-        final CompletableFuture<Optional<Product>> product = CompletableFuture.supplyAsync(() -> {
+    void findPresentationByIdDeleted() throws ExecutionException, InterruptedException {
+        final CompletableFuture<Optional<Presentation>> presentation = CompletableFuture.supplyAsync(() -> {
             try {
-                return productService.findProductById(1).get();
+                return productService.findPresentationById(1).get();
             } catch (InterruptedException | ExecutionException e) {
                 return Optional.empty();
             }
         });
 
-        assertThat(product.get())
+        assertThat(presentation.get())
                 .matches(Optional::isPresent, "is empty");
     }
 
     @Test
-    void findProductDeleted() throws ExecutionException, InterruptedException {
-        final CompletableFuture<Optional<Product>> product = CompletableFuture.supplyAsync(() -> {
+    void findDeletedPresentation() throws ExecutionException, InterruptedException {
+        final CompletableFuture<Optional<Presentation>> client = CompletableFuture.supplyAsync(() -> {
             try {
-                return productService.findDeletedProduct(1).get();
+                return productService.findDeletedPresentation(1).get();
             } catch (InterruptedException | ExecutionException e) {
                 return Optional.empty();
             }
         });
 
-        assertThat(product.get())
+        assertThat(client.get())
                 .matches(Optional::isEmpty, "is present");
     }
 
+
     @Test
-    void findAllProducts() throws ExecutionException, InterruptedException {
-        final Condition<Product> firstProduct = new Condition<>(
-                product -> product.getDescription().equalsIgnoreCase("PD-1"),
+    void findAllPresentations() throws ExecutionException, InterruptedException {
+        final Condition<Presentation> firstPresentation = new Condition<>(
+                presentation -> presentation.getDescription().equalsIgnoreCase("PD-1"),
                 "[Description] - PD-1"
         );
-        final CompletableFuture<Page<Product>> products = productService.findAllProducts();
-        final Page<Product> result = products.get();
+        final CompletableFuture<Page<Presentation>> presentations = productService.findAllPresentations();
+        final Page<Presentation> result = presentations.get();
 
         assertThat(result).hasSize(3);
         assertThat(
                 result.getContent().get(0)
-        ).has(firstProduct);
+        ).has(firstPresentation);
     }
 
-
     @Test
-    void findAllProductsDeleted() throws ExecutionException, InterruptedException {
-        final Condition<Product> firstProduct = new Condition<>(
-                product -> product.getDescription().equalsIgnoreCase("PD-1"),
+    void findAllDeletedPresentations() throws ExecutionException, InterruptedException {
+        final Condition<Presentation> firstPresentation = new Condition<>(
+                presentation -> presentation.getDescription().equalsIgnoreCase("PD-1"),
                 "[Description] - PD-1"
         );
-        final CompletableFuture<Page<Product>> products = productService.findAllDeletedProducts();
-        final Page<Product> result = products.get();
+        final CompletableFuture<Page<Presentation>> presentations = productService.findAllDeletedPresentations();
+        final Page<Presentation> result = presentations.get();
 
         assertThat(result).hasSize(3);
         assertThat(
                 result.getContent().get(0)
-        ).has(firstProduct);
+        ).has(firstPresentation);
     }
 
     @Test
-    void saveProduct() throws ExecutionException, InterruptedException {
+    void savePresentation() throws ExecutionException, InterruptedException {
         Product newProduct = new Product(
                 "PD-NEW", 1,
                 new BigDecimal("200.00")
@@ -144,21 +133,21 @@ public class ProductServiceTest {
     }
 
     @Test
-    void modifyProduct() throws ExecutionException, InterruptedException {
+    void modifyPresentation() throws ExecutionException, InterruptedException {
         final Timestamp ts = Timestamp.from(Instant.now());
-        final Product editProduct = productService.findProductById(1).join().orElse(null);
+        final Presentation editPresentation = productService.findPresentationById(1).join().orElse(null);
 
-        Objects.requireNonNull(editProduct).setModifiedAt(ts);
+        Objects.requireNonNull(editPresentation).setModifiedAt(ts);
 
-        final CompletableFuture<Optional<Product>> modifiedProduct =
-                productService.saveProduct(editProduct).thenCompose(
-                        prod -> productService.findProductById(prod.getId())
+        final CompletableFuture<Optional<Presentation>> modifiedPresentation =
+                productService.savePresentation(editPresentation).thenCompose(
+                        prod -> productService.findPresentationById(prod.getId())
                 );
 
         final Timestamp result;
 
-        if (modifiedProduct.get().isPresent())
-            result = modifiedProduct.get().get().getModifiedAt();
+        if (modifiedPresentation.get().isPresent())
+            result = modifiedPresentation.get().get().getModifiedAt();
         else
             result = Timestamp.from(Instant.ofEpochSecond(0L));
 
@@ -167,22 +156,21 @@ public class ProductServiceTest {
                 .isEqualTo(ts);
     }
 
-
     @Test
-    void deleteProduct() throws ExecutionException, InterruptedException {
-        final CompletableFuture<Void> product =
-                productService.findProductById(1).thenAccept(product1 -> product1.ifPresent(
-                        value -> productService.deleteProduct(value)
+    void deletePresentation() throws ExecutionException, InterruptedException {
+        final CompletableFuture<Void> presentation =
+                productService.findPresentationById(1).thenAccept(presentation1 -> presentation1.ifPresent(
+                        value -> productService.deletePresentation(value)
                 ));
 
 
-        final CompletableFuture<Optional<Product>> productDeleted =
-                product.thenCompose(
-                        unused -> productService.findDeletedProduct(1)
+        final CompletableFuture<Optional<Presentation>> presentationDeleted =
+                presentation.thenCompose(
+                        unused -> productService.findDeletedPresentation(1)
                 );
 
         assertThat(
-                productDeleted.get()
+                presentationDeleted.get()
         ).matches(Optional::isPresent, "is empty");
     }
 }

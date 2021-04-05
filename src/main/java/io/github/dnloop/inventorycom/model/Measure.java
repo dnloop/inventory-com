@@ -13,7 +13,7 @@ import java.util.Objects;
 @SQLDelete(sql = "UPDATE measure SET deleted=1 WHERE id=?")
 public class Measure {
     private Integer id;
-    private String type;
+    private String type; // mm, cm, in...
     private Byte deleted;
     private Timestamp createdAt;
     private Timestamp modifiedAt;
@@ -22,6 +22,15 @@ public class Measure {
     private Double width;
     private Double diameter;
     private Collection<ProductDetail> productDetailsById;
+
+    public Measure() {}
+
+    public Measure(String type, Double lenght, Double width, Double diameter) {
+        this.type = type;
+        this.lenght = lenght;
+        this.width = width;
+        this.diameter = diameter;
+    }
 
     @Id
     @Column(name = "id", nullable = false)
