@@ -2,7 +2,6 @@ package io.github.dnloop.inventorycom;
 
 import io.github.dnloop.inventorycom.model.Category;
 import io.github.dnloop.inventorycom.model.CategoryLevel;
-import io.github.dnloop.inventorycom.model.Product;
 import io.github.dnloop.inventorycom.service.ProductService;
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.Test;
@@ -12,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.test.annotation.DirtiesContext;
 
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.HashSet;
