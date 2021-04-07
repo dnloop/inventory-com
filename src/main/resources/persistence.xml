@@ -28,8 +28,8 @@
     <class>io.github.dnloop.inventorycom.model.SupplierCatalog</class>
     <class>io.github.dnloop.inventorycom.model.SupplierPhone</class>
     <properties>
-      <property name="hibernate.connection.url" value="jdbc:mariadb://localhost:3306/inventario_comercial"/>
-      <property name="hibernate.connection.driver_class" value="org.mariadb.jdbc.Driver"/>
+      <property name="hibernate.connection.url" value="jdbc:h2:file:./database/inventory-com"/>
+      <property name="hibernate.connection.driver_class" value="org.hibernate.dialect.H2Dialect"/>
     </properties>
   </persistence-unit>
 </persistence>
