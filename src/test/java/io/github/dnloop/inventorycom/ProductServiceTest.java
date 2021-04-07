@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -23,13 +24,36 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Basic product service tests units. Perform CRUD operations and test relationships with dependencies.
- * TODO load test data
- * TODO adjust test values according to test data
+ *
+ * <p></p>
+ * <p>Further test cases must answer the following topics:</p>
+ * <p></p>
+ * <p><b>What happens when a restored record references a deleted category?</b></p>
+ * <p></p>
+ * <p>
+ * Two possible scenarios arise: one involves restoring the deleted category (not ideal due to hierarchical structure),
+ * other consist in assigning a generic category until deciding where the deleted product must reside. The last option
+ * is more viable, everytime a category is deleted the relationships must be updated to a generic value in order
+ * to prevent orphaned values.
+ * </p>
+ * <p>
+ * Validation must ensure that products are saved on existing categories. Everytime a category is deleted, it must
+ * update its relationships.
+ * </p>
  */
 @SpringBootTest
 @EnableAsync
 @AutoConfigureTestDatabase
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@Sql({
+             "/db/data/insert-category.sql",
+             "/db/data/insert-category_level.sql",
+             "/db/data/insert-material.sql",
+             "/db/data/insert-measure.sql",
+             "/db/data/insert-presentation.sql",
+             "/db/data/insert-product_detail.sql",
+             "/db/data/insert-product.sql"
+     })
 public class ProductServiceTest {
 
     @Autowired
@@ -40,7 +64,7 @@ public class ProductServiceTest {
 
     @Test
     void productNull() throws ExecutionException, InterruptedException {
-        final CompletableFuture<Optional<Product>> product = productService.findProductById(6);
+        final CompletableFuture<Optional<Product>> product = productService.findProductById(7);
 
         assertThat(
                 product.get()
@@ -68,21 +92,7 @@ public class ProductServiceTest {
     void findProductByIdDeleted() throws ExecutionException, InterruptedException {
         final CompletableFuture<Optional<Product>> product = CompletableFuture.supplyAsync(() -> {
             try {
-                return productService.findProductById(1).get();
-            } catch (InterruptedException | ExecutionException e) {
-                return Optional.empty();
-            }
-        });
-
-        assertThat(product.get())
-                .matches(Optional::isPresent, "is empty");
-    }
-
-    @Test
-    void findProductDeleted() throws ExecutionException, InterruptedException {
-        final CompletableFuture<Optional<Product>> product = CompletableFuture.supplyAsync(() -> {
-            try {
-                return productService.findDeletedProduct(1).get();
+                return productService.findProductById(5).get();
             } catch (InterruptedException | ExecutionException e) {
                 return Optional.empty();
             }
@@ -90,6 +100,20 @@ public class ProductServiceTest {
 
         assertThat(product.get())
                 .matches(Optional::isEmpty, "is present");
+    }
+
+    @Test
+    void findDeletedProduct() throws ExecutionException, InterruptedException {
+        final CompletableFuture<Optional<Product>> product = CompletableFuture.supplyAsync(() -> {
+            try {
+                return productService.findDeletedProduct(5).get();
+            } catch (InterruptedException | ExecutionException e) {
+                return Optional.empty();
+            }
+        });
+
+        assertThat(product.get())
+                .matches(Optional::isPresent, "is empty");
     }
 
     @Test
@@ -101,7 +125,7 @@ public class ProductServiceTest {
         final CompletableFuture<Page<Product>> products = productService.findAllProducts();
         final Page<Product> result = products.get();
 
-        assertThat(result).hasSize(3);
+        assertThat(result).hasSize(4);
         assertThat(
                 result.getContent().get(0)
         ).has(firstProduct);
@@ -109,15 +133,15 @@ public class ProductServiceTest {
 
 
     @Test
-    void findAllProductsDeleted() throws ExecutionException, InterruptedException {
+    void findAllDeletedProducts() throws ExecutionException, InterruptedException {
         final Condition<Product> firstProduct = new Condition<>(
-                product -> product.getDescription().equalsIgnoreCase("PD-1"),
-                "[Description] - PD-1"
+                product -> product.getDescription().equalsIgnoreCase("PD-5"),
+                "[Description] - PD-5"
         );
         final CompletableFuture<Page<Product>> products = productService.findAllDeletedProducts();
         final Page<Product> result = products.get();
 
-        assertThat(result).hasSize(3);
+        assertThat(result).hasSize(2);
         assertThat(
                 result.getContent().get(0)
         ).has(firstProduct);
@@ -125,9 +149,16 @@ public class ProductServiceTest {
 
     @Test
     void saveProduct() throws ExecutionException, InterruptedException {
+        final Condition<Product> productCondition = new Condition<>(
+                product -> product.getDescription().equalsIgnoreCase("PD-NEW"),
+                "[Description] - PD-NEW"
+        );
+
         Product newProduct = new Product(
                 "PD-NEW", 1,
-                new BigDecimal("200.00")
+                new BigDecimal("200.00"),
+                2,
+                1
         );
 
         final CompletableFuture<Optional<Product>> product =
@@ -138,9 +169,14 @@ public class ProductServiceTest {
                         return Optional.empty();
                     }
                 });
+        final Optional<Product> result = product.get();
 
-        assertThat(product.get())
+        assertThat(result)
                 .matches(Optional::isPresent, "is empty");
+        if (result.isPresent())
+            assertThat(result.get()).has(productCondition);
+        else
+            throw new AssertionError("Result is not present");
     }
 
     @Test

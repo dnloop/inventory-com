@@ -9,6 +9,11 @@ import java.time.Instant;
 import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * <h4>Product</h4>
+ * <p>
+ * Entity used to represent products. Due to constraint violations, Details must be loaded first.
+ */
 @Entity
 @Table(name = "product")
 @SQLDelete(sql = "UPDATE product SET deleted=1 WHERE id=?")
@@ -32,14 +37,17 @@ public class Product {
 
     public Product() {}
 
-    public Product(String description, Integer stock, BigDecimal price) {
+    public Product(String description, Integer stock, BigDecimal price, Integer categoryId, Integer detailId) {
         this.description = description;
         this.stock = stock;
         this.price = price;
+        this.detailId = detailId;
+        this.categoryId = categoryId;
     }
 
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
