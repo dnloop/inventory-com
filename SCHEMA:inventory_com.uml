@@ -3,129 +3,169 @@
   <ID>DATABASE</ID>
   <OriginalElement>f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.SCHEMA:inventario_comercial</OriginalElement>
   <nodes>
-    <node x="874.5808823529412" y="540.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.category</node>
-    <node x="1146.25" y="0.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.municipality</node>
-    <node x="0.0" y="940.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.client_phone</node>
-    <node x="1557.5" y="1314.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.purchase_share</node>
-    <node x="712.25" y="0.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.departments</node>
-    <node x="857.0808823529412" y="888.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.product</node>
-    <node x="1164.5" y="1288.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.purchase_detail</node>
-    <node x="929.25" y="0.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.province</node>
-    <node x="1425.125" y="862.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.purchase_invoice</node>
-    <node x="502.5000000000001" y="1301.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.sale_detail</node>
-    <node x="1626.625" y="475.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.supplier</node>
-    <node x="1783.125" y="940.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.supplier_phone</node>
-    <node x="168.5000000000001" y="462.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.client</node>
-    <node x="156.5000000000001" y="1314.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.sale_share</node>
-    <node x="900.2058823529412" y="140.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.locality</node>
-    <node x="858.5" y="1340.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.supplier_catalog</node>
-    <node x="284.0000000000001" y="862.0">f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.sale_invoice</node>
+    <node x="0.0" y="1662.0">213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.flyway_schema_history</node>
+    <node x="1401.3061594202895" y="0.0">213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.DEPARTMENTS</node>
+    <node x="530.8043478260868" y="1292.0">213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.PURCHASE_DETAIL</node>
+    <node x="1243.3043478260868" y="477.0">213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.SUPPLIER</node>
+    <node x="1633.0996376811593" y="943.0">213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.CLIENT_PHONE</node>
+    <node x="1922.0996376811593" y="865.0">213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.SALE_INVOICE</node>
+    <node x="1847.3061594202895" y="0.0">213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.MUNICIPALITY</node>
+    <node x="1104.4728260869563" y="141.0">213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.MEASURE</node>
+    <node x="1585.3061594202895" y="141.0">213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.LOCALITY</node>
+    <node x="1014.4293478260868" y="1331.0">213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.SUPPLIER_CATALOG</node>
+    <node x="369.05434782608677" y="865.0">213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.PURCHASE_INVOICE</node>
+    <node x="868.0543478260868" y="891.0">213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.PRODUCT</node>
+    <node x="1624.3061594202895" y="0.0">213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.PROVINCE</node>
+    <node x="804.4728260869563" y="503.0">213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.PRODUCT_DETAIL</node>
+    <node x="185.80434782608677" y="1318.0">213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.PURCHASE_SHARE</node>
+    <node x="2060.224637681159" y="1318.0">213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.SALE_SHARE</node>
+    <node x="1747.8061594202898" y="1305.0">213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.SALE_DETAIL</node>
+    <node x="510.4728260869563" y="167.0">213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.PRESENTATION</node>
+    <node x="63.25" y="542.0">213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.CATEGORY</node>
+    <node x="1791.3496376811593" y="464.0">213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.CLIENT</node>
+    <node x="815.4728260869563" y="167.0">213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.MATERIAL</node>
+    <node x="1343.0996376811593" y="943.0">213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.SUPPLIER_PHONE</node>
+    <node x="0.0" y="904.0">213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.CATEGORY_LEVEL</node>
   </nodes>
   <notes />
   <edges>
-    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.locality" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.municipality">
-      <point x="84.66666666666663" y="-136.0" />
-      <point x="1111.872549019608" y="115.0" />
-      <point x="1244.75" y="115.0" />
-      <point x="0.0" y="45.0" />
+    <edge source="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.SUPPLIER_PHONE" target="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.SUPPLIER">
+      <point x="0.0" y="-110.5" />
+      <point x="1477.5996376811593" y="845.0" />
+      <point x="1385.8043478260868" y="845.0" />
+      <point x="0.0" y="162.5" />
     </edge>
-    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.purchase_detail" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.purchase_invoice">
-      <point x="93.25" y="-162.0" />
-      <point x="1444.25" y="1263.0" />
-      <point x="1509.625" y="1263.0" />
-      <point x="-84.5" y="188.0" />
+    <edge source="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.PRODUCT_DETAIL" target="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.MEASURE">
+      <point x="94.33333333333326" y="-136.5" />
+      <point x="1040.3061594202895" y="439.0" />
+      <point x="1238.9728260869563" y="439.0" />
+      <point x="0.0" y="136.5" />
     </edge>
-    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.sale_invoice" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.client">
-      <point x="0.0" y="-188.0" />
-      <point x="453.0000000000001" y="837.0" />
-      <point x="354.5000000000001" y="837.0" />
-      <point x="62.0" y="175.0" />
+    <edge source="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.PURCHASE_SHARE" target="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.PURCHASE_INVOICE">
+      <point x="0.0" y="-136.5" />
+      <point x="348.30434782608677" y="1272.0" />
+      <point x="450.05434782608677" y="1272.0" />
+      <point x="-81.0" y="188.5" />
     </edge>
-    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.client" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.locality">
-      <point x="0.0" y="-175.0" />
-      <point x="292.5000000000001" y="437.0" />
-      <point x="963.7058823529412" y="437.0" />
-      <point x="-63.5" y="136.0" />
+    <edge source="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.PURCHASE_INVOICE" target="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.SUPPLIER">
+      <point x="0.0" y="-188.5" />
+      <point x="531.0543478260868" y="845.0" />
+      <point x="1290.8043478260868" y="845.0" />
+      <point x="-95.0" y="162.5" />
     </edge>
-    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.purchase_share" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.purchase_invoice">
-      <point x="0.0" y="-136.0" />
-      <point x="1744.0" y="1263.0" />
-      <point x="1678.625" y="1263.0" />
-      <point x="84.5" y="188.0" />
+    <edge source="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.SALE_INVOICE" target="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.CLIENT">
+      <point x="0.0" y="-188.5" />
+      <point x="2084.099637681159" y="845.0" />
+      <point x="1993.0996376811593" y="845.0" />
+      <point x="67.25" y="175.5" />
     </edge>
-    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.locality" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.departments">
-      <point x="-84.66666666666674" y="-136.0" />
-      <point x="942.5392156862745" y="115.0" />
-      <point x="810.75" y="115.0" />
-      <point x="0.0" y="45.0" />
+    <edge source="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.SALE_DETAIL" target="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.PRODUCT">
+      <point x="-67.75" y="-149.5" />
+      <point x="1815.5561594202898" y="1262.0" />
+      <point x="1105.5543478260868" y="1262.0" />
+      <point x="95.0" y="162.5" />
     </edge>
-    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.product" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.category">
-      <point x="0.0" y="-162.0" />
-      <point x="0.0" y="97.0" />
+    <edge source="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.PRODUCT_DETAIL" target="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.PRESENTATION">
+      <point x="-94.33333333333326" y="-136.5" />
+      <point x="851.639492753623" y="439.0" />
+      <point x="652.9728260869563" y="439.0" />
+      <point x="0.0" y="110.5" />
     </edge>
-    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.purchase_invoice" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.supplier">
-      <point x="0.0" y="-188.0" />
-      <point x="1594.125" y="837.0" />
-      <point x="1688.625" y="837.0" />
-      <point x="-62.0" y="162.0" />
+    <edge source="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.CLIENT" target="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.LOCALITY">
+      <point x="0.0" y="-175.5" />
+      <point x="1925.8496376811593" y="439.0" />
+      <point x="1796.0561594202895" y="439.0" />
+      <point x="70.25" y="136.5" />
     </edge>
-    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.supplier_catalog" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.product">
-      <point x="0.0" y="-110.0" />
-      <point x="1001.5" y="1263.0" />
-      <point x="1005.5808823529412" y="1263.0" />
-      <point x="0.0" y="162.0" />
+    <edge source="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.PURCHASE_DETAIL" target="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.PRODUCT">
+      <point x="81.25" y="-162.5" />
+      <point x="774.5543478260868" y="1272.0" />
+      <point x="915.5543478260868" y="1272.0" />
+      <point x="-95.0" y="162.5" />
     </edge>
-    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.supplier" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.locality">
-      <point x="0.0" y="-162.0" />
-      <point x="1750.625" y="437.0" />
-      <point x="1090.7058823529412" y="437.0" />
-      <point x="63.5" y="136.0" />
+    <edge source="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.SUPPLIER" target="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.LOCALITY">
+      <point x="0.0" y="-162.5" />
+      <point x="1385.8043478260868" y="439.0" />
+      <point x="1655.5561594202895" y="439.0" />
+      <point x="-70.25" y="136.5" />
     </edge>
-    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.locality" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.province">
-      <point x="0.0" y="-136.0" />
-      <point x="0.0" y="45.0" />
+    <edge source="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.SALE_SHARE" target="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.SALE_INVOICE">
+      <point x="0.0" y="-136.5" />
+      <point x="2195.724637681159" y="1272.0" />
+      <point x="2165.099637681159" y="1272.0" />
+      <point x="81.0" y="188.5" />
     </edge>
-    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.sale_detail" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.product">
-      <point x="84.0" y="-149.0" />
-      <point x="754.5000000000001" y="1263.0" />
-      <point x="906.5808823529412" y="1263.0" />
-      <point x="-99.0" y="162.0" />
+    <edge source="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.LOCALITY" target="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.PROVINCE">
+      <point x="0.0" y="-136.5" />
+      <point x="0.0" y="45.5" />
     </edge>
-    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.purchase_detail" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.product">
-      <point x="-93.25" y="-162.0" />
-      <point x="1257.75" y="1263.0" />
-      <point x="1104.5808823529412" y="1263.0" />
-      <point x="99.0" y="162.0" />
+    <edge source="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.LOCALITY" target="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.MUNICIPALITY">
+      <point x="93.66666666666663" y="-136.5" />
+      <point x="1819.4728260869563" y="116.0" />
+      <point x="1948.8061594202895" y="116.0" />
+      <point x="0.0" y="45.5" />
     </edge>
-    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.sale_detail" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.sale_invoice">
-      <point x="-84.0" y="-149.0" />
-      <point x="586.5000000000001" y="1263.0" />
-      <point x="537.5000000000001" y="1263.0" />
-      <point x="84.5" y="188.0" />
+    <edge source="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.CLIENT_PHONE" target="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.CLIENT">
+      <point x="0.0" y="-110.5" />
+      <point x="1767.5996376811593" y="845.0" />
+      <point x="1858.5996376811593" y="845.0" />
+      <point x="-67.25" y="175.5" />
     </edge>
-    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.sale_share" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.sale_invoice">
-      <point x="0.0" y="-136.0" />
-      <point x="319.5000000000001" y="1263.0" />
-      <point x="368.5000000000001" y="1263.0" />
-      <point x="-84.5" y="188.0" />
+    <edge source="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.SUPPLIER_CATALOG" target="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.SUPPLIER">
+      <point x="74.25" y="-123.5" />
+      <point x="1237.1793478260868" y="1272.0" />
+      <point x="1622.5996376811593" y="1272.0" />
+      <point x="1622.5996376811593" y="835.0" />
+      <point x="1480.8043478260868" y="835.0" />
+      <point x="95.0" y="162.5" />
     </edge>
-    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.client_phone" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.client">
-      <point x="0.0" y="-110.0" />
-      <point x="132.0" y="837.0" />
-      <point x="230.5000000000001" y="837.0" />
-      <point x="-62.0" y="175.0" />
+    <edge source="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.PRODUCT" target="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.PRODUCT_DETAIL">
+      <point x="71.25" y="-162.5" />
+      <point x="1081.8043478260868" y="835.0" />
+      <point x="945.9728260869563" y="835.0" />
+      <point x="0.0" y="136.5" />
     </edge>
-    <edge source="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.supplier_phone" target="f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.supplier">
-      <point x="0.0" y="-110.0" />
-      <point x="1907.125" y="837.0" />
-      <point x="1812.625" y="837.0" />
-      <point x="62.0" y="162.0" />
+    <edge source="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.PURCHASE_DETAIL" target="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.PURCHASE_INVOICE">
+      <point x="-81.25" y="-162.5" />
+      <point x="81.0" y="188.5" />
+    </edge>
+    <edge source="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.PRODUCT_DETAIL" target="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.MATERIAL">
+      <point x="0.0" y="-136.5" />
+      <point x="945.9728260869563" y="439.0" />
+      <point x="949.9728260869563" y="439.0" />
+      <point x="0.0" y="110.5" />
+    </edge>
+    <edge source="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.CATEGORY_LEVEL" target="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.CATEGORY">
+      <point x="0.0" y="-149.5" />
+      <point x="-71.25" y="97.5" />
+    </edge>
+    <edge source="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.SUPPLIER_CATALOG" target="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.PRODUCT">
+      <point x="-74.25" y="-123.5" />
+      <point x="1088.6793478260868" y="1272.0" />
+      <point x="1010.5543478260868" y="1272.0" />
+      <point x="0.0" y="162.5" />
+    </edge>
+    <edge source="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.LOCALITY" target="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.DEPARTMENTS">
+      <point x="-93.66666666666669" y="-136.5" />
+      <point x="1632.139492753623" y="116.0" />
+      <point x="1502.8061594202895" y="116.0" />
+      <point x="0.0" y="45.5" />
+    </edge>
+    <edge source="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.SALE_DETAIL" target="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.SALE_INVOICE">
+      <point x="67.75" y="-149.5" />
+      <point x="1951.0561594202898" y="1272.0" />
+      <point x="2003.0996376811593" y="1272.0" />
+      <point x="-81.0" y="188.5" />
+    </edge>
+    <edge source="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.PRODUCT" target="213d5696-3de1-4ae6-9474-4cb607e13ddd.TABLE:INVENTORY-COM.PUBLIC.CATEGORY">
+      <point x="-71.25" y="-162.5" />
+      <point x="939.3043478260868" y="835.0" />
+      <point x="277.0" y="835.0" />
+      <point x="71.25" y="97.5" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="0.35721247563352826" x="1016.0" y="806.0" />
-  <SelectedNodes>
-    <node>f3f0d8fd-eb4a-4e07-bc7f-b33c29105749.TABLE:inventario_comercial.sale_invoice</node>
-  </SelectedNodes>
+  <settings layout="Hierarchic Group" zoom="0.6285714285714282" x="1150.1613190730845" y="503.0558754970524" />
+  <SelectedNodes />
   <Categories>
     <Category>Key columns</Category>
     <Category>Columns</Category>
