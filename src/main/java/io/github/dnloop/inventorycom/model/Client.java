@@ -29,7 +29,7 @@ public class Client {
     public Client() {}
 
     public Client(
-            Integer id, String name, String surname, String address,
+            String name, String surname, String address,
             Long cuit, String dni, Integer localityId,
             Byte deleted,
             Timestamp createdAt,
@@ -37,7 +37,6 @@ public class Client {
             Timestamp deletedAt,
             String mail
     ) {
-        this.id = id;
         this.name = name;
         this.surname = surname;
         this.address = address;
@@ -53,6 +52,7 @@ public class Client {
 
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }

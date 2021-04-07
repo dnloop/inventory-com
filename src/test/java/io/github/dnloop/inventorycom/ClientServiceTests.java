@@ -25,8 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Basic client service tests units. Some methods that are meant to be async are executed sequentially in the
  * background due to the nature of the operation such as saving a record and retrieving its results in the same
  * call.
- *
- * TODO test auto increment
+ * <p>
  */
 @SpringBootTest
 @EnableAsync
@@ -52,8 +51,13 @@ class ClientServiceTests {
     @Test
     @Sql({"/db/data/localities.sql"})
     void insertClient() throws ExecutionException, InterruptedException {
+        final Condition<Client> clientCondition = new Condition<>(
+                product -> product.getSurname().equals("Hanigan"),
+                "[Surname] - Hanigan"
+        );
+
         Client newClient = new Client(
-                6, "Berengaria", "Hanigan",
+                "Berengaria", "Hanigan",
                 "ADDRESS-1", 123456789L, "12345678",
                 1, (byte) 0, Timestamp.from(Instant.now()),
                 null, null,
@@ -69,8 +73,14 @@ class ClientServiceTests {
                     }
                 });
 
-        assertThat(client.get())
+        final Optional<Client> result = client.get();
+
+        assertThat(result)
                 .matches(Optional::isPresent, "is empty");
+        if (result.isPresent())
+            assertThat(result.get()).has(clientCondition);
+        else
+            throw new AssertionError("Result is not present");
     }
 
     @Test
