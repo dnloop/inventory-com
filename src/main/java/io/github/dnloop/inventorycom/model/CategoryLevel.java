@@ -1,12 +1,29 @@
 package io.github.dnloop.inventorycom.model;
 
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 
+/**
+ * <h4>Category Level</h4>
+ * <p>
+ * A generic category of level 0 indicates there is no category assigned in the hierarchy, this can happen
+ * when a record is deleted, it is temporarly removed to be adjusted by the user.
+ * </p>
+ * <p></p>
+ * <p>
+ * Every time a new record is inserted it must check in which hierarchy is intended querying the current level value
+ * then add +1. This must go in a transaction due to having two queries in one call.
+ * </p>
+ * <p></p>
+ * <p>
+ * When a branch is deleted all related product categories must be updated, this presents a problem when the stored
+ * records increases. This behaviour must not be allowed, only empty categories can be deleted. Normal operations
+ * include query and modification.
+ * </p>
+ */
 @Entity
 @Table(name = "category_level")
 @SQLDelete(sql = "UPDATE sub_category SET deleted=1 WHERE id=?")
