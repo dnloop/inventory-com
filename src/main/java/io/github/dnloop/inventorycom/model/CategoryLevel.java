@@ -4,13 +4,16 @@ import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Objects;
 
 /**
  * <h4>Category Level</h4>
+ *
+ * <p>In order to insert a new level a {@link Category} must exist before.</p>
  * <p>
  * A generic category of level 0 indicates there is no category assigned in the hierarchy, this can happen
- * when a record is deleted, it is temporarly removed to be adjusted by the user.
+ * when a record is deleted, it is temporarily removed to be adjusted by the user.
  * </p>
  * <p></p>
  * <p>
@@ -34,11 +37,22 @@ public class CategoryLevel {
     private Integer l2;
     private Integer l3;
     private Integer l4;
-    private Byte deleted;
-    private Timestamp createdAt;
+    private Byte deleted = 0;
+    private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
     private Category categoryByCategoryId;
+
+    public CategoryLevel() {}
+
+    public CategoryLevel(Integer categoryId, Level level) {
+        this.categoryId = categoryId;
+        this.l1 = level.getLevelOne();
+        this.l2 = level.getLevelTwo();
+        this.l3 = level.getLevelThree();
+        this.l4 = level.getLevelFour();
+
+    }
 
     @Id
     @Column(name = "id", nullable = false)
