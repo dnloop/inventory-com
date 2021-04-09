@@ -28,4 +28,11 @@ public interface CategoryRepository extends CrudRepository<Category, Integer> {
            " WHERE category.id = :id" +
            " AND category.deleted = 1")
     Optional<Category> findDeleted(int id);
+
+    @Query("SELECT Count(category.id) FROM Category category" +
+           " WHERE EXISTS" +
+           " (SELECT product.id FROM Product product" +
+           " WHERE product.categoryId = category.id)" +
+           " AND category.id = :catId")
+    Integer existsInProduct(int catId);
 }
