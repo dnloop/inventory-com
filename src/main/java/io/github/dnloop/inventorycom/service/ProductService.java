@@ -140,6 +140,15 @@ public class ProductService {
         return CompletableFuture.completedFuture(categoryRepository.save(category));
     }
 
+    /**
+     * Controls that the category ID is assigned to a product to prevent
+     * deleting a category level with elements under its hierarchy.
+     */
+    @Async
+    public CompletableFuture<Integer> categoryExistsInProduct(int catId) {
+        return CompletableFuture.completedFuture(categoryRepository.existsInProduct(catId));
+    }
+
     @Transactional
     public void deleteCategory(Category category) {
         categoryRepository.delete(category);
@@ -161,7 +170,12 @@ public class ProductService {
     }
 
     @Async
-    public CompletableFuture<Optional<CategoryLevel>> findDeletedCategoryLevel(Integer id) {
+    public CompletableFuture<Optional<CategoryLevel>> findCategoryLevelByCategoryId(int categoryId) {
+        return CompletableFuture.completedFuture(categoryLevelRepository.findByCategoryId(categoryId));
+    }
+
+    @Async
+    public CompletableFuture<Optional<CategoryLevel>> findDeletedCategoryLevel(int id) {
         return CompletableFuture.completedFuture(categoryLevelRepository.findDeleted(id));
     }
 
@@ -175,15 +189,78 @@ public class ProductService {
         return CompletableFuture.completedFuture(categoryLevelRepository.findAllDeleted());
     }
 
+    /**
+     * Control method to find if child nodes in a tree has products assigned.
+     */
+    @Async
+    public CompletableFuture<Integer> childNodesExistsInProduct(int levelOne) {
+        return CompletableFuture.completedFuture(categoryLevelRepository.childNodesExistsInProduct(levelOne));
+    }
+
+    /**
+     * Control method to find if a category level has products assigned.
+     */
+    @Async
+    public CompletableFuture<Integer> categoryLevelExistsInProduct(int categoryId) {
+        return CompletableFuture.completedFuture(categoryLevelRepository.categoryLevelExistsInProduct(categoryId));
+    }
+
     @Async
     public CompletableFuture<CategoryLevel> saveCategoryLevel(CategoryLevel category) {
         return CompletableFuture.completedFuture(categoryLevelRepository.save(category));
     }
 
+    /**
+     * Implementation of a control to ensure the correct deletion of a node.
+     */
     @Transactional
-    public void deleteCategoryLevel(CategoryLevel category) {
-        categoryLevelRepository.delete(category);
-        log.debug("Record Deleted: " + category.toString());
+    public boolean deleteCategoryLevel(CategoryLevel categoryLevel) {
+        // extract primitives
+        int levelOne = categoryLevel.getL1();
+        int levelTwo = categoryLevel.getL2();
+        int levelThree = categoryLevel.getL3();
+        int categoryId = categoryLevel.getCategoryId();
+        // if it is a root node
+        if (levelTwo == 0 && levelThree == 0) {
+            if (categoryLevelRepository.childNodesExistsInProduct(levelOne) == 0) {
+                categoryLevelRepository.deleteRootNode(levelOne);
+                log.debug("Record Deleted: " + categoryLevel.toString());
+                return true;
+            } else {
+                log.debug("Root node is not empty");
+                return false;
+            }
+            // otherwise its a child node
+        } else {
+            if (categoryLevelRepository.categoryLevelExistsInProduct(categoryId) == 0) {
+                categoryLevelRepository.deleteNode(categoryId);
+                log.debug("Record Deleted: " + categoryLevel.toString());
+                return true;
+            } else {
+                log.debug("Child node is not unassigned");
+                return false;
+            }
+        }
+    }
+
+    /**
+     * Method to delete a root node. It requires control methods to ensure it is not deleting child nodes
+     * assigned to a product.
+     */
+    @Async
+    @Transactional
+    public CompletableFuture<Void> deleteRootNode(int levelOne) {
+        return CompletableFuture.runAsync(() -> categoryLevelRepository.deleteRootNode(levelOne));
+    }
+
+    /**
+     * Method to delete a node. It requires control methods to ensure it is not deleting a node
+     * or a root node with leaves assigned to a product.
+     */
+    @Async
+    @Transactional
+    public CompletableFuture<Void> deleteNode(int categoryId) {
+        return CompletableFuture.runAsync(() -> categoryLevelRepository.deleteNode(categoryId));
     }
 
     /* Measure */
@@ -218,7 +295,7 @@ public class ProductService {
         return CompletableFuture.completedFuture(measureRepository.save(measure));
     }
 
-    @Transactional
+    @Async
     public void deleteMeasures(Measure measure) {
         measureRepository.delete(measure);
         log.debug("Record Deleted: " + measure.toString());
@@ -256,7 +333,7 @@ public class ProductService {
         return CompletableFuture.completedFuture(presentationRepository.save(presentation));
     }
 
-    @Transactional
+    @Async
     public void deletePresentation(Presentation presentation) {
         presentationRepository.delete(presentation);
         log.debug("Record Deleted: " + presentation.toString());
@@ -294,7 +371,7 @@ public class ProductService {
         return CompletableFuture.completedFuture(materialRepository.save(material));
     }
 
-    @Transactional
+    @Async
     public void deleteMaterial(Material material) {
         materialRepository.delete(material);
         log.debug("Record Deleted: " + material.toString());
