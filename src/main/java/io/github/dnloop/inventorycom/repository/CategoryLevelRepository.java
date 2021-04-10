@@ -1,3 +1,22 @@
+/*
+ *     Inventory-Com: Inventory and Commerce Management Application.
+ *     Copyright (C) 2021. dnloop.
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ */
+
 package io.github.dnloop.inventorycom.repository;
 
 import io.github.dnloop.inventorycom.model.CategoryLevel;
@@ -15,7 +34,7 @@ public interface CategoryLevelRepository extends CrudRepository<CategoryLevel, I
            " ORDER BY categoryLevel.l1," +
            " categoryLevel.l2," +
            " categoryLevel.l3," +
-           " categoryLevel.l4 ASC")
+           " categoryLevel.l4")
     HashSet<CategoryLevel> findAll();
 
     @Query("SELECT categoryLevel FROM CategoryLevel categoryLevel" +
@@ -24,19 +43,16 @@ public interface CategoryLevelRepository extends CrudRepository<CategoryLevel, I
     Optional<CategoryLevel> findById(int id);
 
     @Query("SELECT categoryLevel FROM CategoryLevel categoryLevel" +
-           " WHERE categoryLevel.l1 = :levelOne" +
-           " AND categoryLevel.l2 = :levelTwo" +
-           " AND categoryLevel.l3 = :levelThree" +
-           " AND categoryLevel.l4 = :levelFour" +
+           " WHERE categoryLevel.categoryId = :categoryId" +
            " AND categoryLevel.deleted = 0")
-    Optional<CategoryLevel> findByLevel(int levelOne, int levelTwo, int levelThree, int levelFour);
+    Optional<CategoryLevel> findByCategoryId(int categoryId);
 
     @Query("SELECT categoryLevel FROM CategoryLevel categoryLevel" +
            " WHERE categoryLevel.deleted = 1 " +
            " ORDER BY categoryLevel.l1," +
            " categoryLevel.l2," +
            " categoryLevel.l3," +
-           " categoryLevel.l4 ASC")
+           " categoryLevel.l4")
     HashSet<CategoryLevel> findAllDeleted();
 
     @Query("SELECT categoryLevel FROM CategoryLevel categoryLevel" +
@@ -85,7 +101,7 @@ public interface CategoryLevelRepository extends CrudRepository<CategoryLevel, I
     Integer categoryLevelExistsInProduct(int categoryId);
 
     /**
-     * Method to delete a child node.
+     * Method to delete a single node.
      */
     @Modifying
     @Query("UPDATE CategoryLevel categoryLevel" +
@@ -96,5 +112,5 @@ public interface CategoryLevelRepository extends CrudRepository<CategoryLevel, I
            " categoryLevel.l4 = 0" +
            " WHERE categoryLevel.categoryId = :categoryId" +
            " AND categoryLevel.l2 > 0")
-    void deleteChildNode(int categoryId);
+    void deleteNode(int categoryId);
 }
