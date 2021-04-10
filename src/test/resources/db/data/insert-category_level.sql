@@ -6,4 +6,6 @@ VALUES
 (3, 1, 2, 1, 0, CURRENT_TIMESTAMP(), 0, null, null),
 (4, 1, 2, 2, 0, CURRENT_TIMESTAMP(), 0, null, null),
 (5, 2, 0, 0, 0, CURRENT_TIMESTAMP(), 0, null, null),
-(6, 2, 1, 0, 0, CURRENT_TIMESTAMP(), 0, null, null);
+(6, 2, 1, 0, 0, CURRENT_TIMESTAMP(), 0, null, null),
+(7, 0, 0, 0, 0, CURRENT_TIMESTAMP(), 1, null, null),
+(8, 0, 0, 0, 0, CURRENT_TIMESTAMP(), 1, null, null);
