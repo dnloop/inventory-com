@@ -202,7 +202,7 @@ public class ProductService {
      */
     @Async
     public CompletableFuture<Integer> categoryLevelExistsInProduct(int categoryId) {
-        return CompletableFuture.completedFuture(categoryLevelRepository.categoryLevelExistsInProduct(categoryId));
+        return CompletableFuture.completedFuture(categoryLevelRepository.categoryExistsInProduct(categoryId));
     }
 
     @Async
@@ -235,7 +235,7 @@ public class ProductService {
             }
             // otherwise its a child node
         } else {
-            if (categoryLevelRepository.categoryLevelExistsInProduct(categoryId) == 0) {
+            if (categoryLevelRepository.categoryExistsInProduct(categoryId) == 0) {
                 categoryLevelRepository.deleteNode(categoryId);
                 log.debug("Record Deleted: " + categoryLevel.toString());
                 return true;

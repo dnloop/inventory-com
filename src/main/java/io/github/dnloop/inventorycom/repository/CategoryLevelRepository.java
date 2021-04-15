@@ -91,14 +91,12 @@ public interface CategoryLevelRepository extends CrudRepository<CategoryLevel, I
     void deleteRootNode(int levelOne);
 
     /**
-     * Method to check if a child node is assigned to a product.
+     * Method to check if a category is assigned to a product.
      */
-    @Query("SELECT COUNT(categoryLevel.id) FROM CategoryLevel categoryLevel" +
-           " WHERE categoryLevel.categoryId = :categoryId" +
-           " AND EXISTS " +
-           " (SELECT product.id FROM Product product" +
-           " WHERE product.categoryId = categoryLevel.categoryId)")
-    Integer categoryLevelExistsInProduct(int categoryId);
+    @Query("SELECT COUNT (product.id)" +
+           " FROM Product product" +
+           " WHERE product.categoryId = :categoryId")
+    Integer categoryExistsInProduct(int categoryId);
 
     /**
      * Method to delete a single node.

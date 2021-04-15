@@ -29,10 +29,13 @@ public interface CategoryRepository extends CrudRepository<Category, Integer> {
            " AND category.deleted = 1")
     Optional<Category> findDeleted(int id);
 
-    @Query("SELECT Count(category.id) FROM Category category" +
-           " WHERE EXISTS" +
-           " (SELECT product.id FROM Product product" +
-           " WHERE product.categoryId = category.id)" +
-           " AND category.id = :catId")
-    Integer existsInProduct(int catId);
+    /**
+     * Returns the number of assigned categories to a product.
+     *
+     * This method is the same as {@link CategoryLevelRepository#categoryExistsInProduct(int)}
+     */
+    @Query("SELECT COUNT (product.id)" +
+           " FROM Product product" +
+           " WHERE product.categoryId = :categoryId")
+    Integer existsInProduct(int categoryId);
 }

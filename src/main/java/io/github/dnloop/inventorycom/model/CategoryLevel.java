@@ -166,4 +166,21 @@ public class CategoryLevel {
     public void setCategoryByCategoryId(Category categoryByCategoryId) {
         this.categoryByCategoryId = categoryByCategoryId;
     }
+
+    @Override
+    public String toString() {
+        return "CategoryLevel{" +
+               "id=" + id +
+               ", categoryId=" + categoryId +
+               ", l1=" + l1 +
+               ", l2=" + l2 +
+               ", l3=" + l3 +
+               ", l4=" + l4 +
+               ", deleted=" + deleted +
+               ", createdAt=" + createdAt +
+               ", modifiedAt=" + modifiedAt +
+               ", deletedAt=" + deletedAt +
+               ", categoryByCategoryId=" + categoryByCategoryId +
+               '}';
+    }
 }
