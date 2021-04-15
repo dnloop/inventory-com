@@ -227,7 +227,7 @@ public class ProductService {
         if (levelTwo == 0 && levelThree == 0) {
             if (categoryLevelRepository.childNodesExistsInProduct(levelOne) == 0) {
                 categoryLevelRepository.deleteRootNode(levelOne);
-                log.debug("Record Deleted: " + categoryLevel.toString());
+                log.debug("[Root Node] Record Deleted: " + categoryLevel.toString());
                 return true;
             } else {
                 log.debug("Root node is not empty");
@@ -237,7 +237,7 @@ public class ProductService {
         } else {
             if (categoryLevelRepository.categoryExistsInProduct(categoryId) == 0) {
                 categoryLevelRepository.deleteNode(categoryId);
-                log.debug("Record Deleted: " + categoryLevel.toString());
+                log.debug("[Child Node] Record Deleted: " + categoryLevel.toString());
                 return true;
             } else {
                 log.debug("Child node is not unassigned");

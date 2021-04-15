@@ -40,7 +40,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -297,7 +296,7 @@ public class CategoryLevelRepositoryTest {
     }
 
     @Test
-    void deleteCategoryLevel() throws ExecutionException, InterruptedException {
+    void deleteCategoryLevelChild() throws ExecutionException, InterruptedException {
         final CompletableFuture<HashSet<CategoryLevel>> categoryLevelDeleted =
                 productService.findCategoryLevelByCategoryId(6).thenAccept(
                         categoryLevel -> categoryLevel.ifPresent(
@@ -306,12 +305,9 @@ public class CategoryLevelRepositoryTest {
                 ).thenCompose(unused -> productService.findAllDeletedCategoryLevel());
 
         HashSet<CategoryLevel> result = categoryLevelDeleted
-                .get()
-                .stream()
-                .filter(p -> p.getL1() == 2)
-                .collect(Collectors.toCollection(HashSet::new));
+                .get();
 
-        assertThat(result).hasSize(2);
+        assertThat(result).hasSize(3);
     }
 
     @Test
