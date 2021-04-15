@@ -212,6 +212,9 @@ public class ProductService {
 
     /**
      * Implementation of a control to ensure the correct deletion of a node.
+     *
+     * It takes the L1 value of a record allowing the deletion of multiple
+     * rows without necessarily selecting 'root' category
      */
     @Transactional
     public boolean deleteCategoryLevel(CategoryLevel categoryLevel) {

@@ -23,6 +23,7 @@ import io.github.dnloop.inventorycom.model.CategoryLevel;
 import io.github.dnloop.inventorycom.model.Level;
 import io.github.dnloop.inventorycom.model.LevelBuilder;
 import io.github.dnloop.inventorycom.service.ProductService;
+import io.github.dnloop.inventorycom.utils.LevelManager;
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +40,19 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test {@link CategoryLevelRepositoryTest} property in  {@link ProductService}.
+ * <p></p>
+ * <p><b>Pending Tests</b></p>
+ * <p></p>
+ * <li>
+ * Check the behaviour of repeated levels, the assumption is ordering will be affected but not hierarchy.
+ * </li>
+ * <p></p>
  */
 @SpringBootTest
 @EnableAsync
@@ -51,7 +60,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @Sql({
              "/db/data/insert-category.sql",
-             "/db/data/insert-category_level.sql"
+             "/db/data/insert-category_level.sql",
+             "/db/data/insert-material.sql",
+             "/db/data/insert-measure.sql",
+             "/db/data/insert-presentation.sql",
+             "/db/data/insert-product_detail.sql",
+             "/db/data/insert-product.sql"
      })
 public class CategoryLevelRepositoryTest {
 
@@ -219,6 +233,7 @@ public class CategoryLevelRepositoryTest {
                                 .levelThree(categoryLevel1.get().getL3())
                                 .levelFour(categoryLevel1.get().getL4())
                                 .buildLevel();
+                        LevelManager.insertLevel(level);
                         newCategory = new CategoryLevel(7, level);
 
                         return productService.saveCategoryLevel(newCategory).thenApply(category1 -> {
@@ -245,15 +260,16 @@ public class CategoryLevelRepositoryTest {
 
     @Test
     void childNodesExistsInProduct() throws ExecutionException, InterruptedException {
-        // TODO implement this method
-        final Integer categoryId = productService.categoryExistsInProduct(2).get();
+        final Integer nodes = productService.childNodesExistsInProduct(1).get();
 
-        assertThat(categoryId).isEqualTo(1);
+        assertThat(nodes).isEqualTo(5);
     }
 
     @Test
-    void categoryLevelExistsInProduct() {
-        // TODO implement this method
+    void categoryLevelExistsInProduct() throws ExecutionException, InterruptedException {
+        final Integer products = productService.categoryLevelExistsInProduct(2).get();
+
+        assertThat(products).isEqualTo(2);
     }
 
     @Test
@@ -282,16 +298,36 @@ public class CategoryLevelRepositoryTest {
 
     @Test
     void deleteCategoryLevel() throws ExecutionException, InterruptedException {
-        // TODO review this method
-        final CompletableFuture<Void> categoryLevel =
-                productService.findCategoryLevelById(1).thenAccept(categoryLevel1 -> categoryLevel1.ifPresent(
-                        value -> productService.deleteCategoryLevel(value)
-                ));
+        final CompletableFuture<HashSet<CategoryLevel>> categoryLevelDeleted =
+                productService.findCategoryLevelByCategoryId(6).thenAccept(
+                        categoryLevel -> categoryLevel.ifPresent(
+                                level -> productService.deleteCategoryLevel(level)
+                        )
+                ).thenCompose(unused -> productService.findAllDeletedCategoryLevel());
 
+        HashSet<CategoryLevel> result = categoryLevelDeleted
+                .get()
+                .stream()
+                .filter(p -> p.getL1() == 2)
+                .collect(Collectors.toCollection(HashSet::new));
 
-        final CompletableFuture<Optional<CategoryLevel>> categoryLevelDeleted =
-                categoryLevel.thenCompose(
-                        unused -> productService.findDeletedCategoryLevel(1)
+        assertThat(result).hasSize(2);
+    }
+
+    @Test
+    void deleteRootNode() throws ExecutionException, InterruptedException {
+        final CategoryLevel categoryLevel =
+                productService.findCategoryLevelByCategoryId(6).join().orElse(null);
+        assert categoryLevel != null;
+
+        final CompletableFuture<Optional<CategoryLevel>> categoryLevelDeleted = productService
+                .categoryLevelExistsInProduct(
+                        categoryLevel.getCategoryId()
+                ).thenAccept(productCount -> {
+                    if (productCount == 0)
+                        productService.deleteRootNode(categoryLevel.getL1());
+                }).thenCompose(
+                        unused -> productService.findDeletedCategoryLevel(categoryLevel.getId())
                 );
 
         assertThat(
@@ -300,12 +336,23 @@ public class CategoryLevelRepositoryTest {
     }
 
     @Test
-    void deleteRootNode() {
-        // TODO implement this method
-    }
+    void deleteNode() throws ExecutionException, InterruptedException {
+        final CategoryLevel categoryLevel =
+                productService.findCategoryLevelByCategoryId(6).join().orElse(null);
+        assert categoryLevel != null;
 
-    @Test
-    void deleteNode() {
-        // TODO implement this method
+        final CompletableFuture<Optional<CategoryLevel>> categoryLevelDeleted = productService
+                .categoryLevelExistsInProduct(
+                        categoryLevel.getCategoryId()
+                ).thenAccept(productCount -> {
+                    if (productCount == 0)
+                        productService.deleteNode(categoryLevel.getCategoryId());
+                }).thenCompose(
+                        unused -> productService.findDeletedCategoryLevel(categoryLevel.getId())
+                );
+
+        assertThat(
+                categoryLevelDeleted.get()
+        ).matches(Optional::isPresent, "is empty");
     }
 }
