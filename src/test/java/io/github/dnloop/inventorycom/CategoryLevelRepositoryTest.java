@@ -296,6 +296,11 @@ public class CategoryLevelRepositoryTest {
     }
 
     @Test
+    void deleteCategoryLevelRoot() throws ExecutionException, InterruptedException {
+        // TODO not yet implemented
+    }
+
+    @Test
     void deleteCategoryLevelChild() throws ExecutionException, InterruptedException {
         final CompletableFuture<HashSet<CategoryLevel>> categoryLevelDeleted =
                 productService.findCategoryLevelByCategoryId(6).thenAccept(
@@ -308,6 +313,16 @@ public class CategoryLevelRepositoryTest {
                 .get();
 
         assertThat(result).hasSize(3);
+    }
+
+    @Test
+    void failedDeleteCategoryLevelRoot() throws ExecutionException, InterruptedException {
+        // TODO not yet implemented
+    }
+
+    @Test
+    void failedDeleteCategoryLevelChild() throws ExecutionException, InterruptedException {
+        // TODO not yet implemented
     }
 
     @Test
