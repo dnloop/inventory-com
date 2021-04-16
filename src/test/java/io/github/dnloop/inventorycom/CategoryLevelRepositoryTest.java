@@ -19,6 +19,7 @@
 
 package io.github.dnloop.inventorycom;
 
+import io.github.dnloop.inventorycom.model.Category;
 import io.github.dnloop.inventorycom.model.CategoryLevel;
 import io.github.dnloop.inventorycom.model.Level;
 import io.github.dnloop.inventorycom.model.LevelBuilder;
@@ -209,9 +210,9 @@ public class CategoryLevelRepositoryTest {
 
     @Test
     void insertIntoHierarchy() throws ExecutionException, InterruptedException {
-        final Condition<CategoryLevel> categoryDescriptionCondition = new Condition<>(
-                categoryLevel -> categoryLevel.getCategoryByCategoryId().getDescription().equals("CAT-5"),
-                "[Description] - Must be CAT-5"
+        final Condition<Category> categoryDescriptionCondition = new Condition<>(
+                categoryLevel -> categoryLevel.getDescription().equals("CAT-6"),
+                "[Description] - Must be CAT-6"
         );
 
         final Condition<CategoryLevel> categoryLevelCondition = new Condition<>(
@@ -247,11 +248,11 @@ public class CategoryLevelRepositoryTest {
         final Optional<CategoryLevel> result = category.get();
         assertThat(result)
                 .matches(Optional::isPresent, "is empty");
-        if (result.isPresent())
+        if (result.isPresent()) {
             assertThat(result.get())
-                    .has(categoryDescriptionCondition)
                     .has(categoryLevelCondition);
-        else
+            assertThat(result.get().getCategoryByCategoryId()).has(categoryDescriptionCondition);
+        } else
             throw new AssertionError("result not present");
     }
 

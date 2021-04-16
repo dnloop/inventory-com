@@ -1,7 +1,6 @@
 package io.github.dnloop.inventorycom.model;
 
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -123,5 +122,17 @@ public class Category {
 
     public void setCategoryLevelsById(Collection<CategoryLevel> categoryLevelsById) {
         this.categoryLevelsById = categoryLevelsById;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+               "id=" + id +
+               ", description='" + description + '\'' +
+               ", deleted=" + deleted +
+               ", createdAt=" + createdAt +
+               ", modifiedAt=" + modifiedAt +
+               ", deletedAt=" + deletedAt +
+               '}';
     }
 }
