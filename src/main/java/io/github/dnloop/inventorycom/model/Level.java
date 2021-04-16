@@ -90,5 +90,26 @@ public class Level {
         ++this.levelFour;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Level)) return false;
+
+        Level level = (Level) o;
+
+        if (getLevelOne() != level.getLevelOne()) return false;
+        if (getLevelTwo() != level.getLevelTwo()) return false;
+        if (getLevelThree() != level.getLevelThree()) return false;
+        return getLevelFour() == level.getLevelFour();
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getLevelOne();
+        result = 31 * result + getLevelTwo();
+        result = 31 * result + getLevelThree();
+        result = 31 * result + getLevelFour();
+        return result;
+    }
 }
 

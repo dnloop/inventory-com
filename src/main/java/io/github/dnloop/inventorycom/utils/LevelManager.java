@@ -21,11 +21,15 @@ package io.github.dnloop.inventorycom.utils;
 
 import io.github.dnloop.inventorycom.model.Level;
 import io.github.dnloop.inventorycom.model.LevelBuilder;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Class used to implement validation and control the insertion of records into a hierarchy.
  */
 public class LevelManager {
+
+    private static final Log log = LogFactory.getLog(LevelManager.class);
 
     /**
      * According to the state of the node perform increments
@@ -35,19 +39,19 @@ public class LevelManager {
     public static void insertLevel(Level level) {
         if (level.getLevelOne() == 0) {
             // insert into level1
-            System.out.println("L1: " + level);
+            log.debug("L1: " + level);
             level.incrementLevelOne();
         } else if (level.getLevelTwo() == 0 && level.getLevelThree() == 0) {
             // insert into level2
-            System.out.println("L2: " + level);
+            log.debug("L2: " + level);
             level.incrementLevelTwo();
         } else if (level.getLevelTwo() != 0 && level.getLevelThree() == 0) {
             // insert into level3
-            System.out.println("L3: " + level);
+            log.debug("L3: " + level);
             level.incrementLevelThree();
         } else if (level.getLevelThree() != 0) {
             // insert into level4
-            System.out.println("L4: " + level);
+            log.debug("L4: " + level);
             level.incrementLevelFour();
         }
     }
@@ -66,23 +70,23 @@ public class LevelManager {
             && level.getLevelThree() == 0
             && level.getLevelFour() == 0) {
             // insert into level1
-            System.out.println("L1: " + level);
+            log.debug("L1: " + level);
             level.incrementLevelOne();
         } else if (level.getLevelOne() != 0 && level.getLevelTwo() == 0) {
             // insert into level1
-            System.out.println("L1: " + level);
+            log.debug("L1: " + level);
             level.incrementLevelOne();
         } else if (level.getLevelTwo() != 0 && level.getLevelThree() == 0) {
             // insert into level2
-            System.out.println("L2: " + level);
+            log.debug("L2: " + level);
             level.incrementLevelTwo();
         } else if (level.getLevelThree() != 0 && level.getLevelFour() == 0) {
             // insert into level3
-            System.out.println("L3: " + level);
+            log.debug("L3: " + level);
             level.incrementLevelThree();
         } else {
             // insert into level4
-            System.out.println("L4: " + level);
+            log.debug("L4: " + level);
             level.incrementLevelFour();
         }
     }
@@ -104,13 +108,26 @@ public class LevelManager {
                                  .levelThree(0)
                                  .levelFour(0)
                                  .buildLevel(); // L1
+        Level expectedEmptyRoot = builder.levelOne(1)
+                                         .levelTwo(0)
+                                         .levelThree(0)
+                                         .levelFour(0)
+                                         .buildLevel(); // L1
         Level root = builder.levelOne(1).buildLevel(); // L2
+        Level expectedRoot = builder.levelOne(1).levelTwo(1).buildLevel(); // L2
         Level targetNode = builder.levelOne(2).levelTwo(1).buildLevel(); // L3
+        Level expectedTargetNode = builder.levelOne(2).levelTwo(1).levelThree(1).buildLevel(); // L3
         Level fullNode = builder
                 .levelOne(2)
                 .levelTwo(1)
                 .levelThree(1)
                 .levelFour(1)
+                .buildLevel(); // L4
+        Level expectedFullNode = builder
+                .levelOne(2)
+                .levelTwo(1)
+                .levelThree(1)
+                .levelFour(2)
                 .buildLevel(); // L4
 
         LevelManager.insertLevel(emptyRoot);
@@ -118,12 +135,34 @@ public class LevelManager {
         LevelManager.insertLevel(targetNode);
         LevelManager.insertLevel(fullNode);
 
+        processAssertion(
+                emptyRoot, expectedEmptyRoot,
+                root, expectedRoot,
+                targetNode, expectedTargetNode,
+                fullNode, expectedFullNode
+        );
+        log.info("[ End of Hierarchy Insertion Test. ]");
+    }
+
+    private void processAssertion(
+            Level emptyRoot,
+            Level expectedEmptyRoot,
+            Level root,
+            Level expectedRoot,
+            Level targetNode,
+            Level expectedTargetNode,
+            Level fullNode,
+            Level expectedFullNode
+    ) {
         System.out.println("[ State of the objects after operation. ]");
-        System.out.println("emptyRoot ---> " + emptyRoot);
-        System.out.println("root ---> " + root);
-        System.out.println("targetNode ---> " + targetNode);
-        System.out.println("fullNode ---> " + fullNode);
-        System.out.println("[ End of Hierarchy Insertion Test. ]");
+        assert emptyRoot.equals(expectedEmptyRoot);
+        log.info("emptyRoot ---> " + emptyRoot);
+        assert root.equals(expectedRoot);
+        log.info("root ---> " + root);
+        assert targetNode.equals(expectedTargetNode);
+        log.info("targetNode ---> " + targetNode);
+        assert fullNode.equals(expectedFullNode);
+        log.info("fullNode ---> " + fullNode);
     }
 
     private void insertAdjacent(LevelBuilder builder) {
@@ -134,9 +173,23 @@ public class LevelManager {
                 .levelThree(0)
                 .levelFour(0)
                 .buildLevel(); // L1
+        Level expectedEmptyRoot = builder
+                .levelOne(0)
+                .levelTwo(0)
+                .levelThree(0)
+                .levelFour(0)
+                .buildLevel(); // L1
         Level root = builder.levelOne(1).buildLevel(); // L2
+        Level expectedRoot = builder.levelOne(1).buildLevel(); // L2
         Level targetNode = builder.levelOne(2).levelTwo(1).buildLevel(); // L3
+        Level expectedTargetNode = builder.levelOne(2).levelTwo(1).buildLevel(); // L3
         Level fullNode = builder
+                .levelOne(2)
+                .levelTwo(1)
+                .levelThree(1)
+                .levelFour(1)
+                .buildLevel(); // L4
+        Level expectedFullNode = builder
                 .levelOne(2)
                 .levelTwo(1)
                 .levelThree(1)
@@ -147,11 +200,12 @@ public class LevelManager {
         LevelManager.incrementLevel(targetNode);
         LevelManager.incrementLevel(fullNode);
 
-        System.out.println("[ State of the objects after operation. ]");
-        System.out.println("emptyRoot ---> " + emptyRoot);
-        System.out.println("root ---> " + root);
-        System.out.println("targetNode ---> " + targetNode);
-        System.out.println("fullNode ---> " + fullNode);
+        processAssertion(
+                emptyRoot, expectedEmptyRoot,
+                root, expectedRoot,
+                targetNode, expectedTargetNode,
+                fullNode, expectedFullNode
+        );
         System.out.println("[ End of Adjacency Insertion Test. ]");
     }
 }
