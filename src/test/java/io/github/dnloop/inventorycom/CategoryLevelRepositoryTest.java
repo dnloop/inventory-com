@@ -40,6 +40,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -120,11 +121,8 @@ public class CategoryLevelRepositoryTest {
     void findAllCategoryLevel() throws ExecutionException, InterruptedException {
 
         final Condition<CategoryLevel> levelCondition = new Condition<>(
-                category -> category.getL1().equals(1)
-                            && category.getL2().equals(0)
-                            && category.getL3().equals(0)
-                            && category.getL4().equals(0),
-                "[Level] - Not top level"
+                category -> !category.getL1().equals(0),
+                "[Level] - Top level"
         );
         final CompletableFuture<HashSet<CategoryLevel>> categories = productService.findAllCategoryLevel();
         final HashSet<CategoryLevel> result = categories.get();
@@ -261,7 +259,7 @@ public class CategoryLevelRepositoryTest {
     void childNodesExistsInProduct() throws ExecutionException, InterruptedException {
         final Integer nodes = productService.childNodesExistsInProduct(1).get();
 
-        assertThat(nodes).isEqualTo(5);
+        assertThat(nodes).isEqualTo(3);
     }
 
     @Test
@@ -297,7 +295,17 @@ public class CategoryLevelRepositoryTest {
 
     @Test
     void deleteCategoryLevelRoot() throws ExecutionException, InterruptedException {
-        // TODO not yet implemented
+        final CompletableFuture<HashSet<CategoryLevel>> categoryLevelDeleted =
+                productService.findCategoryLevelByCategoryId(5).thenAccept(
+                        categoryLevel -> categoryLevel.ifPresent(
+                                level -> productService.deleteCategoryLevel(level)
+                        )
+                ).thenCompose(unused -> productService.findAllDeletedCategoryLevel());
+
+        HashSet<CategoryLevel> result = categoryLevelDeleted
+                .get();
+
+        assertThat(result).hasSize(4);
     }
 
     @Test
@@ -317,53 +325,35 @@ public class CategoryLevelRepositoryTest {
 
     @Test
     void failedDeleteCategoryLevelRoot() throws ExecutionException, InterruptedException {
-        // TODO not yet implemented
+        AtomicBoolean state = new AtomicBoolean(true);
+        final CompletableFuture<HashSet<CategoryLevel>> categoryLevelDeleted =
+                productService.findCategoryLevelByCategoryId(1).thenAccept(
+                        categoryLevel -> categoryLevel.ifPresent(
+                                level -> state.set(productService.deleteCategoryLevel(level))
+                        )
+                ).thenCompose(unused -> productService.findAllDeletedCategoryLevel());
+
+        HashSet<CategoryLevel> result = categoryLevelDeleted
+                .get();
+
+        assertThat(state).isFalse();
+        assertThat(result).hasSize(2);
     }
 
     @Test
     void failedDeleteCategoryLevelChild() throws ExecutionException, InterruptedException {
-        // TODO not yet implemented
-    }
+        AtomicBoolean state = new AtomicBoolean(true);
+        final CompletableFuture<HashSet<CategoryLevel>> categoryLevelDeleted =
+                productService.findCategoryLevelByCategoryId(2).thenAccept(
+                        categoryLevel -> categoryLevel.ifPresent(
+                                level -> state.set(productService.deleteCategoryLevel(level))
+                        )
+                ).thenCompose(unused -> productService.findAllDeletedCategoryLevel());
 
-    @Test
-    void deleteRootNode() throws ExecutionException, InterruptedException {
-        final CategoryLevel categoryLevel =
-                productService.findCategoryLevelByCategoryId(6).join().orElse(null);
-        assert categoryLevel != null;
+        HashSet<CategoryLevel> result = categoryLevelDeleted
+                .get();
 
-        final CompletableFuture<Optional<CategoryLevel>> categoryLevelDeleted = productService
-                .categoryLevelExistsInProduct(
-                        categoryLevel.getCategoryId()
-                ).thenAccept(productCount -> {
-                    if (productCount == 0)
-                        productService.deleteRootNode(categoryLevel.getL1());
-                }).thenCompose(
-                        unused -> productService.findDeletedCategoryLevel(categoryLevel.getId())
-                );
-
-        assertThat(
-                categoryLevelDeleted.get()
-        ).matches(Optional::isPresent, "is empty");
-    }
-
-    @Test
-    void deleteNode() throws ExecutionException, InterruptedException {
-        final CategoryLevel categoryLevel =
-                productService.findCategoryLevelByCategoryId(6).join().orElse(null);
-        assert categoryLevel != null;
-
-        final CompletableFuture<Optional<CategoryLevel>> categoryLevelDeleted = productService
-                .categoryLevelExistsInProduct(
-                        categoryLevel.getCategoryId()
-                ).thenAccept(productCount -> {
-                    if (productCount == 0)
-                        productService.deleteNode(categoryLevel.getCategoryId());
-                }).thenCompose(
-                        unused -> productService.findDeletedCategoryLevel(categoryLevel.getId())
-                );
-
-        assertThat(
-                categoryLevelDeleted.get()
-        ).matches(Optional::isPresent, "is empty");
+        assertThat(state).isFalse();
+        assertThat(result).hasSize(2);
     }
 }

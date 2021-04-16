@@ -86,8 +86,7 @@ public interface CategoryLevelRepository extends CrudRepository<CategoryLevel, I
            " categoryLevel.l2 = 0," +
            " categoryLevel.l3 = 0," +
            " categoryLevel.l4 = 0" +
-           " WHERE categoryLevel.l1 = :levelOne" +
-           " AND categoryLevel.l2 > 0")
+           " WHERE categoryLevel.l1 = :levelOne")
     void deleteRootNode(int levelOne);
 
     /**
@@ -108,7 +107,6 @@ public interface CategoryLevelRepository extends CrudRepository<CategoryLevel, I
            " categoryLevel.l2 = 0," +
            " categoryLevel.l3 = 0," +
            " categoryLevel.l4 = 0" +
-           " WHERE categoryLevel.categoryId = :categoryId" +
-           " AND categoryLevel.l2 > 0")
+           " WHERE categoryLevel.categoryId = :categoryId")
     void deleteNode(int categoryId);
 }
