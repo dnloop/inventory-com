@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -24,14 +25,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test {@link CategoryRepository} property in  {@link ProductService}.
- *
+ * <p>
  * TODO adjust test values according to test data
- * TODO test tree deletion in category level
  */
 @SpringBootTest
 @EnableAsync
 @AutoConfigureTestDatabase
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@Sql({
+             "/db/data/insert-category.sql",
+             "/db/data/insert-category_level.sql",
+             "/db/data/insert-material.sql",
+             "/db/data/insert-measure.sql",
+             "/db/data/insert-presentation.sql",
+             "/db/data/insert-product_detail.sql",
+             "/db/data/insert-product.sql"
+     })
 public class CategoryRepositoryTest {
 
     @Autowired
