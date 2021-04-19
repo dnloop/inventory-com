@@ -31,11 +31,26 @@ public interface CategoryRepository extends CrudRepository<Category, Integer> {
 
     /**
      * Returns the number of assigned categories to a product.
-     *
+     * <p>
      * This method is the same as {@link CategoryLevelRepository#categoryExistsInProduct(int)}
      */
     @Query("SELECT COUNT (product.id)" +
            " FROM Product product" +
            " WHERE product.categoryId = :categoryId")
     Integer existsInProduct(int categoryId);
+
+    /**
+     * Returns the number of assigned categories to a category level.
+     * <p>
+     * This method shares similarities with others. This behaviour should be abstracted in
+     * a general function to prevent duplication. So far it works as is.
+     *
+     * @see CategoryLevelRepository#categoryExistsInProduct(int)
+     * @see #existsInProduct(int)
+     * @see #existsInCategoryLevel(int)
+     */
+    @Query("SELECT COUNT (categoryLevel.id)" +
+           " FROM CategoryLevel categoryLevel" +
+           " WHERE categoryLevel.categoryId = :categoryId")
+    Integer existsInCategoryLevel(int categoryId);
 }

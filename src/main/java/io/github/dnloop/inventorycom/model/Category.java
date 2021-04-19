@@ -8,6 +8,12 @@ import java.time.Instant;
 import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * <h4>Category</h4>
+ * <p>
+ * Categories are related to a hierarchy level. Record deletion must be prevented if its either
+ * assigned to a product or a category level.
+ */
 @Entity
 @Table(name = "category")
 @SQLDelete(sql = "UPDATE category SET deleted=0 WHERE id=?")

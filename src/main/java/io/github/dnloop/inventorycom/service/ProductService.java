@@ -150,16 +150,25 @@ public class ProductService {
     }
 
     @Transactional
-    public void deleteCategory(Category category) {
-        categoryRepository.delete(category);
-        log.debug("Record Deleted: " + category.toString());
-        log.debug("Deleting Relationships");
-        final Collection<CategoryLevel> catLevels = category.getCategoryLevelsById();
-        catLevels.forEach(categoryLevel -> {
-            categoryLevelRepository.delete(categoryLevel);
-            log.debug("Record Deleted: " + categoryLevel.toString());
-        });
-        log.debug("Records Deleted: " + catLevels.size());
+    public boolean deleteCategory(Category category) {
+        int categoryId = category.getId();
+        // if its unassigned in products
+        if (categoryRepository.existsInProduct(categoryId) == 0) {
+            // and its unassigned in category level
+            if (categoryRepository.existsInCategoryLevel(categoryId) == 0) {
+                categoryRepository.delete(category);
+                log.debug("[Category] Record Deleted: " + category.toString());
+                return true;
+            } else {
+                // otherwise category level is assigned
+                log.debug("[Category Level] is not unassigned");
+                return false;
+            }
+            // otherwise category is assigned
+        } else {
+            log.debug("[Category] is not unassigned");
+            return false;
+        }
     }
 
     /* Category Level */
@@ -212,7 +221,7 @@ public class ProductService {
 
     /**
      * Implementation of a control to ensure the correct deletion of a node.
-     *
+     * <p>
      * It takes the L1 value of a record allowing the deletion of multiple
      * rows without necessarily selecting 'root' category
      */
