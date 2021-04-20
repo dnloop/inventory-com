@@ -8,4 +8,5 @@ VALUES
 (5, CURRENT_TIMESTAMP, 1, null, 'CAT-4', null),
 (6, CURRENT_TIMESTAMP, 1, null, 'CAT-5', null),
 (7, CURRENT_TIMESTAMP, 1, null, 'CAT-6', null),
-(8, CURRENT_TIMESTAMP, 1, null, 'CAT-7', null);
+(8, CURRENT_TIMESTAMP, 1, null, 'CAT-7', null),
+(9, CURRENT_TIMESTAMP, 0, null, 'CAT-8', null);

@@ -149,6 +149,13 @@ public class ProductService {
         return CompletableFuture.completedFuture(categoryRepository.existsInProduct(catId));
     }
 
+    /**
+     * Method to delete a category.
+     * Record deletion must be prevented if its either assigned to a product or a category level.
+     * Even when the category level is deleted, it still possible to be reassigned later,
+     * this behaviour prevents deletion of the category;
+     * only possibility will be change its description.
+     */
     @Transactional
     public boolean deleteCategory(Category category) {
         int categoryId = category.getId();
@@ -156,7 +163,7 @@ public class ProductService {
         if (categoryRepository.existsInProduct(categoryId) == 0) {
             // and its unassigned in category level
             if (categoryRepository.existsInCategoryLevel(categoryId) == 0) {
-                categoryRepository.delete(category);
+                categoryRepository.delete(categoryId);
                 log.debug("[Category] Record Deleted: " + category.toString());
                 return true;
             } else {

@@ -19,6 +19,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,7 +27,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Test {@link CategoryRepository} property in  {@link ProductService}.
  * <p>
- * TODO adjust test values according to test data
  */
 @SpringBootTest
 @EnableAsync
@@ -60,7 +60,7 @@ public class CategoryRepositoryTest {
         });
 
         assertThat(category.get())
-                .matches(Optional::isPresent, "is empty");
+                .matches(Optional::isPresent, "Must be present");
     }
 
     /**
@@ -70,28 +70,28 @@ public class CategoryRepositoryTest {
     void findCategoryByIdDeleted() throws ExecutionException, InterruptedException {
         final CompletableFuture<Optional<Category>> category = CompletableFuture.supplyAsync(() -> {
             try {
-                return productService.findCategoryById(1).get();
+                return productService.findCategoryById(5).get();
             } catch (InterruptedException | ExecutionException e) {
                 return Optional.empty();
             }
         });
 
         assertThat(category.get())
-                .matches(Optional::isPresent, "is empty");
+                .matches(Optional::isEmpty, "Must be empty");
     }
 
     @Test
     void findDeletedCategory() throws ExecutionException, InterruptedException {
         final CompletableFuture<Optional<Category>> category = CompletableFuture.supplyAsync(() -> {
             try {
-                return productService.findDeletedCategory(1).get();
+                return productService.findDeletedCategory(5).get();
             } catch (InterruptedException | ExecutionException e) {
                 return Optional.empty();
             }
         });
 
         assertThat(category.get())
-                .matches(Optional::isEmpty, "is present");
+                .matches(Optional::isPresent, "Must be present");
     }
 
     @Test
@@ -99,13 +99,13 @@ public class CategoryRepositoryTest {
         final Condition<Optional<Category>> firstCategory = new Condition<>(
                 category -> category.isPresent()
                             && category.get().getDescription()
-                                       .equalsIgnoreCase("CATEGORY-1"),
-                "[Description] - CATEGORY-1"
+                                       .equalsIgnoreCase("CAT-1"),
+                "[Description] - CAT-1"
         );
         final CompletableFuture<HashSet<Category>> categories = productService.findAllCategory();
         final HashSet<Category> result = categories.get();
 
-        assertThat(result).hasSize(3);
+        assertThat(result).hasSize(4);
         assertThat(
                 result.stream().findFirst()
         ).has(firstCategory);
@@ -116,13 +116,13 @@ public class CategoryRepositoryTest {
         final Condition<Optional<Category>> firstCategory = new Condition<>(
                 category -> category.isPresent()
                             && category.get().getDescription()
-                                       .equalsIgnoreCase("CATEGORY-1"),
-                "[Description] - CATEGORY-1"
+                                       .equalsIgnoreCase("CAT-1"),
+                "[Description] - CAT-1"
         );
         final CompletableFuture<HashSet<Category>> categories = productService.findAllDeletedCategory();
         final HashSet<Category> result = categories.get();
 
-        assertThat(result).hasSize(3);
+        assertThat(result).hasSize(4);
         assertThat(
                 result.stream().findFirst()
         ).has(firstCategory);
@@ -172,8 +172,27 @@ public class CategoryRepositoryTest {
     @Test
     void deleteCategory() throws ExecutionException, InterruptedException {
         final CompletableFuture<Void> category =
-                productService.findCategoryById(1).thenAccept(category1 -> category1.ifPresent(
+                productService.findCategoryById(9).thenAccept(category1 -> category1.ifPresent(
                         value -> productService.deleteCategory(value)
+                ));
+
+
+        final CompletableFuture<Optional<Category>> categoryDeleted =
+                category.thenCompose(
+                        unused -> productService.findDeletedCategory(9)
+                );
+
+        assertThat(
+                categoryDeleted.get()
+        ).matches(Optional::isPresent, "Must be present");
+    }
+
+    @Test
+    void failedDeleteCategory() throws ExecutionException, InterruptedException {
+        AtomicBoolean state = new AtomicBoolean(true);
+        final CompletableFuture<Void> category =
+                productService.findCategoryById(1).thenAccept(category1 -> category1.ifPresent(
+                        value -> state.set(productService.deleteCategory(value))
                 ));
 
 
@@ -182,8 +201,9 @@ public class CategoryRepositoryTest {
                         unused -> productService.findDeletedCategory(1)
                 );
 
+        assertThat(state).isFalse();
         assertThat(
                 categoryDeleted.get()
-        ).matches(Optional::isPresent, "is empty");
+        ).matches(Optional::isEmpty, "Must be empty");
     }
 }

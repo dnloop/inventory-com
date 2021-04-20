@@ -11,8 +11,8 @@ import java.util.Objects;
 /**
  * <h4>Category</h4>
  * <p>
- * Categories are related to a hierarchy level. Record deletion must be prevented if its either
- * assigned to a product or a category level.
+ * Categories are related to a hierarchy level in that they
+ * provide description for the current level.
  */
 @Entity
 @Table(name = "category")
