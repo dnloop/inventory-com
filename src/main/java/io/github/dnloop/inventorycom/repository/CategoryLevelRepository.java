@@ -72,7 +72,8 @@ public interface CategoryLevelRepository extends CrudRepository<CategoryLevel, I
            " WHERE categoryLevel.l1 = :levelOne" +
            " AND EXISTS " +
            " (SELECT product.id FROM Product product" +
-           " WHERE product.categoryId = categoryLevel.categoryId)")
+           " WHERE product.categoryId = categoryLevel.categoryId)" +
+           " AND categoryLevel.deleted = 0")
     Integer childNodesExistsInProduct(int levelOne);
 
     /**
@@ -94,7 +95,8 @@ public interface CategoryLevelRepository extends CrudRepository<CategoryLevel, I
      */
     @Query("SELECT COUNT (product.id)" +
            " FROM Product product" +
-           " WHERE product.categoryId = :categoryId")
+           " WHERE product.categoryId = :categoryId" +
+           " AND product.deleted = 0")
     Integer categoryExistsInProduct(int categoryId);
 
     /**
