@@ -8,13 +8,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -96,41 +96,39 @@ public class CategoryRepositoryTest {
 
     @Test
     void findAllCategory() throws ExecutionException, InterruptedException {
-        final Condition<Optional<Category>> firstCategory = new Condition<>(
-                category -> category.isPresent()
-                            && category.get().getDescription()
-                                       .equalsIgnoreCase("CAT-1"),
+        final Condition<Category> firstCategory = new Condition<>(
+                category -> category.getDescription()
+                                    .equalsIgnoreCase("CAT-1"),
                 "[Description] - CAT-1"
         );
-        final CompletableFuture<HashSet<Category>> categories = productService.findAllCategory();
-        final HashSet<Category> result = categories.get();
+        final CompletableFuture<Page<Category>> categories = productService.findAllCategory();
+        final Page<Category> result = categories.get();
 
-        assertThat(result).hasSize(4);
+        assertThat(result).hasSize(5);
         assertThat(
-                result.stream().findFirst()
+                result.getContent().get(0)
         ).has(firstCategory);
     }
 
     @Test
     void findAllDeletedCategory() throws ExecutionException, InterruptedException {
-        final Condition<Optional<Category>> firstCategory = new Condition<>(
-                category -> category.isPresent()
-                            && category.get().getDescription()
-                                       .equalsIgnoreCase("CAT-1"),
-                "[Description] - CAT-1"
+        final Condition<Category> firstCategory = new Condition<>(
+                category -> category.getDescription()
+                                    .equalsIgnoreCase("CAT-1"),
+                "[Description] - CAT-4"
         );
-        final CompletableFuture<HashSet<Category>> categories = productService.findAllDeletedCategory();
-        final HashSet<Category> result = categories.get();
+        final CompletableFuture<Page<Category>> categories = productService.findAllDeletedCategory();
+        final Page<Category> result = categories.get();
 
         assertThat(result).hasSize(4);
         assertThat(
-                result.stream().findFirst()
+                result.getContent().get(0)
         ).has(firstCategory);
     }
 
     @Test
     void saveCategory() throws ExecutionException, InterruptedException {
-        Category newCategory = new Category();
+        Category newCategory = new Category("CAT-NEW");
 
         final CompletableFuture<Optional<Category>> category =
                 productService.saveCategory(newCategory).thenApply(category1 -> {
@@ -201,9 +199,11 @@ public class CategoryRepositoryTest {
                         unused -> productService.findDeletedCategory(1)
                 );
 
+        Optional<Category> result = categoryDeleted.get();
+
         assertThat(state).isFalse();
         assertThat(
-                categoryDeleted.get()
+                result
         ).matches(Optional::isEmpty, "Must be empty");
     }
 }

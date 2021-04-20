@@ -1,19 +1,21 @@
 package io.github.dnloop.inventorycom.repository;
 
 import io.github.dnloop.inventorycom.model.Category;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 
-import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 
-public interface CategoryRepository extends CrudRepository<Category, Integer> {
+public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
     @Query("SELECT category FROM Category category" +
            " WHERE category.deleted = 0" +
-           " ORDER BY category.description ASC")
-    HashSet<Category> findAll();
+           " ORDER BY category.description")
+    Page<Category> findAll(Pageable pageable);
 
     @Query("SELECT category FROM Category category" +
            " WHERE category.id = :id" +
@@ -22,8 +24,8 @@ public interface CategoryRepository extends CrudRepository<Category, Integer> {
 
     @Query("SELECT category FROM Category category" +
            " WHERE category.deleted = 1 " +
-           " ORDER BY category.description ASC")
-    HashSet<Category> findAllDeleted();
+           " ORDER BY category.description")
+    Page<Category> findAllDeleted(Pageable pageable);
 
     @Query("SELECT category FROM Category category" +
            " WHERE category.id = :id" +

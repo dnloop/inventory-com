@@ -12,7 +12,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -126,13 +125,13 @@ public class ProductService {
     }
 
     @Async
-    public CompletableFuture<HashSet<Category>> findAllCategory() {
-        return CompletableFuture.completedFuture(categoryRepository.findAll());
+    public CompletableFuture<Page<Category>> findAllCategory() {
+        return CompletableFuture.completedFuture(categoryRepository.findAll(pageableFifty));
     }
 
     @Async
-    public CompletableFuture<HashSet<Category>> findAllDeletedCategory() {
-        return CompletableFuture.completedFuture(categoryRepository.findAllDeleted());
+    public CompletableFuture<Page<Category>> findAllDeletedCategory() {
+        return CompletableFuture.completedFuture(categoryRepository.findAllDeleted(pageableFiftyDeleted));
     }
 
     @Async
@@ -260,26 +259,6 @@ public class ProductService {
                 return false;
             }
         }
-    }
-
-    /**
-     * Method to delete a root node. It requires control methods to ensure it is not deleting child nodes
-     * assigned to a product.
-     */
-    @Async
-    @Transactional
-    public CompletableFuture<Void> deleteRootNode(int levelOne) {
-        return CompletableFuture.runAsync(() -> categoryLevelRepository.deleteRootNode(levelOne));
-    }
-
-    /**
-     * Method to delete a node. It requires control methods to ensure it is not deleting a node
-     * or a root node with leaves assigned to a product.
-     */
-    @Async
-    @Transactional
-    public CompletableFuture<Void> deleteNode(int categoryId) {
-        return CompletableFuture.runAsync(() -> categoryLevelRepository.deleteNode(categoryId));
     }
 
     /* Measure */
