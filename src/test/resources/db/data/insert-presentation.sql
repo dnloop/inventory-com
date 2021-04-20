@@ -1,8 +1,9 @@
 INSERT INTO PUBLIC.PRESENTATION
 (ID, CREATED_AT, DELETED, DELETED_AT, DESCRIPTION, MODIFIED_AT, UNITS)
 VALUES
-(1, CURRENT_TIMESTAMP(), 0, null, 'Bag', null, 6),
-(2, CURRENT_TIMESTAMP(), 0, null, 'Box', null, 3),
-(3, CURRENT_TIMESTAMP(), 0, null, 'Tube', null, 2),
-(4, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP(), 'Bag', null, 1),
-(5, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP(), 'Box', null, 5);
+(1, CURRENT_TIMESTAMP(), 0, null, 'NONE', null, 0),
+(2, CURRENT_TIMESTAMP(), 0, null, 'Bag', null, 6),
+(3, CURRENT_TIMESTAMP(), 0, null, 'Box', null, 3),
+(4, CURRENT_TIMESTAMP(), 0, null, 'Tube', null, 2),
+(5, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP(), 'Bag', null, 1),
+(6, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP(), 'Box', null, 5);

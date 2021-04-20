@@ -1,8 +1,9 @@
 INSERT INTO PUBLIC.MEASURE
 (ID, CREATED_AT, DELETED, DELETED_AT, DIAMETER, LENGHT, MODIFIED_AT, WIDTH, "TYPE")
 VALUES
-(1, CURRENT_TIMESTAMP(), 0, null, 2.0, 2.0, null, 1.0, 'MM'),
-(2, CURRENT_TIMESTAMP(), 0, null, 0.0, 2.0, null, 3.5, 'CM'),
-(3, CURRENT_TIMESTAMP(), 0, null, 5.0, 5.0, null, 0.0, 'MM'),
-(4, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP(), 0, 0, null, 0, 'INCH'),
-(5, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP(), 0, 0, null, 0, 'PX');
+(1, CURRENT_TIMESTAMP(), 0, null, 0.0, 0.0, null, 0.0, '00'),
+(2, CURRENT_TIMESTAMP(), 0, null, 2.0, 2.0, null, 1.0, 'MM'),
+(3, CURRENT_TIMESTAMP(), 0, null, 0.0, 2.0, null, 3.5, 'CM'),
+(4, CURRENT_TIMESTAMP(), 0, null, 5.0, 5.0, null, 0.0, 'MM'),
+(5, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP(), 0, 0, null, 0, 'INCH'),
+(6, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP(), 0, 0, null, 0, 'PX');
