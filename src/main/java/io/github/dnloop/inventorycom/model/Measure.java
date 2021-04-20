@@ -8,6 +8,13 @@ import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * <h4>Measure</h4>
+ * <p>
+ * Requires a default 'unavailable' value preloaded to ensure Product Detail is never
+ * left in an invalid state. This allows for later UI controls to hide the nonexistent
+ * value or suggest assignment.
+ */
 @Entity
 @Table(name = "measure")
 @SQLDelete(sql = "UPDATE measure SET deleted=1 WHERE id=?")

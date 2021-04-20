@@ -7,6 +7,12 @@ import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * <h4>Product Detail</h4>
+ * <p>
+ * Requires a default 'generic' value preloaded. This allows to have products that won't require
+ * further details.
+ */
 @Entity
 @Table(name = "product_detail")
 @SQLDelete(sql = "UPDATE product_detail SET deleted=1 WHERE id=?")

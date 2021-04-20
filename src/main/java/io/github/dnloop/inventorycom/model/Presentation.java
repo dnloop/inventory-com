@@ -7,6 +7,13 @@ import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * <h4>Presentation</h4>
+ * <p>
+ * Requires a default 'unavailable' value preloaded to ensure Product Detail is never
+ * left in an invalid state. This allows for later UI controls to hide the nonexistent
+ * value or suggest assignment.
+ */
 @Entity
 @Table(name = "presentation")
 @SQLDelete(sql = "UPDATE presentation SET deleted=1 WHERE id=?")
