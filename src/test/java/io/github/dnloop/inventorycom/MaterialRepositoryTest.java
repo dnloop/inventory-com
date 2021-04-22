@@ -1,7 +1,6 @@
 package io.github.dnloop.inventorycom;
 
 import io.github.dnloop.inventorycom.model.Material;
-import io.github.dnloop.inventorycom.model.Product;
 import io.github.dnloop.inventorycom.repository.MaterialRepository;
 import io.github.dnloop.inventorycom.service.ProductService;
 import org.assertj.core.api.Condition;
@@ -12,8 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.jdbc.Sql;
 
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Objects;
@@ -25,12 +24,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test {@link MaterialRepository} property in  {@link ProductService}.
- * TODO adjust test values according to test data
  */
 @SpringBootTest
 @EnableAsync
 @AutoConfigureTestDatabase
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@Sql({
+             "/db/data/insert-category.sql",
+             "/db/data/insert-category_level.sql",
+             "/db/data/insert-material.sql",
+             "/db/data/insert-measure.sql",
+             "/db/data/insert-presentation.sql",
+             "/db/data/insert-product_detail.sql",
+             "/db/data/insert-product.sql"
+     })
 public class MaterialRepositoryTest {
 
     @Autowired
@@ -40,14 +47,14 @@ public class MaterialRepositoryTest {
     void findMaterialById() throws ExecutionException, InterruptedException {
         final CompletableFuture<Optional<Material>> material = CompletableFuture.supplyAsync(() -> {
             try {
-                return productService.findMaterialById(1).get();
+                return productService.findMaterialById(2).get();
             } catch (InterruptedException | ExecutionException e) {
                 return Optional.empty();
             }
         });
 
         assertThat(material.get())
-                .matches(Optional::isPresent, "is empty");
+                .matches(Optional::isPresent, "Must be present");
     }
 
     /**
@@ -57,40 +64,40 @@ public class MaterialRepositoryTest {
     void findMaterialByIdDeleted() throws ExecutionException, InterruptedException {
         final CompletableFuture<Optional<Material>> material = CompletableFuture.supplyAsync(() -> {
             try {
-                return productService.findMaterialById(1).get();
+                return productService.findMaterialById(5).get();
             } catch (InterruptedException | ExecutionException e) {
                 return Optional.empty();
             }
         });
 
         assertThat(material.get())
-                .matches(Optional::isPresent, "is empty");
+                .matches(Optional::isEmpty, "Must be empty");
     }
 
     @Test
     void findDeletedMaterial() throws ExecutionException, InterruptedException {
-        final CompletableFuture<Optional<Material>> client = CompletableFuture.supplyAsync(() -> {
+        final CompletableFuture<Optional<Material>> material = CompletableFuture.supplyAsync(() -> {
             try {
-                return productService.findDeletedMaterial(1).get();
+                return productService.findDeletedMaterial(5).get();
             } catch (InterruptedException | ExecutionException e) {
                 return Optional.empty();
             }
         });
 
-        assertThat(client.get())
-                .matches(Optional::isEmpty, "is present");
+        assertThat(material.get())
+                .matches(Optional::isPresent, "Must be present");
     }
 
     @Test
     void findAllMaterials() throws ExecutionException, InterruptedException {
         final Condition<Material> firstMaterial = new Condition<>(
-                client -> client.getType().equalsIgnoreCase("TYPE-1"),
-                "[Type] - TYPE-1"
+                material -> material.getType().equalsIgnoreCase("IRON"),
+                "[Type] - Must be IRON"
         );
-        final CompletableFuture<Page<Material>> clients = productService.findAllMaterials();
-        final Page<Material> result = clients.get();
+        final CompletableFuture<Page<Material>> materials = productService.findAllMaterials();
+        final Page<Material> result = materials.get();
 
-        assertThat(result).hasSize(3);
+        assertThat(result).hasSize(4);
         assertThat(
                 result.getContent().get(0)
         ).has(firstMaterial);
@@ -99,13 +106,13 @@ public class MaterialRepositoryTest {
     @Test
     void findAllDeletedMaterials() throws ExecutionException, InterruptedException {
         final Condition<Material> firstMaterial = new Condition<>(
-                client -> client.getType().equalsIgnoreCase("TYPE-1"),
-                "[Type] - TYPE-1"
+                material -> material.getType().equalsIgnoreCase("PLASTIC"),
+                "[Type] - must be PLASTIC"
         );
-        final CompletableFuture<Page<Material>> clients = productService.findAllDeletedMaterials();
-        final Page<Material> result = clients.get();
+        final CompletableFuture<Page<Material>> materials = productService.findAllDeletedMaterials();
+        final Page<Material> result = materials.get();
 
-        assertThat(result).hasSize(3);
+        assertThat(result).hasSize(2);
         assertThat(
                 result.getContent().get(0)
         ).has(firstMaterial);
@@ -113,7 +120,7 @@ public class MaterialRepositoryTest {
 
     @Test
     void saveMaterial() throws ExecutionException, InterruptedException {
-        Material newMaterial = new Material("MATERIAL-TYPE");
+        Material newMaterial = new Material("COPPER");
 
         final CompletableFuture<Optional<Material>> product =
                 productService.saveMaterial(newMaterial).thenApply(material1 -> {
@@ -131,7 +138,7 @@ public class MaterialRepositoryTest {
     @Test
     void modifyMaterial() throws ExecutionException, InterruptedException {
         final Timestamp ts = Timestamp.from(Instant.now());
-        final Material editMaterial = productService.findMaterialById(1).join().orElse(null);
+        final Material editMaterial = productService.findMaterialById(2).join().orElse(null);
 
         Objects.requireNonNull(editMaterial).setModifiedAt(ts);
 
@@ -155,14 +162,14 @@ public class MaterialRepositoryTest {
     @Test
     void deleteMaterial() throws ExecutionException, InterruptedException {
         final CompletableFuture<Void> material =
-                productService.findMaterialById(1).thenAccept(material1 -> material1.ifPresent(
+                productService.findMaterialById(4).thenAccept(material1 -> material1.ifPresent(
                         value -> productService.deleteMaterial(value)
                 ));
 
 
         final CompletableFuture<Optional<Material>> materialDeleted =
                 material.thenCompose(
-                        unused -> productService.findDeletedMaterial(1)
+                        unused -> productService.findDeletedMaterial(4)
                 );
 
         assertThat(
