@@ -1,7 +1,6 @@
 package io.github.dnloop.inventorycom.model;
 
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -25,16 +24,16 @@ public class Measure {
     private Timestamp createdAt;
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
-    private Double lenght;
+    private Double length;
     private Double width;
     private Double diameter;
     private Collection<ProductDetail> productDetailsById;
 
     public Measure() {}
 
-    public Measure(String type, Double lenght, Double width, Double diameter) {
+    public Measure(String type, Double length, Double width, Double diameter) {
         this.type = type;
-        this.lenght = lenght;
+        this.length = length;
         this.width = width;
         this.diameter = diameter;
     }
@@ -101,13 +100,13 @@ public class Measure {
     }
 
     @Basic
-    @Column(name = "lenght", precision = 2)
-    public Double getLenght() {
-        return lenght;
+    @Column(name = "LENGTH", precision = 2)
+    public Double getLength() {
+        return length;
     }
 
-    public void setLenght(Double lenght) {
-        this.lenght = lenght;
+    public void setLength(Double lenght) {
+        this.length = lenght;
     }
 
     @Basic
@@ -141,14 +140,14 @@ public class Measure {
                Objects.equals(createdAt, that.createdAt) &&
                Objects.equals(modifiedAt, that.modifiedAt) &&
                Objects.equals(deletedAt, that.deletedAt) &&
-               Objects.equals(lenght, that.lenght) &&
+               Objects.equals(length, that.length) &&
                Objects.equals(width, that.width) &&
                Objects.equals(diameter, that.diameter);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, type, deleted, createdAt, modifiedAt, deletedAt, lenght, width, diameter);
+        return Objects.hash(id, type, deleted, createdAt, modifiedAt, deletedAt, length, width, diameter);
     }
 
     @OneToMany(mappedBy = "measureByMeasureId")

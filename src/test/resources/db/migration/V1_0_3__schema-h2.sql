@@ -100,7 +100,7 @@ create table PUBLIC.measure
     deleted     tinyint   default 0,
     deleted_at  timestamp,
     diameter    double,
-    lenght      double,
+    length      double,
     modified_at timestamp,
     type        varchar(4)                          not null,
     width       double,
