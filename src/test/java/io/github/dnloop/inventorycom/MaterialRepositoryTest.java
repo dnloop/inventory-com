@@ -174,6 +174,6 @@ public class MaterialRepositoryTest {
 
         assertThat(
                 materialDeleted.get()
-        ).matches(Optional::isPresent, "is empty");
+        ).matches(Optional::isPresent, "Must be present");
     }
 }

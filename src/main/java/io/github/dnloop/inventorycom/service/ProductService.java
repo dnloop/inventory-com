@@ -369,9 +369,19 @@ public class ProductService {
         return CompletableFuture.completedFuture(materialRepository.save(material));
     }
 
-    @Async
-    public void deleteMaterial(Material material) {
-        materialRepository.delete(material);
-        log.debug("Record Deleted: " + material.toString());
+    @Transactional
+    public boolean deleteMaterial(Material material) {
+        int materialId = material.getId();
+        // if its unassigned in product detail
+        if (materialRepository.existsInProductDetail(materialId) == 0) {
+            materialRepository.delete(materialId);
+            log.debug("[Material] Record Deleted: " + material.toString());
+            return true;
+        } else {
+            // otherwise material is assigned
+            log.debug("[Material] is not unassigned");
+            return false;
+        }
+        // otherwise material is assigned
     }
 }
