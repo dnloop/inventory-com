@@ -88,6 +88,11 @@ public class MaterialRepositoryTest {
                 .matches(Optional::isPresent, "Must be present");
     }
 
+    /**
+     * 'Unavailable' type is shown first due to being empty, this behaviour is preferred
+     * instead of having at the end of list due to possible insertions moving its
+     * value to the middle.
+     */
     @Test
     void findAllMaterials() throws ExecutionException, InterruptedException {
         final Condition<Material> firstMaterial = new Condition<>(
@@ -99,7 +104,7 @@ public class MaterialRepositoryTest {
 
         assertThat(result).hasSize(4);
         assertThat(
-                result.getContent().get(0)
+                result.getContent().get(1) // list starts at index 1
         ).has(firstMaterial);
     }
 

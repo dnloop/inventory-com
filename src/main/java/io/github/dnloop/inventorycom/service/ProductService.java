@@ -35,16 +35,7 @@ public class ProductService {
 
     private final MaterialRepository materialRepository;
 
-    private final Pageable pageableFifty = PageRequest.of(
-            0, 50,
-            Sort.by("description").ascending()
-    );
-
-    private final Pageable pageableFiftyDeleted = PageRequest.of(
-            0, 50,
-            Sort.by("description").ascending()
-                .and(Sort.by("deletedAt").ascending())
-    );
+    private final PageableProperty pageableProperty = new PageableProperty();
 
     public ProductService(
             ProductRepository productRepository,
@@ -78,7 +69,7 @@ public class ProductService {
 
     @Async
     public CompletableFuture<Page<Product>> findAllProducts() {
-        return CompletableFuture.completedFuture(productRepository.findAll(pageableFifty));
+        return CompletableFuture.completedFuture(productRepository.findAll(pageableProperty.getPageableFifty()));
     }
 
     @Async
@@ -88,7 +79,8 @@ public class ProductService {
 
     @Async
     public CompletableFuture<Page<Product>> findAllDeletedProducts() {
-        return CompletableFuture.completedFuture(productRepository.findAllDeleted(pageableFiftyDeleted));
+        return CompletableFuture.completedFuture(productRepository.findAllDeleted(
+                pageableProperty.getPageableFiftyDeleted()));
     }
 
     @Async
@@ -126,12 +118,13 @@ public class ProductService {
 
     @Async
     public CompletableFuture<Page<Category>> findAllCategory() {
-        return CompletableFuture.completedFuture(categoryRepository.findAll(pageableFifty));
+        return CompletableFuture.completedFuture(categoryRepository.findAll(pageableProperty.getPageableFifty()));
     }
 
     @Async
     public CompletableFuture<Page<Category>> findAllDeletedCategory() {
-        return CompletableFuture.completedFuture(categoryRepository.findAllDeleted(pageableFiftyDeleted));
+        return CompletableFuture.completedFuture(categoryRepository.findAllDeleted(
+                pageableProperty.getPageableFiftyDeleted()));
     }
 
     @Async
@@ -275,7 +268,7 @@ public class ProductService {
 
     @Async
     public CompletableFuture<Page<Measure>> findAllMeasures() {
-        return CompletableFuture.completedFuture(measureRepository.findAll(pageableFifty));
+        return CompletableFuture.completedFuture(measureRepository.findAll(pageableProperty.getPageableFifty()));
     }
 
     @Async
@@ -285,7 +278,8 @@ public class ProductService {
 
     @Async
     public CompletableFuture<Page<Measure>> findAllDeletedMeasures() {
-        return CompletableFuture.completedFuture(measureRepository.findAllDeleted(pageableFiftyDeleted));
+        return CompletableFuture.completedFuture(measureRepository.findAllDeleted(
+                pageableProperty.getPageableFiftyDeleted()));
     }
 
     @Async
@@ -313,7 +307,7 @@ public class ProductService {
 
     @Async
     public CompletableFuture<Page<Presentation>> findAllPresentations() {
-        return CompletableFuture.completedFuture(presentationRepository.findAll(pageableFifty));
+        return CompletableFuture.completedFuture(presentationRepository.findAll(pageableProperty.getPageableFifty()));
     }
 
     @Async
@@ -323,7 +317,8 @@ public class ProductService {
 
     @Async
     public CompletableFuture<Page<Presentation>> findAllDeletedPresentations() {
-        return CompletableFuture.completedFuture(presentationRepository.findAllDeleted(pageableFiftyDeleted));
+        return CompletableFuture.completedFuture(presentationRepository.findAllDeleted(
+                pageableProperty.getPageableFiftyDeleted()));
     }
 
     @Async
@@ -351,17 +346,21 @@ public class ProductService {
 
     @Async
     public CompletableFuture<Page<Material>> findAllMaterials() {
-        return CompletableFuture.completedFuture(materialRepository.findAll(pageableFifty));
+        PageableProperty pageableProperty = new PageableProperty("type");
+        return CompletableFuture.completedFuture(materialRepository.findAll(pageableProperty.getPageableFifty()));
     }
 
     @Async
     public CompletableFuture<Page<Material>> findAllMaterials(Pageable pageable) {
+        PageableProperty pageableProperty = new PageableProperty("type");
         return CompletableFuture.completedFuture(materialRepository.findAll(pageable));
     }
 
     @Async
     public CompletableFuture<Page<Material>> findAllDeletedMaterials() {
-        return CompletableFuture.completedFuture(materialRepository.findAllDeleted(pageableFiftyDeleted));
+        PageableProperty pageableProperty = new PageableProperty("type");
+        return CompletableFuture.completedFuture(materialRepository.findAllDeleted(
+                pageableProperty.getPageableFiftyDeleted()));
     }
 
     @Async
@@ -383,5 +382,45 @@ public class ProductService {
             return false;
         }
         // otherwise material is assigned
+    }
+
+    public static class PageableProperty {
+        private Pageable pageableFifty;
+
+        private Pageable pageableFiftyDeleted;
+
+        public PageableProperty() {
+            pageableFifty = PageRequest.of(
+                    0, 50,
+                    Sort.by("description").ascending()
+            );
+
+            pageableFiftyDeleted = PageRequest.of(
+                    0, 50,
+                    Sort.by("description").ascending()
+                        .and(Sort.by("deletedAt").ascending())
+            );
+        }
+
+        public PageableProperty(String description) {
+            pageableFifty = PageRequest.of(
+                    0, 50,
+                    Sort.by(description).ascending()
+            );
+
+            pageableFiftyDeleted = PageRequest.of(
+                    0, 50,
+                    Sort.by(description).ascending()
+                        .and(Sort.by("deletedAt").ascending())
+            );
+        }
+
+        public Pageable getPageableFifty() {
+            return pageableFifty;
+        }
+
+        public Pageable getPageableFiftyDeleted() {
+            return pageableFiftyDeleted;
+        }
     }
 }
