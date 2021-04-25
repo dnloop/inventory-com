@@ -1,7 +1,6 @@
 package io.github.dnloop.inventorycom.model;
 
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -125,7 +124,7 @@ public class Material {
         return Objects.hash(id, type, deleted, createdAt, modifiedAt, deletedAt, color);
     }
 
-    @OneToMany(mappedBy = "materialByMaterialId")
+    @OneToMany(mappedBy = "materialByMaterialId", fetch = FetchType.LAZY)
     public Collection<ProductDetail> getProductDetailsById() {
         return productDetailsById;
     }
@@ -134,5 +133,18 @@ public class Material {
             Collection<ProductDetail> productDetailsById
     ) {
         this.productDetailsById = productDetailsById;
+    }
+
+    @Override
+    public String toString() {
+        return "Material{" +
+               "id=" + id +
+               ", type='" + type + '\'' +
+               ", deleted=" + deleted +
+               ", createdAt=" + createdAt +
+               ", modifiedAt=" + modifiedAt +
+               ", deletedAt=" + deletedAt +
+               ", color='" + color + '\'' +
+               '}';
     }
 }
