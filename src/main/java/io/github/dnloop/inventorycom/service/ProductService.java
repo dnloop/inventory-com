@@ -287,10 +287,20 @@ public class ProductService {
         return CompletableFuture.completedFuture(measureRepository.save(measure));
     }
 
-    @Async
-    public void deleteMeasures(Measure measure) {
-        measureRepository.delete(measure);
-        log.debug("Record Deleted: " + measure.toString());
+    @Transactional
+    public boolean deleteMeasures(Measure measure) {
+        int measureId = measure.getId();
+        // if its unassigned in product detail
+        if (measureRepository.existsInProductDetail(measureId) == 0) {
+            measureRepository.delete(measureId);
+            log.debug("[Material] Record Deleted: " + measure.toString());
+            return true;
+        } else {
+            // otherwise measure is assigned
+            log.debug("[Material] is not unassigned");
+            return false;
+        }
+        // otherwise material is assigned
     }
 
     /* Presentation */
