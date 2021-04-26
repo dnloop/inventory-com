@@ -1,5 +1,6 @@
 package io.github.dnloop.inventorycom;
 
+import io.github.dnloop.inventorycom.model.Category;
 import io.github.dnloop.inventorycom.model.Material;
 import io.github.dnloop.inventorycom.repository.MaterialRepository;
 import io.github.dnloop.inventorycom.service.ProductService;
@@ -19,6 +20,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -180,5 +182,30 @@ public class MaterialRepositoryTest {
         assertThat(
                 materialDeleted.get()
         ).matches(Optional::isPresent, "Must be present");
+    }
+
+    /**
+     * This unit should return empty due to not being able to delete the record.
+     */
+    @Test
+    void failedDeleteMaterial() throws ExecutionException, InterruptedException {
+        AtomicBoolean state = new AtomicBoolean(true);
+        final CompletableFuture<Void> material =
+                productService.findMaterialById(1).thenAccept(material1 -> material1.ifPresent(
+                        value -> state.set(productService.deleteMaterial(value))
+                ));
+
+
+        final CompletableFuture<Optional<Material>> materialDeleted =
+                material.thenCompose(
+                        unused -> productService.findDeletedMaterial(1)
+                );
+
+        Optional<Material> result = materialDeleted.get();
+
+        assertThat(state).isFalse();
+        assertThat(
+                result
+        ).matches(Optional::isEmpty, "Must be empty");
     }
 }
