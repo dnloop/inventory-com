@@ -15,7 +15,7 @@ import java.util.Objects;
 public class ClientPhone {
     private Integer id;
     private String number;
-    private Byte deleted;
+    private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
     private Timestamp deletedAt;

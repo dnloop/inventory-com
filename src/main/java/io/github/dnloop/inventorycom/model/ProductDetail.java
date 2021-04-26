@@ -20,7 +20,7 @@ import java.util.Objects;
 public class ProductDetail {
     private Integer id;
     private String brand;
-    private Byte deleted;
+    private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
     private Timestamp deletedAt;

@@ -17,7 +17,7 @@ public class Supplier {
     private String description;
     private String mail;
     private Integer localityId;
-    private Byte deleted;
+    private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
     private Timestamp deletedAt;

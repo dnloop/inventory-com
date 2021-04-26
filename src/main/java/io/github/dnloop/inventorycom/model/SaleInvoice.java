@@ -20,7 +20,7 @@ public class SaleInvoice {
     private BigDecimal total;
     private String invoiceType;
     private String paymentType;
-    private Byte deleted;
+    private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
     private BigDecimal discount;
     private Timestamp modifiedAt;

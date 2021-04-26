@@ -128,7 +128,7 @@ public class MaterialRepositoryTest {
     void saveMaterial() throws ExecutionException, InterruptedException {
         Material newMaterial = new Material("COPPER");
 
-        final CompletableFuture<Optional<Material>> product =
+        final CompletableFuture<Optional<Material>> material =
                 productService.saveMaterial(newMaterial).thenApply(material1 -> {
                     try {
                         return productService.findMaterialById(material1.getId()).get();
@@ -137,8 +137,8 @@ public class MaterialRepositoryTest {
                     }
                 });
 
-        assertThat(product.get())
-                .matches(Optional::isPresent, "is empty");
+        assertThat(material.get())
+                .matches(Optional::isPresent, "Must be present");
     }
 
     @Test

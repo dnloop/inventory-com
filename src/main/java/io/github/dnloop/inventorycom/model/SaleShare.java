@@ -16,7 +16,7 @@ public class SaleShare {
     private Integer number;
     private Date paymentDate;
     private Date dueDate;
-    private Byte deleted;
+    private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
     private Timestamp deletedAt;

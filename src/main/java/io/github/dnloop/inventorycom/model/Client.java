@@ -19,7 +19,7 @@ public class Client {
     private Long cuit;
     private String dni;
     private Integer localityId;
-    private Byte deleted;
+    private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
     private Timestamp deletedAt;

@@ -16,7 +16,7 @@ public class SaleDetail {
     private Integer amount;
     private BigDecimal unitPrice;
     private Byte iva;
-    private Byte deleted;
+    private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
     private Timestamp deletedAt;

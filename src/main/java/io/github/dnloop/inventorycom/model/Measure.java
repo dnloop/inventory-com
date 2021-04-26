@@ -21,7 +21,7 @@ import java.util.Objects;
 public class Measure {
     private Integer id;
     private String type; // mm, cm, in...
-    private Byte deleted;
+    private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
     private Timestamp deletedAt;

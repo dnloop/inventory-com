@@ -13,7 +13,7 @@ import java.util.Objects;
 public class SupplierCatalog {
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
-    private Byte deleted;
+    private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
     private String catalogCode;
     private Integer id;
