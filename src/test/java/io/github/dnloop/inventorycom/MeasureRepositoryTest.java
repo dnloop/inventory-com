@@ -1,9 +1,10 @@
 package io.github.dnloop.inventorycom;
 
+import io.github.dnloop.inventorycom.model.Material;
 import io.github.dnloop.inventorycom.model.Measure;
-import io.github.dnloop.inventorycom.model.Product;
 import io.github.dnloop.inventorycom.repository.MeasureRepository;
 import io.github.dnloop.inventorycom.service.ProductService;
+import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -11,14 +12,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.jdbc.Sql;
 
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -30,6 +32,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 @EnableAsync
 @AutoConfigureTestDatabase
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@Sql({
+             "/db/data/insert-category.sql",
+             "/db/data/insert-category_level.sql",
+             "/db/data/insert-material.sql",
+             "/db/data/insert-measure.sql",
+             "/db/data/insert-presentation.sql",
+             "/db/data/insert-product_detail.sql",
+             "/db/data/insert-product.sql"
+     })
 public class MeasureRepositoryTest {
 
     @Autowired
@@ -46,7 +57,7 @@ public class MeasureRepositoryTest {
         });
 
         assertThat(measure.get())
-                .matches(Optional::isPresent, "is empty");
+                .matches(Optional::isPresent, "Must be present");
     }
 
     /**
@@ -56,56 +67,64 @@ public class MeasureRepositoryTest {
     void findMeasureByIdDeleted() throws ExecutionException, InterruptedException {
         final CompletableFuture<Optional<Measure>> measure = CompletableFuture.supplyAsync(() -> {
             try {
-                return productService.findMeasuresById(1).get();
+                return productService.findMeasuresById(5).get();
             } catch (InterruptedException | ExecutionException e) {
                 return Optional.empty();
             }
         });
 
         assertThat(measure.get())
-                .matches(Optional::isPresent, "is empty");
+                .matches(Optional::isEmpty, "Must be empty");
     }
 
     @Test
     void findDeletedMeasure() throws ExecutionException, InterruptedException {
         final CompletableFuture<Optional<Measure>> measure = CompletableFuture.supplyAsync(() -> {
             try {
-                return productService.findDeletedMeasures(1).get();
+                return productService.findDeletedMeasures(5).get();
             } catch (InterruptedException | ExecutionException e) {
                 return Optional.empty();
             }
         });
 
         assertThat(measure.get())
-                .matches(Optional::isEmpty, "is present");
+                .matches(Optional::isPresent, "Must be present");
     }
 
     @Test
     void findAllMeasures() throws ExecutionException, InterruptedException {
+        final Condition<Measure> firstMeasure = new Condition<>(
+                material -> material.getType().equalsIgnoreCase("CM"),
+                "[Type] - Must be CM"
+        );
         final CompletableFuture<Page<Measure>> measures = productService.findAllMeasures();
         final Page<Measure> result = measures.get();
 
-        assertThat(result).hasSize(3);
+        assertThat(result).hasSize(4);
         assertThat(
-                result.getContent().get(0)
-        );
+                result.getContent().get(1) // first index default value
+        ).has(firstMeasure);
     }
 
     @Test
     void findAllDeletedMeasures() throws ExecutionException, InterruptedException {
+        final Condition<Measure> firstMeasure = new Condition<>(
+                material -> material.getType().equalsIgnoreCase("INCH"),
+                "[Type] - Must be INCH"
+        );
         final CompletableFuture<Page<Measure>> measures = productService.findAllDeletedMeasures();
         final Page<Measure> result = measures.get();
 
-        assertThat(result).hasSize(3);
+        assertThat(result).hasSize(2);
         assertThat(
                 result.getContent().get(0)
-        );
+        ).has(firstMeasure);
     }
 
     @Test
     void saveMeasures() throws ExecutionException, InterruptedException {
         Measure newMeasure = new Measure(
-               "CM" , 1.2, 1.1, 0.0
+                "CM", 1.2, 1.1, 0.0
         );
 
         final CompletableFuture<Optional<Measure>> measure =
@@ -118,13 +137,13 @@ public class MeasureRepositoryTest {
                 });
 
         assertThat(measure.get())
-                .matches(Optional::isPresent, "is empty");
+                .matches(Optional::isPresent, "Must be present");
     }
 
     @Test
     void modifyMeasures() throws ExecutionException, InterruptedException {
         final Timestamp ts = Timestamp.from(Instant.now());
-        final Measure editMeasures = productService.findMeasuresById(1).join().orElse(null);
+        final Measure editMeasures = productService.findMeasuresById(2).join().orElse(null);
 
         Objects.requireNonNull(editMeasures).setModifiedAt(ts);
 
@@ -148,18 +167,43 @@ public class MeasureRepositoryTest {
     @Test
     void deleteMeasures() throws ExecutionException, InterruptedException {
         final CompletableFuture<Void> measures =
-                productService.findMeasuresById(1).thenAccept(measures1 -> measures1.ifPresent(
+                productService.findMeasuresById(4).thenAccept(measures1 -> measures1.ifPresent(
                         value -> productService.deleteMeasures(value)
                 ));
 
 
         final CompletableFuture<Optional<Measure>> measuresDeleted =
                 measures.thenCompose(
-                        unused -> productService.findDeletedMeasures(1)
+                        unused -> productService.findDeletedMeasures(4)
                 );
 
         assertThat(
                 measuresDeleted.get()
-        ).matches(Optional::isPresent, "is empty");
+        ).matches(Optional::isPresent, "Must be present");
+    }
+
+    /**
+     * This unit should return empty due to not being able to delete the record.
+     */
+    @Test
+    void failedDeleteMeasure() throws ExecutionException, InterruptedException {
+        AtomicBoolean state = new AtomicBoolean(true);
+        final CompletableFuture<Void> measure =
+                productService.findMeasuresById(1).thenAccept(measure1 -> measure1.ifPresent(
+                        value -> state.set(productService.deleteMeasures(value))
+                ));
+
+
+        final CompletableFuture<Optional<Material>> measureDeleted =
+                measure.thenCompose(
+                        unused -> productService.findDeletedMaterial(1)
+                );
+
+        Optional<Material> result = measureDeleted.get();
+
+        assertThat(state).isFalse();
+        assertThat(
+                result
+        ).matches(Optional::isEmpty, "Must be empty");
     }
 }
