@@ -1,6 +1,5 @@
 package io.github.dnloop.inventorycom;
 
-import io.github.dnloop.inventorycom.model.Category;
 import io.github.dnloop.inventorycom.model.Material;
 import io.github.dnloop.inventorycom.repository.MaterialRepository;
 import io.github.dnloop.inventorycom.service.ProductService;
