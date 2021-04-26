@@ -185,6 +185,9 @@ public class CategoryRepositoryTest {
         ).matches(Optional::isPresent, "Must be present");
     }
 
+    /**
+     * This unit should return empty due to not being able to delete the record.
+     */
     @Test
     void failedDeleteCategory() throws ExecutionException, InterruptedException {
         AtomicBoolean state = new AtomicBoolean(true);
