@@ -4,6 +4,7 @@ import io.github.dnloop.inventorycom.model.Presentation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
@@ -28,4 +29,25 @@ public interface PresentationRepository extends JpaRepository<Presentation, Inte
            " WHERE presentation.id = :id" +
            " AND presentation.deleted = 1")
     Optional<Presentation> findDeleted(int id);
+
+    /**
+     * Returns the number of assigned measures to a Product Detail.
+     */
+    @Query("SELECT COUNT (productDetail.id)" +
+           " FROM ProductDetail productDetail" +
+           " WHERE productDetail.presentationId = :presentationId" +
+           " AND productDetail.deleted = 0")
+    Integer existsInProductDetail(int presentationId);
+
+    /**
+     * Method to delete a single presentation.
+     * <p>
+     * By using this method we ensure Product Detail is not in an invalid state. If
+     * a record is 'deleted' we assign a default 'none' value.
+     */
+    @Modifying
+    @Query("UPDATE Presentation presentation" +
+           " SET presentation.deleted = 1" +
+           " WHERE presentation.id = :presentationId")
+    void delete(int presentationId);
 }

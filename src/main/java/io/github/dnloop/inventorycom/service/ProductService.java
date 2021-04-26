@@ -342,8 +342,8 @@ public class ProductService {
     public boolean deletePresentation(Presentation presentation) {
         int presentationId = presentation.getId();
         // if its unassigned in product detail
-        if (materialRepository.existsInProductDetail(presentationId) == 0) {
-            materialRepository.delete(presentationId);
+        if (presentationRepository.existsInProductDetail(presentationId) == 0) {
+            presentationRepository.delete(presentationId);
             log.debug("[Presentation] Record Deleted: " + presentation.toString());
             return true;
         } else {

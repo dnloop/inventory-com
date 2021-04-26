@@ -25,7 +25,7 @@ public class Presentation {
     private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
-    private Integer units;
+    private Integer units = 1;
     private Collection<ProductDetail> productDetailsById;
 
     public Presentation() {}
