@@ -145,4 +145,18 @@ public class PurchaseShare {
     ) {
         this.purchaseInvoiceByPurchaseInvoiceId = purchaseInvoiceByPurchaseInvoiceId;
     }
+
+    @Override
+    public String toString() {
+        return "PurchaseShare{" +
+               "id=" + id +
+               ", number=" + number +
+               ", paymentDate=" + paymentDate +
+               ", dueDate=" + dueDate +
+               ", deleted=" + deleted +
+               ", createdAt=" + createdAt +
+               ", modifiedAt=" + modifiedAt +
+               ", deletedAt=" + deletedAt +
+               '}';
+    }
 }

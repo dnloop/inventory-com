@@ -119,4 +119,18 @@ public class ClientPhone {
     public void setClientByClientId(Client clientByClientId) {
         this.clientByClientId = clientByClientId;
     }
+
+    @Override
+    public String toString() {
+        return "ClientPhone{" +
+               "id=" + id +
+               ", number='" + number + '\'' +
+               ", deleted=" + deleted +
+               ", createdAt=" + createdAt +
+               ", modifiedAt=" + modifiedAt +
+               ", deletedAt=" + deletedAt +
+               ", clientId=" + clientId +
+               '}';
+    }
+
 }

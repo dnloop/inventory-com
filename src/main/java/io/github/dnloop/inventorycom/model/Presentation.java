@@ -28,6 +28,12 @@ public class Presentation {
     private Integer units;
     private Collection<ProductDetail> productDetailsById;
 
+    public Presentation() {}
+
+    public Presentation(String description) {
+        this.description = description;
+    }
+
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -127,5 +133,18 @@ public class Presentation {
             Collection<ProductDetail> productDetailsById
     ) {
         this.productDetailsById = productDetailsById;
+    }
+
+    @Override
+    public String toString() {
+        return "Presentation{" +
+               "id=" + id +
+               ", description='" + description + '\'' +
+               ", deleted=" + deleted +
+               ", createdAt=" + createdAt +
+               ", modifiedAt=" + modifiedAt +
+               ", deletedAt=" + deletedAt +
+               ", units=" + units +
+               '}';
     }
 }

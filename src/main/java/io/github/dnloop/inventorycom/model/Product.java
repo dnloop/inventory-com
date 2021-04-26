@@ -233,4 +233,21 @@ public class Product {
     ) {
         this.supplierCatalogsById = supplierCatalogsById;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+               "id=" + id +
+               ", description='" + description + '\'' +
+               ", stock=" + stock +
+               ", price=" + price +
+               ", deleted=" + deleted +
+               ", createdAt=" + createdAt +
+               ", modifiedAt=" + modifiedAt +
+               ", categoryId=" + categoryId +
+               ", deletedAt=" + deletedAt +
+               ", image='" + image + '\'' +
+               ", detailId=" + detailId +
+               '}';
+    }
 }

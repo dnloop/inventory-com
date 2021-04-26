@@ -182,4 +182,21 @@ public class PurchaseDetail {
     public void setProductByProductId(Product productByProductId) {
         this.productByProductId = productByProductId;
     }
+
+    @Override
+    public String toString() {
+        return "PurchaseDetail{" +
+               "id=" + id +
+               ", amount=" + amount +
+               ", unitPrice=" + unitPrice +
+               ", subtotal=" + subtotal +
+               ", deleted=" + deleted +
+               ", createdAt=" + createdAt +
+               ", modifiedAt=" + modifiedAt +
+               ", deletedAt=" + deletedAt +
+               ", purchaseInvoiceId=" + purchaseInvoiceId +
+               ", productId=" + productId +
+               ", iva=" + iva +
+               '}';
+    }
 }

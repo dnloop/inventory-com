@@ -201,4 +201,23 @@ public class SaleInvoice {
     public void setSaleSharesById(Collection<SaleShare> saleSharesById) {
         this.saleSharesById = saleSharesById;
     }
+
+    @Override
+    public String toString() {
+        return "SaleInvoice{" +
+               "id=" + id +
+               ", number=" + number +
+               ", generationDate=" + generationDate +
+               ", surcharge=" + surcharge +
+               ", total=" + total +
+               ", invoiceType='" + invoiceType + '\'' +
+               ", paymentType='" + paymentType + '\'' +
+               ", deleted=" + deleted +
+               ", createdAt=" + createdAt +
+               ", discount=" + discount +
+               ", modifiedAt=" + modifiedAt +
+               ", deletedAt=" + deletedAt +
+               ", clientId=" + clientId +
+               '}';
+    }
 }

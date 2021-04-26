@@ -117,4 +117,17 @@ public class SupplierPhone {
     public void setSupplierBySupplierId(Supplier supplierBySupplierId) {
         this.supplierBySupplierId = supplierBySupplierId;
     }
+
+    @Override
+    public String toString() {
+        return "SupplierPhone{" +
+               "id=" + id +
+               ", number='" + number + '\'' +
+               ", deleted=" + deleted +
+               ", createdAt=" + createdAt +
+               ", modifiedAt=" + modifiedAt +
+               ", deletedAt=" + deletedAt +
+               ", supplierId=" + supplierId +
+               '}';
+    }
 }

@@ -144,4 +144,19 @@ public class SaleShare {
     public void setSaleInvoiceBySaleInvoiceId(SaleInvoice saleInvoiceBySaleInvoiceId) {
         this.saleInvoiceBySaleInvoiceId = saleInvoiceBySaleInvoiceId;
     }
+
+    @Override
+    public String toString() {
+        return "SaleShare{" +
+               "id=" + id +
+               ", number=" + number +
+               ", paymentDate=" + paymentDate +
+               ", dueDate=" + dueDate +
+               ", deleted=" + deleted +
+               ", createdAt=" + createdAt +
+               ", modifiedAt=" + modifiedAt +
+               ", deletedAt=" + deletedAt +
+               ", saleInvoiceId=" + saleInvoiceId +
+               '}';
+    }
 }

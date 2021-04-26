@@ -117,4 +117,15 @@ public class SupplierCatalog {
         this.productByProductId = productByProductId;
     }
 
+    @Override
+    public String toString() {
+        return "SupplierCatalog{" +
+               "modifiedAt=" + modifiedAt +
+               ", deletedAt=" + deletedAt +
+               ", deleted=" + deleted +
+               ", createdAt=" + createdAt +
+               ", catalogCode='" + catalogCode + '\'' +
+               ", id=" + id +
+               '}';
+    }
 }

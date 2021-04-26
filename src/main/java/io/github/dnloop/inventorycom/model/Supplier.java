@@ -212,4 +212,21 @@ public class Supplier {
     ) {
         this.supplierPhonesById = supplierPhonesById;
     }
+
+    @Override
+    public String toString() {
+        return "Supplier{" +
+               "id=" + id +
+               ", name='" + name + '\'' +
+               ", description='" + description + '\'' +
+               ", mail='" + mail + '\'' +
+               ", localityId=" + localityId +
+               ", deleted=" + deleted +
+               ", createdAt=" + createdAt +
+               ", modifiedAt=" + modifiedAt +
+               ", deletedAt=" + deletedAt +
+               ", address='" + address + '\'' +
+               ", cuit=" + cuit +
+               '}';
+    }
 }

@@ -186,4 +186,19 @@ public class ProductDetail {
     public void setMaterialByMaterialId(Material materialByMaterialId) {
         this.materialByMaterialId = materialByMaterialId;
     }
+
+    @Override
+    public String toString() {
+        return "ProductDetail{" +
+               "id=" + id +
+               ", brand='" + brand + '\'' +
+               ", deleted=" + deleted +
+               ", createdAt=" + createdAt +
+               ", modifiedAt=" + modifiedAt +
+               ", deletedAt=" + deletedAt +
+               ", measureId=" + measureId +
+               ", presentationId=" + presentationId +
+               ", materialId=" + materialId +
+               '}';
+    }
 }

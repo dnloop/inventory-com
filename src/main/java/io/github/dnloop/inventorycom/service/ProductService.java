@@ -338,10 +338,20 @@ public class ProductService {
         return CompletableFuture.completedFuture(presentationRepository.save(presentation));
     }
 
-    @Async
-    public void deletePresentation(Presentation presentation) {
-        presentationRepository.delete(presentation);
-        log.debug("Record Deleted: " + presentation.toString());
+    @Transactional
+    public boolean deletePresentation(Presentation presentation) {
+        int presentationId = presentation.getId();
+        // if its unassigned in product detail
+        if (materialRepository.existsInProductDetail(presentationId) == 0) {
+            materialRepository.delete(presentationId);
+            log.debug("[Presentation] Record Deleted: " + presentation.toString());
+            return true;
+        } else {
+            // otherwise presentation is assigned
+            log.debug("[Presentation] is not unassigned");
+            return false;
+        }
+        // otherwise presentation is assigned
     }
 
     /* Material */

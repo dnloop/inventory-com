@@ -161,4 +161,19 @@ public class Measure {
     ) {
         this.productDetailsById = productDetailsById;
     }
+
+    @Override
+    public String toString() {
+        return "Measure{" +
+               "id=" + id +
+               ", type='" + type + '\'' +
+               ", deleted=" + deleted +
+               ", createdAt=" + createdAt +
+               ", modifiedAt=" + modifiedAt +
+               ", deletedAt=" + deletedAt +
+               ", length=" + length +
+               ", width=" + width +
+               ", diameter=" + diameter +
+               '}';
+    }
 }

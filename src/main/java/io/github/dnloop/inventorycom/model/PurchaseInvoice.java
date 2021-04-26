@@ -216,5 +216,24 @@ public class PurchaseInvoice {
     public void setPurchaseSharesById(Collection<PurchaseShare> purchaseSharesById) {
         this.purchaseSharesById = purchaseSharesById;
     }
+
+    @Override
+    public String toString() {
+        return "PurchaseInvoice{" +
+               "id=" + id +
+               ", number=" + number +
+               ", generationDate=" + generationDate +
+               ", paymentType='" + paymentType + '\'' +
+               ", invoiceType='" + invoiceType + '\'' +
+               ", surcharge=" + surcharge +
+               ", discount=" + discount +
+               ", total=" + total +
+               ", deleted=" + deleted +
+               ", createdAt=" + createdAt +
+               ", modifiedAt=" + modifiedAt +
+               ", deletedAt=" + deletedAt +
+               ", supplierId=" + supplierId +
+               '}';
+    }
 }
 

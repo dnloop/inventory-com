@@ -167,4 +167,20 @@ public class SaleDetail {
     public void setProductByProductId(Product productByProductId) {
         this.productByProductId = productByProductId;
     }
+
+    @Override
+    public String toString() {
+        return "SaleDetail{" +
+               "id=" + id +
+               ", amount=" + amount +
+               ", unitPrice=" + unitPrice +
+               ", iva=" + iva +
+               ", deleted=" + deleted +
+               ", createdAt=" + createdAt +
+               ", modifiedAt=" + modifiedAt +
+               ", deletedAt=" + deletedAt +
+               ", saleInvoiceId=" + saleInvoiceId +
+               ", productId=" + productId +
+               '}';
+    }
 }

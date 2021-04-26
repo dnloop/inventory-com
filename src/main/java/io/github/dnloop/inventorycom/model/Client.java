@@ -213,4 +213,22 @@ public class Client {
     public void setClientPhonesById(Collection<ClientPhone> clientPhonesById) {
         this.clientPhonesById = clientPhonesById;
     }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+               "id=" + id +
+               ", name='" + name + '\'' +
+               ", surname='" + surname + '\'' +
+               ", address='" + address + '\'' +
+               ", cuit=" + cuit +
+               ", dni='" + dni + '\'' +
+               ", localityId=" + localityId +
+               ", deleted=" + deleted +
+               ", createdAt=" + createdAt +
+               ", modifiedAt=" + modifiedAt +
+               ", deletedAt=" + deletedAt +
+               ", mail='" + mail + '\'' +
+               '}';
+    }
 }
