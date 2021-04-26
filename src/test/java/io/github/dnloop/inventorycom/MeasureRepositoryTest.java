@@ -26,7 +26,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test {@link MeasureRepository} property in  {@link ProductService}.
- * TODO adjust test values according to test data
  */
 @SpringBootTest
 @EnableAsync
