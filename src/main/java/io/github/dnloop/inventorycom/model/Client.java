@@ -4,6 +4,7 @@ import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -19,7 +20,7 @@ public class Client {
     private String dni;
     private Integer localityId;
     private Byte deleted;
-    private Timestamp createdAt;
+    private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
     private String mail;

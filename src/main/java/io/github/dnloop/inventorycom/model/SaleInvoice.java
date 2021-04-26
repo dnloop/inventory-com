@@ -5,6 +5,7 @@ import org.hibernate.annotations.SQLDelete;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -20,7 +21,7 @@ public class SaleInvoice {
     private String invoiceType;
     private String paymentType;
     private Byte deleted;
-    private Timestamp createdAt;
+    private Timestamp createdAt = Timestamp.from(Instant.now());
     private BigDecimal discount;
     private Timestamp modifiedAt;
     private Timestamp deletedAt;

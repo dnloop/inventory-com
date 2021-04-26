@@ -4,6 +4,7 @@ import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -20,7 +21,7 @@ public class ProductDetail {
     private Integer id;
     private String brand;
     private Byte deleted;
-    private Timestamp createdAt;
+    private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
     private Integer measureId;

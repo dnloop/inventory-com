@@ -4,6 +4,7 @@ import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Objects;
 
 @Entity
@@ -13,7 +14,7 @@ public class SupplierCatalog {
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
     private Byte deleted;
-    private Timestamp createdAt;
+    private Timestamp createdAt = Timestamp.from(Instant.now());
     private String catalogCode;
     private Integer id;
     private Supplier supplierBySupplierId;
