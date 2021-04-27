@@ -94,7 +94,7 @@ public class ProductService {
     }
 
 
-    @Async
+    @Transactional
     public void deleteProduct(Product product) {
         productRepository.delete(product);
         log.debug("Record Deleted: " + product.toString());
@@ -141,7 +141,7 @@ public class ProductService {
         return CompletableFuture.completedFuture(productDetailRepository.save(product));
     }
 
-    @Async
+    @Transactional
     public void deleteProductDetail(ProductDetail productDetail) {
         productDetailRepository.delete(productDetail);
         log.debug("Record Deleted: " + productDetail.toString());

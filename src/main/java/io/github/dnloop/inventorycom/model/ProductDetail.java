@@ -24,13 +24,19 @@ public class ProductDetail {
     private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
-    private Integer measureId;
-    private Integer presentationId;
-    private Integer materialId;
+    private Integer measureId = 1;
+    private Integer presentationId = 1;
+    private Integer materialId = 1;
     private Collection<Product> productsById;
     private Measure measureByMeasureId;
     private Presentation presentationByPresentationId;
     private Material materialByMaterialId;
+
+    public ProductDetail() {}
+
+    public ProductDetail(String brand) {
+        this.brand = brand;
+    }
 
     @Id
     @Column(name = "id", nullable = false)
