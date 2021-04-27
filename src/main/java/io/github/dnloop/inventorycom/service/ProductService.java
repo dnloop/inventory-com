@@ -94,14 +94,58 @@ public class ProductService {
     }
 
 
-    @Transactional
+    @Async
     public void deleteProduct(Product product) {
         productRepository.delete(product);
         log.debug("Record Deleted: " + product.toString());
-        log.debug("Deleting Relationships");
-        ProductDetail productDetail = product.getProductDetailByDetailId();
-        log.debug("Product Detail Deleted.");
+        log.debug("Product Deleted.");
+    }
+
+    /* Product Detail */
+
+    @Async
+    public CompletableFuture<Optional<ProductDetail>> findProductDetailById(int id) {
+        return CompletableFuture.completedFuture(productDetailRepository.findById(id));
+    }
+
+    @Async
+    public CompletableFuture<Optional<ProductDetail>> findDeletedProductDetail(Integer id) {
+        return CompletableFuture.completedFuture(productDetailRepository.findDeleted(id));
+    }
+
+    @Async
+    public CompletableFuture<Page<ProductDetail>> findAllProductDetails() {
+        PageableProperty pageableProperty = new PageableProperty("brand");
+        return CompletableFuture.completedFuture(productDetailRepository.findAll(pageableProperty.getPageable()));
+    }
+
+    @Async
+    public CompletableFuture<Page<ProductDetail>> findAllProductDetails(PageableProperty pageable) {
+        return CompletableFuture.completedFuture(productDetailRepository.findAll(pageable.getPageable()));
+    }
+
+    @Async
+    public CompletableFuture<Page<ProductDetail>> findAllDeletedProductDetails() {
+        PageableProperty pageableProperty = new PageableProperty("brand");
+        return CompletableFuture.completedFuture(productDetailRepository.findAllDeleted(
+                pageableProperty.getPageableDeleted()));
+    }
+
+    @Async
+    public CompletableFuture<Page<ProductDetail>> findAllDeletedProductDetails(PageableProperty pageable) {
+        return CompletableFuture.completedFuture(productDetailRepository.findAllDeleted(pageable.getPageable()));
+    }
+
+    @Async
+    public CompletableFuture<ProductDetail> saveProductDetail(ProductDetail product) {
+        return CompletableFuture.completedFuture(productDetailRepository.save(product));
+    }
+
+    @Async
+    public void deleteProductDetail(ProductDetail productDetail) {
         productDetailRepository.delete(productDetail);
+        log.debug("Record Deleted: " + productDetail.toString());
+        log.debug("Product Detail Deleted.");
     }
 
     /* Category */
