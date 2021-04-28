@@ -1,7 +1,7 @@
 package io.github.dnloop.inventorycom;
 
-import io.github.dnloop.inventorycom.repository.SupplierRepository;
-import io.github.dnloop.inventorycom.service.SupplierService;
+import io.github.dnloop.inventorycom.repository.PurchaseInvoiceRepository;
+import io.github.dnloop.inventorycom.service.PurchaseService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -13,7 +13,7 @@ import org.springframework.test.context.jdbc.Sql;
 import java.util.concurrent.ExecutionException;
 
 /**
- * Test {@link SupplierRepository} property in  {@link SupplierService}.
+ * Test {@link PurchaseInvoiceRepository} property in  {@link PurchaseService}.
  */
 @SpringBootTest
 @EnableAsync
@@ -22,10 +22,10 @@ import java.util.concurrent.ExecutionException;
 @Sql({
 
      })
-public class SupplierServiceTest {
+public class PurchaseInvoiceRepositoryTest {
 
     @Autowired
-    SupplierService supplierService;
+    PurchaseService purchaseService;
 
     @Test
     void contextLoads() throws ExecutionException, InterruptedException {}
@@ -36,7 +36,7 @@ public class SupplierServiceTest {
     }
 
     @Test
-    void findSupplierById() {
+    void findPurchaseInvoiceById() {
 
     }
 
@@ -44,37 +44,37 @@ public class SupplierServiceTest {
      * Query a deleted record with a non-delete clause
      */
     @Test
-    void findSupplierByIdDeleted() throws ExecutionException, InterruptedException {
+    void findPurchaseInvoiceByIdDeleted() throws ExecutionException, InterruptedException {
 
     }
 
     @Test
-    void findDeletedSupplier() throws ExecutionException, InterruptedException {
+    void findDeletedPurchaseInvoice() throws ExecutionException, InterruptedException {
 
     }
 
     @Test
-    void findAllSupplier() throws ExecutionException, InterruptedException {
+    void findAllPurchaseInvoice() throws ExecutionException, InterruptedException {
 
     }
 
     @Test
-    void findAllDeletedSupplier() throws ExecutionException, InterruptedException {
+    void findAllDeletedPurchaseInvoice() throws ExecutionException, InterruptedException {
 
     }
 
     @Test
-    void saveSupplier() throws ExecutionException, InterruptedException {
+    void savePurchaseInvoice() throws ExecutionException, InterruptedException {
 
     }
 
     @Test
-    void modifySupplier() throws ExecutionException, InterruptedException {
+    void modifyPurchaseInvoice() throws ExecutionException, InterruptedException {
 
     }
 
     @Test
-    void deleteSupplier() throws ExecutionException, InterruptedException {
+    void deletePurchaseInvoice() throws ExecutionException, InterruptedException {
 
     }
 }
