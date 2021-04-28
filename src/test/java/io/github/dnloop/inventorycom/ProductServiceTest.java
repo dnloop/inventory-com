@@ -13,7 +13,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.jdbc.Sql;
 
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Objects;
