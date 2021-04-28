@@ -48,7 +48,7 @@ public class PurchaseDetail {
     }
 
     @Basic
-    @Column(name = "unit_price", nullable = false, precision = 5)
+    @Column(name = "unit_price", nullable = false, precision = 15, scale = 5)
     public BigDecimal getUnitPrice() {
         return unitPrice;
     }
@@ -58,7 +58,7 @@ public class PurchaseDetail {
     }
 
     @Basic
-    @Column(name = "subtotal", nullable = false, precision = 5)
+    @Column(name = "subtotal", nullable = false, precision = 15, scale = 5)
     public BigDecimal getSubtotal() {
         return subtotal;
     }

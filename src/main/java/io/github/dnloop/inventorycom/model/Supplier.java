@@ -41,7 +41,7 @@ public class Supplier {
     }
 
     @Basic
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, length = 320)
     public String getName() {
         return name;
     }
@@ -121,7 +121,7 @@ public class Supplier {
     }
 
     @Basic
-    @Column(name = "address", nullable = false)
+    @Column(name = "address", nullable = false, length = 320)
     public String getAddress() {
         return address;
     }

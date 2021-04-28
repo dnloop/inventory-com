@@ -21,7 +21,7 @@ public class Product {
     private Integer id;
     private String description;
     private Integer stock = 0;
-    private BigDecimal price;
+    private String productCode;
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
@@ -37,10 +37,10 @@ public class Product {
 
     public Product() {}
 
-    public Product(String description, Integer stock, BigDecimal price, Integer categoryId, Integer detailId) {
+    public Product(String description, Integer stock, String productCode, Integer categoryId, Integer detailId) {
         this.description = description;
         this.stock = stock;
-        this.price = price;
+        this.productCode = productCode;
         this.detailId = detailId;
         this.categoryId = categoryId;
     }
@@ -77,13 +77,13 @@ public class Product {
     }
 
     @Basic
-    @Column(name = "price", nullable = false, precision = 4)
-    public BigDecimal getPrice() {
-        return price;
+    @Column(name = "product_code", nullable = false, length = 320)
+    public String getProductCode() {
+        return productCode;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
     }
 
     @Basic
@@ -164,7 +164,7 @@ public class Product {
         return Objects.equals(id, that.id) &&
                Objects.equals(description, that.description) &&
                Objects.equals(stock, that.stock) &&
-               Objects.equals(price, that.price) &&
+               Objects.equals(productCode, that.productCode) &&
                Objects.equals(deleted, that.deleted) &&
                Objects.equals(createdAt, that.createdAt) &&
                Objects.equals(modifiedAt, that.modifiedAt) &&
@@ -176,7 +176,7 @@ public class Product {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, description, stock, price, deleted, createdAt, modifiedAt, categoryId, deletedAt, image,
+        return Objects.hash(id, description, stock, productCode, deleted, createdAt, modifiedAt, categoryId, deletedAt, image,
                             detailId
         );
     }
@@ -240,7 +240,7 @@ public class Product {
                "id=" + id +
                ", description='" + description + '\'' +
                ", stock=" + stock +
-               ", price=" + price +
+               ", productCode=" + productCode +
                ", deleted=" + deleted +
                ", createdAt=" + createdAt +
                ", modifiedAt=" + modifiedAt +

@@ -15,6 +15,7 @@ public class SaleDetail {
     private Integer id;
     private Integer amount;
     private BigDecimal unitPrice;
+    private BigDecimal subtotal;
     private Byte iva;
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
@@ -47,13 +48,23 @@ public class SaleDetail {
     }
 
     @Basic
-    @Column(name = "unit_price", nullable = false, precision = 5)
+    @Column(name = "unit_price", nullable = false, precision = 15, scale = 5)
     public BigDecimal getUnitPrice() {
         return unitPrice;
     }
 
     public void setUnitPrice(BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
+    }
+
+    @Basic
+    @Column(name = "subtotal", nullable = false, precision = 15, scale = 5)
+    public BigDecimal getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(BigDecimal subtotal) {
+        this.subtotal = subtotal;
     }
 
     @Basic

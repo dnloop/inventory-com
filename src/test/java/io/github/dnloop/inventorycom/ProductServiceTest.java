@@ -165,7 +165,7 @@ public class ProductServiceTest {
 
         Product newProduct = new Product(
                 "PD-NEW", 1,
-                new BigDecimal("200.00"),
+                "CODE-NEW",
                 2,
                 1
         );

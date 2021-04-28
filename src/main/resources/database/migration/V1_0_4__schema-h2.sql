@@ -123,8 +123,8 @@ create table PUBLIC.product_detail
 (
     id              integer auto_increment not null,
     brand           varchar(140)           not null,
-    created_at      timestamp,
-    deleted         tinyint,
+    created_at      timestamp default current_timestamp,
+    deleted         tinyint   default 0,
     deleted_at      timestamp,
     material_id     integer                not null,
     measure_id      integer                not null,
@@ -139,17 +139,17 @@ create table PUBLIC.product_detail
 
 create table PUBLIC.product
 (
-    id          integer auto_increment              not null,
-    category_id integer                             not null,
-    created_at  timestamp default current_timestamp not null,
-    deleted     tinyint   default 0,
-    deleted_at  timestamp,
-    description varchar(140)                        not null,
-    detail_id   integer                             not null,
-    image       varchar(500),
-    modified_at timestamp,
-    price       decimal(4, 0)                       not null,
-    stock       integer                             not null,
+    id           integer auto_increment              not null,
+    category_id  integer                             not null,
+    created_at   timestamp default current_timestamp not null,
+    deleted      tinyint   default 0,
+    deleted_at   timestamp,
+    description  varchar(320)                        not null,
+    detail_id    integer                             not null,
+    image        varchar(500),
+    modified_at  timestamp,
+    product_code varchar(320)                        not null,
+    stock        integer                             not null,
     primary key (id),
 
     constraint FK1mtsbur82frn64de7balymq9s foreign key (category_id) references PUBLIC.category,
@@ -160,16 +160,16 @@ create table PUBLIC.product
 create table PUBLIC.supplier
 (
     id          integer auto_increment              not null,
-    address     varchar(255)                        not null,
+    address     varchar(320)                        not null,
     created_at  timestamp default current_timestamp not null,
     cuit        bigint(20)                          not null,
     deleted     tinyint   default 0,
     deleted_at  timestamp,
-    description varchar(255),
+    description varchar(320),
     locality_id integer                             not null,
     mail        varchar(320),
     modified_at timestamp,
-    name        varchar(255)                        not null,
+    name        varchar(320)                        not null,
     primary key (id),
 
     constraint FKo8tkgxhgfy0hqhuoaspeaqgpc foreign key (locality_id) references locality
@@ -178,18 +178,18 @@ create table PUBLIC.supplier
 create table PUBLIC.purchase_invoice
 (
     id              integer auto_increment not null,
-    created_at      timestamp,
-    deleted         tinyint,
+    created_at      timestamp default current_timestamp,
+    deleted         tinyint   default 0,
     deleted_at      timestamp,
-    discount        decimal(5, 0),
+    discount        decimal(15, 5),
     generation_date timestamp              not null,
     invoice_type    varchar(3),
     modified_at     timestamp,
     number          integer                not null,
     payment_type    varchar(8),
     supplier_id     integer                not null,
-    surcharge       decimal(5, 0),
-    total           decimal(5, 0)          not null,
+    surcharge       decimal(15, 5),
+    total           decimal(15, 5)         not null,
     primary key (id),
 
     constraint FKqtx4kjstn77n9v4wowt0mlxkx foreign key (supplier_id) references PUBLIC.supplier
@@ -199,15 +199,15 @@ create table PUBLIC.purchase_detail
 (
     id                  integer auto_increment not null,
     amount              integer                not null,
-    created_at          timestamp,
-    deleted             tinyint,
+    created_at          timestamp default current_timestamp,
+    deleted             tinyint   default 0,
     deleted_at          timestamp,
     iva                 tinyint,
     modified_at         timestamp,
     product_id          integer                not null,
     purchase_invoice_id integer                not null,
-    subtotal            decimal(5, 0)          not null,
-    unit_price          decimal(5, 0)          not null,
+    subtotal            decimal(15, 5)         not null,
+    unit_price          decimal(15, 5)         not null,
     primary key (id),
 
     constraint FK79a6tsn4e9qfillme2u9kr3i2 foreign key (product_id) references PUBLIC.product,
@@ -217,8 +217,8 @@ create table PUBLIC.purchase_detail
 create table PUBLIC.purchase_share
 (
     id                  integer auto_increment not null,
-    created_at          timestamp,
-    deleted             tinyint,
+    created_at          timestamp default current_timestamp,
+    deleted             tinyint   default 0,
     deleted_at          timestamp,
     due_date            date                   not null,
     modified_at         timestamp,
@@ -234,8 +234,8 @@ create table PUBLIC.sale_invoice
 (
     id              integer auto_increment not null,
     client_id       integer                not null,
-    created_at      timestamp,
-    deleted         tinyint,
+    created_at      timestamp default current_timestamp,
+    deleted         tinyint   default 0,
     deleted_at      timestamp,
     discount        decimal(4, 0),
     generation_date timestamp              not null,
@@ -243,8 +243,8 @@ create table PUBLIC.sale_invoice
     modified_at     timestamp,
     number          integer                not null,
     payment_type    varchar(8),
-    surcharge       decimal(5, 0),
-    total           decimal(5, 0)          not null,
+    surcharge       decimal(15, 5),
+    total           decimal(15, 5)         not null,
     primary key (id)
 );
 
@@ -252,14 +252,15 @@ create table PUBLIC.sale_detail
 (
     id              integer auto_increment not null,
     amount          integer                not null,
-    created_at      timestamp,
-    deleted         tinyint,
+    created_at      timestamp default current_timestamp,
+    deleted         tinyint   default 0,
     deleted_at      timestamp,
     iva             tinyint,
     modified_at     timestamp,
     product_id      integer                not null,
     sale_invoice_id integer                not null,
-    unit_price      decimal(5, 0)          not null,
+    subtotal        decimal(15, 5)         not null,
+    unit_price      decimal(15, 5)         not null,
     primary key (id),
 
     constraint FK2k26c5k0qkdm1srkiwn7q5009 foreign key (product_id) references PUBLIC.product,
@@ -270,8 +271,8 @@ create table PUBLIC.sale_detail
 create table PUBLIC.sale_share
 (
     id              integer auto_increment not null,
-    created_at      timestamp,
-    deleted         tinyint,
+    created_at      timestamp default current_timestamp,
+    deleted         tinyint   default 0,
     deleted_at      timestamp,
     due_date        date                   not null,
     modified_at     timestamp,
@@ -304,8 +305,8 @@ create table PUBLIC.supplier_catalog
 (
     id           integer auto_increment not null,
     catalog_code varchar(20)            not null,
-    created_at   timestamp,
-    deleted      tinyint,
+    created_at   timestamp default current_timestamp,
+    deleted      tinyint   default 0,
     deleted_at   timestamp,
     modified_at  timestamp,
     product_id   integer                not null,

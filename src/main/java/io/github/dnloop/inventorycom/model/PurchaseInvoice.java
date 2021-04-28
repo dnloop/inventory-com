@@ -82,7 +82,7 @@ public class PurchaseInvoice {
     }
 
     @Basic
-    @Column(name = "surcharge", precision = 5)
+    @Column(name = "surcharge", precision = 15, scale = 5)
     public BigDecimal getSurcharge() {
         return surcharge;
     }
@@ -92,7 +92,7 @@ public class PurchaseInvoice {
     }
 
     @Basic
-    @Column(name = "discount", precision = 5)
+    @Column(name = "discount", precision = 15, scale = 5)
     public BigDecimal getDiscount() {
         return discount;
     }
@@ -102,7 +102,7 @@ public class PurchaseInvoice {
     }
 
     @Basic
-    @Column(name = "total", nullable = false, precision = 5)
+    @Column(name = "total", nullable = false, precision = 15, scale = 5)
     public BigDecimal getTotal() {
         return total;
     }

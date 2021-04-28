@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -38,38 +37,40 @@ public class PurchaseService {
         this.purchaseShareRepository = purchaseShareRepository;
     }
 
+    /* Invoice */
+
     @Async
-    public CompletableFuture<Optional<PurchaseInvoice>> findById(Integer id) {
+    public CompletableFuture<Optional<PurchaseInvoice>> findInvoiceById(Integer id) {
         return CompletableFuture.completedFuture(invoiceRepository.findById(id));
     }
 
     @Async
-    public CompletableFuture<Page<PurchaseInvoice>> findAll() {
+    public CompletableFuture<Page<PurchaseInvoice>> findAllInvoices() {
         return CompletableFuture.completedFuture(invoiceRepository.findAll(pageableFifty));
     }
 
     @Async
-    public CompletableFuture<Page<PurchaseInvoice>> findAll(Pageable pageable) {
+    public CompletableFuture<Page<PurchaseInvoice>> findAllInvoices(Pageable pageable) {
         return CompletableFuture.completedFuture(invoiceRepository.findAll(pageable));
     }
 
     @Async
-    public CompletableFuture<Page<PurchaseInvoice>> findAllDeleted() {
+    public CompletableFuture<Page<PurchaseInvoice>> findAllDeletedInvoices() {
         return CompletableFuture.completedFuture(invoiceRepository.findAllDeleted(pageableFifty));
     }
 
     @Async
-    public CompletableFuture<Page<PurchaseInvoice>> findAllDeleted(Pageable pageable) {
+    public CompletableFuture<Page<PurchaseInvoice>> findAllDeletedInvoices(Pageable pageable) {
         return CompletableFuture.completedFuture(invoiceRepository.findAllDeleted(pageable));
     }
 
     @Async
-    public void save(PurchaseInvoice invoice) {
+    public void saveInvoice(PurchaseInvoice invoice) {
         invoiceRepository.save(invoice);
     }
 
     @Async
-    public void delete(PurchaseInvoice invoice) {
+    public void deleteInvoice(PurchaseInvoice invoice) {
         invoiceRepository.delete(invoice);
 
         invoice.getPurchaseDetailsById().forEach(purchaseDetail -> invoiceDetailRepository
@@ -81,8 +82,5 @@ public class PurchaseService {
         );
     }
 
-    @Async
-    public void deleteAll(Collection<PurchaseInvoice> collectionPurchaseInvoice) {
-        collectionPurchaseInvoice.forEach(this::delete);
-    }
+    /* Purchase Share */
 }
