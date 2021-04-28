@@ -31,7 +31,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @EnableAsync
 @AutoConfigureTestDatabase
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-class ClientServiceTests {
+@Sql({
+             "/db/data/localities.sql",
+             "/db/data/clients.sql"
+     })
+class ClientServiceTest {
 
     @Autowired
     private ClientService clientService;
@@ -49,7 +53,6 @@ class ClientServiceTests {
     }
 
     @Test
-    @Sql({"/db/data/localities.sql"})
     void insertClient() throws ExecutionException, InterruptedException {
         final Condition<Client> clientCondition = new Condition<>(
                 product -> product.getSurname().equals("Hanigan"),
@@ -84,7 +87,6 @@ class ClientServiceTests {
     }
 
     @Test
-    @Sql({"/db/data/localities.sql", "/db/data/clients.sql"})
     void findById() throws ExecutionException, InterruptedException {
         final CompletableFuture<Optional<Client>> client = CompletableFuture.supplyAsync(() -> {
             try {
@@ -100,10 +102,8 @@ class ClientServiceTests {
 
     /**
      * Query a deleted record with a non-delete clause
-     * TODO missing find deleted record by ID
      */
     @Test
-    @Sql({"/db/data/localities.sql", "/db/data/clients.sql"})
     void findByIdDeleted() throws ExecutionException, InterruptedException {
         final CompletableFuture<Optional<Client>> client = CompletableFuture.supplyAsync(() -> {
             try {
@@ -118,7 +118,20 @@ class ClientServiceTests {
     }
 
     @Test
-    @Sql({"/db/data/localities.sql", "/db/data/clients.sql"})
+    void findDeletedClient() throws ExecutionException, InterruptedException {
+        final CompletableFuture<Optional<Client>> product = CompletableFuture.supplyAsync(() -> {
+            try {
+                return clientService.findDeleted(5).get();
+            } catch (InterruptedException | ExecutionException e) {
+                return Optional.empty();
+            }
+        });
+
+        assertThat(product.get())
+                .matches(Optional::isPresent, "Must be present");
+    }
+
+    @Test
     void modifyClient() throws ExecutionException, InterruptedException {
         final Timestamp ts = Timestamp.from(Instant.now());
         final Client editClient = clientService.findById(1).join().orElse(null);
@@ -143,7 +156,6 @@ class ClientServiceTests {
     }
 
     @Test
-    @Sql({"/db/data/localities.sql", "/db/data/clients.sql"})
     void findAll() throws ExecutionException, InterruptedException {
         final Condition<Client> firstClient = new Condition<>(
                 client -> client.getSurname().equalsIgnoreCase("Benson"),
@@ -159,7 +171,6 @@ class ClientServiceTests {
     }
 
     @Test
-    @Sql({"/db/data/localities.sql", "/db/data/clients.sql"})
     void findAllDeleted() throws ExecutionException, InterruptedException {
         final CompletableFuture<Page<Client>> clients = clientService.findAllDeleted();
         final Page<Client> result = clients.get();
@@ -173,7 +184,6 @@ class ClientServiceTests {
     }
 
     @Test
-    @Sql({"/db/data/localities.sql", "/db/data/clients.sql"})
     void deleteClient() throws ExecutionException, InterruptedException {
         final CompletableFuture<Void> client =
                 clientService.findById(1).thenAccept(client1 -> client1.ifPresent(
@@ -192,7 +202,6 @@ class ClientServiceTests {
     }
 
     @Test
-    @Sql({"/db/data/localities.sql", "/db/data/clients.sql"})
     void deleteClientCollection() throws ExecutionException, InterruptedException {
 
         final CompletableFuture<Void> clients =
