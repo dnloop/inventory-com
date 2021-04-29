@@ -20,7 +20,10 @@ import java.util.concurrent.ExecutionException;
 @AutoConfigureTestDatabase
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @Sql({
-
+             "/db/data/localities.sql",
+             "/db/data/suppliers.sql",
+             "/db/data/purchaseInvoice.sql",
+             "/db/data/purchaseDetail.sql"
      })
 public class PurchaseInvoiceRepositoryTest {
 
@@ -36,30 +39,12 @@ public class PurchaseInvoiceRepositoryTest {
     }
 
     @Test
-    void findPurchaseInvoiceById() {
-
-    }
-
-    /**
-     * Query a deleted record with a non-delete clause
-     */
-    @Test
-    void findPurchaseInvoiceByIdDeleted() throws ExecutionException, InterruptedException {
-
-    }
-
-    @Test
-    void findDeletedPurchaseInvoice() throws ExecutionException, InterruptedException {
+    void findPurchaseInvoiceById() throws ExecutionException, InterruptedException {
 
     }
 
     @Test
     void findAllPurchaseInvoice() throws ExecutionException, InterruptedException {
-
-    }
-
-    @Test
-    void findAllDeletedPurchaseInvoice() throws ExecutionException, InterruptedException {
 
     }
 
@@ -70,11 +55,6 @@ public class PurchaseInvoiceRepositoryTest {
 
     @Test
     void modifyPurchaseInvoice() throws ExecutionException, InterruptedException {
-
-    }
-
-    @Test
-    void deletePurchaseInvoice() throws ExecutionException, InterruptedException {
 
     }
 }
