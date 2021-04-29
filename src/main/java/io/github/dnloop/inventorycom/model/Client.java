@@ -8,6 +8,15 @@ import java.time.Instant;
 import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * <h4>Client</h4>
+ * <p>
+ * Entity representing a client. Constraints must be enforced when deleting
+ * a client associated to a sale invoice. The field is hidden but related entities
+ * can access its values.
+ * </p>
+ * TODO implement constraint
+ */
 @Entity
 @Table(name = "client")
 @SQLDelete(sql = "UPDATE client SET deleted=1 WHERE id=?")

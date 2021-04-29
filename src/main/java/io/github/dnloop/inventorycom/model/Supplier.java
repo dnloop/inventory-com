@@ -8,6 +8,15 @@ import java.time.Instant;
 import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * <h4>Supplier</h4>
+ * <p>
+ * Entity representing a supplier. Constraints must be enforced when deleting
+ * a supplier associated to a sale invoice. The field is hidden but related entities
+ * can access its values.
+ * </p>
+ * TODO implement constraint
+ */
 @Entity
 @Table(name = "supplier")
 @SQLDelete(sql = "UPDATE supplier SET deleted=1 WHERE id=?")
@@ -23,8 +32,7 @@ public class Supplier {
     private Timestamp deletedAt;
     private String address;
     private Long cuit;
-    private Collection<PurchaseInvoice
-            > purchaseInvoicesById;
+    private Collection<PurchaseInvoice> purchaseInvoicesById;
     private Locality localityByLocalityId;
     private Collection<SupplierCatalog> supplierCatalogsById;
     private Collection<SupplierPhone> supplierPhonesById;

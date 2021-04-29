@@ -9,6 +9,14 @@ import java.time.Instant;
 import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * <h4>Sale Invoice</h4>
+ * <p>
+ * Entity representing a sale invoice. Constraints must be enforced to
+ * prevent record deletion as well as related entities.
+ * </p>
+ * TODO implement constraint
+ */
 @Entity
 @Table(name = "sale_invoice")
 @SQLDelete(sql = "UPDATE sale_invoice SET deleted=1 WHERE id=?")
