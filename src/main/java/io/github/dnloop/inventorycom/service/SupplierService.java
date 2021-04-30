@@ -4,6 +4,7 @@ import io.github.dnloop.inventorycom.model.Supplier;
 import io.github.dnloop.inventorycom.model.SupplierPhone;
 import io.github.dnloop.inventorycom.repository.SupplierPhoneRepository;
 import io.github.dnloop.inventorycom.repository.SupplierRepository;
+import io.github.dnloop.inventorycom.utils.PageableProperty;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.data.domain.Page;
@@ -26,7 +27,7 @@ public class SupplierService {
 
     private final SupplierPhoneRepository phoneRepository;
 
-    private final Pageable pageableFifty = PageRequest.of(0, 50);
+    private final PageableProperty pageableProperty = new PageableProperty();
 
     public SupplierService(
             SupplierRepository supplierRepository,
@@ -45,12 +46,14 @@ public class SupplierService {
 
     @Async
     public CompletableFuture<Page<Supplier>> findAllSuppliers() {
-        return CompletableFuture.completedFuture(supplierRepository.findAll(pageableFifty));
+        return CompletableFuture.completedFuture(supplierRepository.findAll(pageableProperty.getPageable()));
     }
 
     @Async
-    public CompletableFuture<Page<Supplier>> findAllSuppliers(Pageable pageable) {
-        return CompletableFuture.completedFuture(supplierRepository.findAll(pageable));
+    public CompletableFuture<Page<Supplier>> findAllSuppliers(PageableProperty pageableProperty) {
+        return CompletableFuture.completedFuture(
+                supplierRepository.findAll(pageableProperty.getPageable())
+        );
     }
 
     @Async
@@ -60,12 +63,16 @@ public class SupplierService {
 
     @Async
     public CompletableFuture<Page<Supplier>> findAllDeletedSuppliers() {
-        return CompletableFuture.completedFuture(supplierRepository.findAllDeleted(pageableFifty));
+        return CompletableFuture.completedFuture(
+                supplierRepository.findAllDeleted(pageableProperty.getPageableDeleted())
+        );
     }
 
     @Async
-    public CompletableFuture<Page<Supplier>> findAllDeletedSuppliers(Pageable pageable) {
-        return CompletableFuture.completedFuture(supplierRepository.findAllDeleted(pageable));
+    public CompletableFuture<Page<Supplier>> findAllDeletedSuppliers(PageableProperty pageableProperty) {
+        return CompletableFuture.completedFuture(
+                supplierRepository.findAllDeleted(pageableProperty.getPageableDeleted())
+        );
     }
 
     @Async
