@@ -24,7 +24,7 @@ import io.github.dnloop.inventorycom.model.CategoryLevel;
 import io.github.dnloop.inventorycom.model.Level;
 import io.github.dnloop.inventorycom.model.LevelBuilder;
 import io.github.dnloop.inventorycom.service.ProductService;
-import io.github.dnloop.inventorycom.utils.LevelManager;
+import io.github.dnloop.inventorycom.model.LevelManager;
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
