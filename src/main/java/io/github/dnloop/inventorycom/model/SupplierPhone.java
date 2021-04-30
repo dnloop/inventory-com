@@ -7,6 +7,11 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Objects;
 
+/**
+ * <h4>Supplier Phone</h4>
+ * <p>
+ * Entity used to represent supplier's phones.
+ */
 @Entity
 @Table(name = "supplier_phone")
 @SQLDelete(sql = "UPDATE supplier_phone SET deleted=1 WHERE id=?")

@@ -8,8 +8,6 @@ import io.github.dnloop.inventorycom.utils.PageableProperty;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -100,7 +98,7 @@ public class SupplierService {
     /* Supplier Phone */
 
     @Async
-    public CompletableFuture<Optional<SupplierPhone>> findSupplierPhoneById(Integer id) {
+    public CompletableFuture<Optional<SupplierPhone>> findSupplierPhoneById(int id) {
         return CompletableFuture.completedFuture(phoneRepository.findById(id));
     }
 
@@ -110,7 +108,7 @@ public class SupplierService {
     }
 
     @Async
-    public CompletableFuture<Optional<SupplierPhone>> findDeletedSupplierPhoneById(Integer id) {
+    public CompletableFuture<Optional<SupplierPhone>> findDeletedSupplierPhoneById(int id) {
         return CompletableFuture.completedFuture(phoneRepository.findDeleted(id));
     }
 
@@ -124,13 +122,13 @@ public class SupplierService {
         return CompletableFuture.completedFuture(phoneRepository.save(supplierPhone));
     }
 
-    @Async
+    @Transactional
     public void deleteSupplierPhone(SupplierPhone supplierPhone) {
         phoneRepository.delete(supplierPhone);
         log.debug("Record Deleted: " + supplierPhone.toString());
     }
 
-    @Async
+    @Transactional
     public void deleteAllSupplierPhones(Collection<SupplierPhone> collectionSupplierPhone) {
         collectionSupplierPhone.forEach(this::deleteSupplierPhone);
         log.debug("Records Deleted: " + collectionSupplierPhone.size());

@@ -20,8 +20,6 @@
 package io.github.dnloop.inventorycom;
 
 import io.github.dnloop.inventorycom.model.SupplierPhone;
-import io.github.dnloop.inventorycom.model.Supplier;
-import io.github.dnloop.inventorycom.model.SupplierPhone;
 import io.github.dnloop.inventorycom.repository.SupplierPhoneRepository;
 import io.github.dnloop.inventorycom.service.SupplierService;
 import org.assertj.core.api.Condition;
@@ -29,7 +27,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.jdbc.Sql;
@@ -182,7 +179,8 @@ public class SupplierPhoneRepositoryTest {
 
     @Test
     void findAllDeleted() throws ExecutionException, InterruptedException {
-        final CompletableFuture<LinkedHashSet<SupplierPhone>> supplierPhones = supplierService.findAllDeletedSupplierPhones();
+        final CompletableFuture<LinkedHashSet<SupplierPhone>> supplierPhones = supplierService
+                .findAllDeletedSupplierPhones();
         final LinkedHashSet<SupplierPhone> result = supplierPhones.get();
 
         assertThat(result).hasSize(2);
@@ -196,13 +194,13 @@ public class SupplierPhoneRepositoryTest {
                 ));
 
 
-        final CompletableFuture<Optional<SupplierPhone>> supplierPhoneDeleted =
+        final CompletableFuture<Optional<SupplierPhone>> supplierDeleted =
                 supplierPhone.thenCompose(
                         unused -> supplierService.findDeletedSupplierPhoneById(1)
                 );
 
         assertThat(
-                supplierPhoneDeleted.get()
+                supplierDeleted.get()
         ).matches(Optional::isPresent, "Must be present");
     }
 }

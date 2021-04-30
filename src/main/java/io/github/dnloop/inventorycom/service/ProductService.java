@@ -95,8 +95,7 @@ public class ProductService {
     @Transactional
     public void deleteProduct(Product product) {
         productRepository.delete(product);
-        log.debug("Record Deleted: " + product.toString());
-        log.debug("Product Deleted.");
+        log.debug("Product Deleted: " + product.toString());
     }
 
     /* Product Detail */
