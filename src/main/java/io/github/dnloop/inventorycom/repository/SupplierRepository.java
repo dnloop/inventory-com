@@ -25,8 +25,7 @@ public interface SupplierRepository extends JpaRepository<Supplier, Integer> {
      * its record is used for historical purposes.
      */
     @Query("SELECT supplier FROM Supplier supplier" +
-           " WHERE supplier.id = :id" +
-           " AND supplier.deleted = 0")
+           " WHERE supplier.id = :id")
     Optional<Supplier> findByIdIgnoreDeleted(int id);
 
     @Query("SELECT supplier FROM Supplier supplier" +

@@ -54,6 +54,11 @@ public class SupplierService {
     }
 
     @Async
+    public CompletableFuture<Optional<Supplier>> findDeletedSupplierById(Integer id) {
+        return CompletableFuture.completedFuture(supplierRepository.findDeleted(id));
+    }
+
+    @Async
     public CompletableFuture<Page<Supplier>> findAllDeletedSuppliers() {
         return CompletableFuture.completedFuture(supplierRepository.findAllDeleted(pageableFifty));
     }
@@ -64,8 +69,8 @@ public class SupplierService {
     }
 
     @Async
-    public void saveSupplier(Supplier supplier) {
-        supplierRepository.save(supplier);
+    public CompletableFuture<Supplier> saveSupplier(Supplier supplier) {
+        return CompletableFuture.completedFuture(supplierRepository.save(supplier));
     }
 
     @Transactional
@@ -98,13 +103,18 @@ public class SupplierService {
     }
 
     @Async
+    public CompletableFuture<Optional<SupplierPhone>> findDeletedSupplierPhoneById(Integer id) {
+        return CompletableFuture.completedFuture(phoneRepository.findDeleted(id));
+    }
+
+    @Async
     public CompletableFuture<LinkedHashSet<SupplierPhone>> findAllDeletedSupplierPhones() {
         return CompletableFuture.completedFuture(phoneRepository.findAllDeleted());
     }
 
     @Async
-    public void saveSupplierPhone(SupplierPhone supplierPhone) {
-        phoneRepository.save(supplierPhone);
+    public CompletableFuture<SupplierPhone> saveSupplierPhone(SupplierPhone supplierPhone) {
+        return CompletableFuture.completedFuture(phoneRepository.save(supplierPhone));
     }
 
     @Async

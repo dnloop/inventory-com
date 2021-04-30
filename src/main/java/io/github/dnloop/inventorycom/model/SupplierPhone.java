@@ -20,6 +20,13 @@ public class SupplierPhone {
     private Integer supplierId;
     private Supplier supplierBySupplierId;
 
+    public SupplierPhone() {}
+
+    public SupplierPhone(String number, Integer supplierId) {
+        this.number = number;
+        this.supplierId = supplierId;
+    }
+
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
