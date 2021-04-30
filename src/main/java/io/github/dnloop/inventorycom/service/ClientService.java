@@ -3,12 +3,11 @@ package io.github.dnloop.inventorycom.service;
 import io.github.dnloop.inventorycom.model.Client;
 import io.github.dnloop.inventorycom.repository.ClientPhoneRepository;
 import io.github.dnloop.inventorycom.repository.ClientRepository;
+import io.github.dnloop.inventorycom.utils.PageableProperty;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,13 +24,7 @@ public class ClientService {
 
     private final ClientPhoneRepository phoneRepository;
 
-    private final Pageable pageableFifty = PageRequest.of(0, 50, Sort.by("surname").ascending());
-
-    private final Pageable pageableFiftyDeleted = PageRequest.of(
-            0, 50,
-            Sort.by("surname").ascending()
-                .and(Sort.by("deletedAt").ascending())
-    );
+    private final PageableProperty pageableProperty = new PageableProperty();
 
     public ClientService(
             ClientRepository clientRepository,
@@ -53,7 +46,7 @@ public class ClientService {
 
     @Async
     public CompletableFuture<Page<Client>> findAll() {
-        return CompletableFuture.completedFuture(clientRepository.findAll(pageableFifty));
+        return CompletableFuture.completedFuture(clientRepository.findAll(pageableProperty.getPageable()));
     }
 
     @Async
@@ -63,12 +56,16 @@ public class ClientService {
 
     @Async
     public CompletableFuture<Page<Client>> findAllDeleted() {
-        return CompletableFuture.completedFuture(clientRepository.findAllDeleted(pageableFiftyDeleted));
+        return CompletableFuture.completedFuture(
+                clientRepository.findAllDeleted(pageableProperty.getPageableDeleted())
+        );
     }
 
     @Async
-    public CompletableFuture<Page<Client>> findAllDeleted(Pageable pageable) {
-        return CompletableFuture.completedFuture(clientRepository.findAllDeleted(pageable));
+    public CompletableFuture<Page<Client>> findAllDeleted(PageableProperty pageableProperty) {
+        return CompletableFuture.completedFuture(
+                clientRepository.findAllDeleted(pageableProperty.getPageable())
+        );
     }
 
     @Async

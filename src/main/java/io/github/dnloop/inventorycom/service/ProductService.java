@@ -2,12 +2,10 @@ package io.github.dnloop.inventorycom.service;
 
 import io.github.dnloop.inventorycom.model.*;
 import io.github.dnloop.inventorycom.repository.*;
+import io.github.dnloop.inventorycom.utils.PageableProperty;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -448,62 +446,5 @@ public class ProductService {
             return false;
         }
         // otherwise material is assigned
-    }
-
-    public static class PageableProperty {
-
-        private final Pageable pageable;
-
-        private final Pageable pageableDeleted;
-
-        public PageableProperty() {
-            pageable = PageRequest.of(
-                    0, 50,
-                    Sort.by("description").ascending()
-            );
-
-            pageableDeleted = PageRequest.of(
-                    0, 50,
-                    Sort.by("description").ascending()
-                        .and(Sort.by("deletedAt").ascending())
-            );
-        }
-
-        public PageableProperty(String description) {
-            int max = 50;
-            int min = 0;
-            pageable = PageRequest.of(
-                    min, max,
-                    Sort.by(description).ascending()
-            );
-
-            pageableDeleted = PageRequest.of(
-                    min, max,
-                    Sort.by(description).ascending()
-                        .and(Sort.by("deletedAt").ascending())
-            );
-        }
-
-        public PageableProperty(String description, int max, int min) {
-
-            pageable = PageRequest.of(
-                    min, max,
-                    Sort.by(description).ascending()
-            );
-
-            pageableDeleted = PageRequest.of(
-                    min, max,
-                    Sort.by(description).ascending()
-                        .and(Sort.by("deletedAt").ascending())
-            );
-        }
-
-        public Pageable getPageable() {
-            return pageable;
-        }
-
-        public Pageable getPageableDeleted() {
-            return pageableDeleted;
-        }
     }
 }

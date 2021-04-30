@@ -4,6 +4,7 @@ import io.github.dnloop.inventorycom.model.PurchaseInvoice;
 import io.github.dnloop.inventorycom.repository.PurchaseInvoiceDetailsRepository;
 import io.github.dnloop.inventorycom.repository.PurchaseInvoiceRepository;
 import io.github.dnloop.inventorycom.repository.PurchaseShareRepository;
+import io.github.dnloop.inventorycom.utils.PageableProperty;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.data.domain.Page;
@@ -25,7 +26,7 @@ public class PurchaseService {
 
     private final PurchaseShareRepository purchaseShareRepository;
 
-    private final Pageable pageableFifty = PageRequest.of(0, 50);
+    private final PageableProperty pageableProperty = new PageableProperty();
 
     public PurchaseService(
             PurchaseInvoiceRepository invoiceRepository,
@@ -46,40 +47,17 @@ public class PurchaseService {
 
     @Async
     public CompletableFuture<Page<PurchaseInvoice>> findAllInvoices() {
-        return CompletableFuture.completedFuture(invoiceRepository.findAll(pageableFifty));
+        return CompletableFuture.completedFuture(invoiceRepository.findAll(pageableProperty.getPageable()));
     }
 
     @Async
-    public CompletableFuture<Page<PurchaseInvoice>> findAllInvoices(Pageable pageable) {
-        return CompletableFuture.completedFuture(invoiceRepository.findAll(pageable));
-    }
-
-    @Async
-    public CompletableFuture<Page<PurchaseInvoice>> findAllDeletedInvoices() {
-        return CompletableFuture.completedFuture(invoiceRepository.findAllDeleted(pageableFifty));
-    }
-
-    @Async
-    public CompletableFuture<Page<PurchaseInvoice>> findAllDeletedInvoices(Pageable pageable) {
-        return CompletableFuture.completedFuture(invoiceRepository.findAllDeleted(pageable));
+    public CompletableFuture<Page<PurchaseInvoice>> findAllInvoices(PageableProperty pageableProperty) {
+        return CompletableFuture.completedFuture(invoiceRepository.findAll(pageableProperty.getPageable()));
     }
 
     @Async
     public void saveInvoice(PurchaseInvoice invoice) {
         invoiceRepository.save(invoice);
-    }
-
-    @Async
-    public void deleteInvoice(PurchaseInvoice invoice) {
-        invoiceRepository.delete(invoice);
-
-        invoice.getPurchaseDetailsById().forEach(purchaseDetail -> invoiceDetailRepository
-                .deleteById(purchaseDetail.getId())
-        );
-
-        invoice.getPurchaseSharesById().forEach(purchaseShare -> purchaseShareRepository
-                .deleteById(purchaseShare.getId())
-        );
     }
 
     /* Purchase Share */

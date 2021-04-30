@@ -6,10 +6,9 @@ import io.github.dnloop.inventorycom.model.Province;
 import io.github.dnloop.inventorycom.repository.DepartmentRepository;
 import io.github.dnloop.inventorycom.repository.LocalityRepository;
 import io.github.dnloop.inventorycom.repository.ProvinceRepository;
+import io.github.dnloop.inventorycom.utils.PageableProperty;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -38,10 +37,7 @@ public class LocalityService {
 
     private final LocalityRepository localityRepository;
 
-    private final Pageable pageableFifty = PageRequest.of(
-            0, 50,
-            Sort.by("name").ascending()
-    );
+    private final PageableProperty pageableProperty = new PageableProperty();
 
     public LocalityService(
             ProvinceRepository provinceRepository,
@@ -55,7 +51,7 @@ public class LocalityService {
 
     @Async
     public CompletableFuture<Page<Locality>> findAllLocalities() {
-        return CompletableFuture.completedFuture(localityRepository.findAll(pageableFifty));
+        return CompletableFuture.completedFuture(localityRepository.findAll(pageableProperty.getPageable()));
     }
 
     @Async
@@ -71,7 +67,7 @@ public class LocalityService {
     @Async
     public CompletableFuture<Page<Locality>> findLocalityByMunicipality(int id) {
         return CompletableFuture.completedFuture(
-                localityRepository.findAllByMunicipalityId(id, pageableFifty)
+                localityRepository.findAllByMunicipalityId(id, pageableProperty.getPageable())
         );
     }
 
@@ -85,7 +81,7 @@ public class LocalityService {
     @Async
     public CompletableFuture<Page<Locality>> findLocalitiesByDepartment(int id) {
         return CompletableFuture.completedFuture(
-                localityRepository.findAllByDepartamentId(id, pageableFifty)
+                localityRepository.findAllByDepartamentId(id, pageableProperty.getPageable())
         );
     }
 
@@ -99,7 +95,7 @@ public class LocalityService {
     @Async
     public CompletableFuture<Page<Locality>> findLocalitiesByProvince(int id) {
         return CompletableFuture.completedFuture(
-                localityRepository.findAllByProvinceId(id, pageableFifty)
+                localityRepository.findAllByProvinceId(id, pageableProperty.getPageable())
         );
     }
 
@@ -111,7 +107,7 @@ public class LocalityService {
     @Async
     public CompletableFuture<Page<Departments>> findAllDepartments() {
         return CompletableFuture.completedFuture(
-                departmentRepository.findAll(pageableFifty)
+                departmentRepository.findAll(pageableProperty.getPageable())
         );
     }
 
