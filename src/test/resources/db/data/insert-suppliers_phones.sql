@@ -17,10 +17,11 @@
  *
  */
 
-insert into PUBLIC.client
-(id, address, created_at, cuit, deleted, deleted_at, dni, locality_id, mail, modified_at, name, surname)
-values (1, 'ADDRESS-1', CURRENT_TIMESTAMP(), 123456789, 0, null, '12345678', 1, 'Joe@dora.biz', null, 'Berengaria', 'Hanigan'),
-       (2, 'ADDRESS-2', CURRENT_TIMESTAMP(), 123456788, 0, null, '12345678', 1, 'Wayne.Crooks@destin.org', null, 'Gemariah', 'Benson'),
-       (3, 'ADDRESS-3', CURRENT_TIMESTAMP(), 123456779, 0, null, '12345678', 1, 'Mackenzie@amely.io', null, 'Floyd', 'Martin'),
-       (4, 'ADDRESS-4', CURRENT_TIMESTAMP(), 123455789, 1, CURRENT_TIMESTAMP(), '12345678', 1, 'Jammie@abagail.us', null, 'Myriam', 'Romilly'),
-       (5, 'ADDRESS-5', CURRENT_TIMESTAMP(), 123446789, 1, CURRENT_TIMESTAMP(), '12345678', 1, 'Malcolm@haylie.info', null, 'Gaia', 'Ayers');
+INSERT INTO PUBLIC.SUPPLIER_PHONE
+(ID, CREATED_AT, DELETED, DELETED_AT, MODIFIED_AT, "NUMBER", SUPPLIER_ID)
+VALUES
+(1, CURRENT_TIMESTAMP(), 0, NULL, NULL, '3344586966', 1),
+(2, CURRENT_TIMESTAMP(), 0, NULL, NULL, '3344415577', 1),
+(3, CURRENT_TIMESTAMP(), 0, NULL, NULL, '3377475588', 2),
+(4, CURRENT_TIMESTAMP(), 0, CURRENT_TIMESTAMP(), NULL, '3377512255', 1),
+(5, CURRENT_TIMESTAMP(), 0, CURRENT_TIMESTAMP(), NULL, '3377452288', 2);
