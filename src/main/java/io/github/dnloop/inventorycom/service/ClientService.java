@@ -1,6 +1,7 @@
 package io.github.dnloop.inventorycom.service;
 
 import io.github.dnloop.inventorycom.model.Client;
+import io.github.dnloop.inventorycom.model.ClientPhone;
 import io.github.dnloop.inventorycom.repository.ClientPhoneRepository;
 import io.github.dnloop.inventorycom.repository.ClientRepository;
 import io.github.dnloop.inventorycom.utils.PageableProperty;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -88,5 +90,39 @@ public class ClientService {
     public void deleteAll(Collection<Client> collectionClient) {
         collectionClient.forEach(this::delete);
         log.debug("Records Deleted: " + collectionClient.size());
+    }
+    
+    /* Client Phones */
+
+    @Async
+    public CompletableFuture<Optional<ClientPhone>> findClientPhoneById(Integer id) {
+        return CompletableFuture.completedFuture(phoneRepository.findById(id));
+    }
+
+    @Async
+    public CompletableFuture<LinkedHashSet<ClientPhone>> findAllClientPhones() {
+        return CompletableFuture.completedFuture(phoneRepository.findAll());
+    }
+
+    @Async
+    public CompletableFuture<LinkedHashSet<ClientPhone>> findAllDeletedClientPhones() {
+        return CompletableFuture.completedFuture(phoneRepository.findAllDeleted());
+    }
+
+    @Async
+    public void saveClientPhone(ClientPhone clientPhone) {
+        phoneRepository.save(clientPhone);
+    }
+
+    @Async
+    public void deleteClientPhone(ClientPhone clientPhone) {
+        phoneRepository.delete(clientPhone);
+        log.debug("Record Deleted: " + clientPhone.toString());
+    }
+
+    @Async
+    public void deleteAllClientPhones(Collection<ClientPhone> collectionClientPhone) {
+        collectionClientPhone.forEach(this::deleteClientPhone);
+        log.debug("Records Deleted: " + collectionClientPhone.size());
     }
 }
