@@ -96,7 +96,7 @@ public class PresentationRepositoryTest {
 
     @Test
     void findDeletedPresentation() throws ExecutionException, InterruptedException {
-        final CompletableFuture<Optional<Presentation>> client = CompletableFuture.supplyAsync(() -> {
+        final CompletableFuture<Optional<Presentation>> presentation = CompletableFuture.supplyAsync(() -> {
             try {
                 return productService.findDeletedPresentation(5).get();
             } catch (InterruptedException | ExecutionException e) {
@@ -104,7 +104,7 @@ public class PresentationRepositoryTest {
             }
         });
 
-        assertThat(client.get())
+        assertThat(presentation.get())
                 .matches(Optional::isPresent, "Must be present");
     }
 
@@ -165,7 +165,7 @@ public class PresentationRepositoryTest {
 
         final CompletableFuture<Optional<Presentation>> modifiedPresentation =
                 productService.savePresentation(editPresentation).thenCompose(
-                        prod -> productService.findPresentationById(prod.getId())
+                        presentation -> productService.findPresentationById(presentation.getId())
                 );
 
         final Timestamp result;

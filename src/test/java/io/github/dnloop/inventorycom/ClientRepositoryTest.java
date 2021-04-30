@@ -50,7 +50,7 @@ class ClientRepositoryTest {
 
         assertThat(
                 client.get()
-        ).matches(Optional::isEmpty, "is present");
+        ).matches(Optional::isEmpty, "Must be empty");
     }
 
     @Test
@@ -80,7 +80,7 @@ class ClientRepositoryTest {
         final Optional<Client> result = client.get();
 
         assertThat(result)
-                .matches(Optional::isPresent, "is empty");
+                .matches(Optional::isPresent, "Must be present");
         if (result.isPresent())
             assertThat(result.get()).has(clientCondition);
         else
@@ -98,7 +98,7 @@ class ClientRepositoryTest {
         });
 
         assertThat(client.get())
-                .matches(Optional::isPresent, "is empty");
+                .matches(Optional::isPresent, "Must be present");
     }
 
     /**
@@ -115,7 +115,7 @@ class ClientRepositoryTest {
         });
 
         assertThat(client.get())
-                .matches(Optional::isEmpty, "is present");
+                .matches(Optional::isEmpty, "Must be empty");
     }
 
     @Test
@@ -199,7 +199,7 @@ class ClientRepositoryTest {
 
         assertThat(
                 clientDeleted.get()
-        ).matches(Optional::isPresent, "is empty");
+        ).matches(Optional::isPresent, "Must be present");
     }
 
     @Test

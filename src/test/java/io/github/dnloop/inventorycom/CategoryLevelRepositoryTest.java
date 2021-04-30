@@ -84,7 +84,7 @@ public class CategoryLevelRepositoryTest {
         });
 
         assertThat(categoryLevel.get())
-                .matches(Optional::isPresent, "is empty");
+                .matches(Optional::isPresent, "Must be present");
     }
 
     /**
@@ -101,7 +101,7 @@ public class CategoryLevelRepositoryTest {
         });
 
         assertThat(categoryLevel.get())
-                .matches(Optional::isPresent, "is empty");
+                .matches(Optional::isPresent, "Must be present");
     }
 
     @Test
@@ -115,7 +115,7 @@ public class CategoryLevelRepositoryTest {
         });
 
         assertThat(categoryLevel.get())
-                .matches(Optional::isEmpty, "is present");
+                .matches(Optional::isEmpty, "Must be empty");
     }
 
     @Test
@@ -175,7 +175,7 @@ public class CategoryLevelRepositoryTest {
         final Optional<CategoryLevel> result = categoryLevel.get();
 
         assertThat(result)
-                .matches(Optional::isPresent, "is empty");
+                .matches(Optional::isPresent, "Must be present");
         if (result.isPresent())
             assertThat(result.get()).has(levelCondition);
         else
@@ -201,7 +201,7 @@ public class CategoryLevelRepositoryTest {
 
         final Optional<CategoryLevel> result = category.get();
         assertThat(result)
-                .matches(Optional::isPresent, "is empty");
+                .matches(Optional::isPresent, "Must be present");
         if (result.isPresent())
             assertThat(result.get()).has(categoryLevelCondition);
         else
@@ -247,7 +247,7 @@ public class CategoryLevelRepositoryTest {
 
         final Optional<CategoryLevel> result = category.get();
         assertThat(result)
-                .matches(Optional::isPresent, "is empty");
+                .matches(Optional::isPresent, "Must be present");
         if (result.isPresent()) {
             assertThat(result.get())
                     .has(categoryLevelCondition);

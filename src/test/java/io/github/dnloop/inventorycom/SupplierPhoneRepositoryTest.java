@@ -182,8 +182,8 @@ public class SupplierPhoneRepositoryTest {
 
     @Test
     void findAllDeleted() throws ExecutionException, InterruptedException {
-        final CompletableFuture<LinkedHashSet<SupplierPhone>> clients = supplierService.findAllDeletedSupplierPhones();
-        final LinkedHashSet<SupplierPhone> result = clients.get();
+        final CompletableFuture<LinkedHashSet<SupplierPhone>> supplierPhones = supplierService.findAllDeletedSupplierPhones();
+        final LinkedHashSet<SupplierPhone> result = supplierPhones.get();
 
         assertThat(result).hasSize(2);
     }
@@ -196,13 +196,13 @@ public class SupplierPhoneRepositoryTest {
                 ));
 
 
-        final CompletableFuture<Optional<SupplierPhone>> clientDeleted =
+        final CompletableFuture<Optional<SupplierPhone>> supplierPhoneDeleted =
                 supplierPhone.thenCompose(
                         unused -> supplierService.findDeletedSupplierPhoneById(1)
                 );
 
         assertThat(
-                clientDeleted.get()
+                supplierPhoneDeleted.get()
         ).matches(Optional::isPresent, "Must be present");
     }
 }

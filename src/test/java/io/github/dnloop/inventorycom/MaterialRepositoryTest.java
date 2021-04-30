@@ -150,7 +150,7 @@ public class MaterialRepositoryTest {
 
         final CompletableFuture<Optional<Material>> modifiedMaterial =
                 productService.saveMaterial(editMaterial).thenCompose(
-                        prod -> productService.findMaterialById(prod.getId())
+                        material -> productService.findMaterialById(material.getId())
                 );
 
         final Timestamp result;

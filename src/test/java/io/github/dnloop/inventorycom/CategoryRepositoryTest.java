@@ -140,7 +140,7 @@ public class CategoryRepositoryTest {
                 });
 
         assertThat(category.get())
-                .matches(Optional::isPresent, "is empty");
+                .matches(Optional::isPresent, "Must be present");
     }
 
     @Test

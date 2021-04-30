@@ -148,7 +148,7 @@ public class MeasureRepositoryTest {
 
         final CompletableFuture<Optional<Measure>> modifiedMeasures =
                 productService.saveMeasures(editMeasures).thenCompose(
-                        prod -> productService.findMeasuresById(prod.getId())
+                        measure -> productService.findMeasuresById(measure.getId())
                 );
 
         final Timestamp result;
