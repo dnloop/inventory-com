@@ -48,6 +48,7 @@ public class ClientService {
 
     @Async
     public CompletableFuture<Page<Client>> findAll() {
+        PageableProperty pageableProperty = new PageableProperty("surname");
         return CompletableFuture.completedFuture(clientRepository.findAll(pageableProperty.getPageable()));
     }
 
@@ -58,6 +59,7 @@ public class ClientService {
 
     @Async
     public CompletableFuture<Page<Client>> findAllDeleted() {
+        PageableProperty pageableProperty = new PageableProperty("surname");
         return CompletableFuture.completedFuture(
                 clientRepository.findAllDeleted(pageableProperty.getPageableDeleted())
         );
