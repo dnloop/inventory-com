@@ -20,10 +20,10 @@ import java.util.concurrent.ExecutionException;
 @AutoConfigureTestDatabase
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @Sql({
-             "/db/data/localities.sql",
-             "/db/data/clients.sql",
-             "/db/data/saleInvoice.sql",
-             "/db/data/saleDetail.sql"
+             "/db/data/insert-localities.sql",
+             "/db/data/insert-clients.sql",
+             "/db/data/insert-sale_invoice.sql",
+             "/db/data/insert-sale_detail.sql"
      })
 public class SaleInvoiceRepositoryTest {
 

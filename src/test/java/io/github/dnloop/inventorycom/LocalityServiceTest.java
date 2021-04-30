@@ -39,7 +39,7 @@ public class LocalityServiceTest {
     void contextLoads() {}
 
     @Test
-    @Sql({"/db/data/localities-relation.sql"})
+    @Sql({"/db/data/insert-localities_relation.sql"})
     void findById() throws ExecutionException, InterruptedException {
         final CompletableFuture<Optional<Locality>> locality = CompletableFuture.supplyAsync(() -> {
             try {
@@ -54,7 +54,7 @@ public class LocalityServiceTest {
     }
 
     @Test
-    @Sql({"/db/data/localities-relation.sql"})
+    @Sql({"/db/data/insert-localities_relation.sql"})
     void findAll() throws ExecutionException, InterruptedException {
         final Condition<Locality> firstLocality = new Condition<>(
                 locality -> locality.getName().equalsIgnoreCase("LOCALITY-1"),
@@ -70,7 +70,7 @@ public class LocalityServiceTest {
     }
 
     @Test
-    @Sql({"/db/data/localities-relation.sql"})
+    @Sql({"/db/data/insert-localities_relation.sql"})
     void findLocalityByMunicipality() throws ExecutionException, InterruptedException {
         final Condition<Locality> name = new Condition<>(
                 locality -> locality.getName().equalsIgnoreCase("LOCALITY-3"),
@@ -86,7 +86,7 @@ public class LocalityServiceTest {
     }
 
     @Test
-    @Sql({"/db/data/localities-relation.sql"})
+    @Sql({"/db/data/insert-localities_relation.sql"})
     void findLocalitiesByDepartment() throws ExecutionException, InterruptedException {
         final CompletableFuture<Page<Locality>> locality = localityService.findLocalitiesByDepartment(2);
         final Page<Locality> result = locality.get();
@@ -95,7 +95,7 @@ public class LocalityServiceTest {
     }
 
     @Test
-    @Sql({"/db/data/localities-relation.sql"})
+    @Sql({"/db/data/insert-localities_relation.sql"})
     void findLocalitiesByProvince() throws ExecutionException, InterruptedException {
         final CompletableFuture<Page<Locality>> locality = localityService.findLocalitiesByDepartment(2);
         final Page<Locality> result = locality.get();
@@ -104,7 +104,7 @@ public class LocalityServiceTest {
     }
 
     @Test
-    @Sql({"/db/data/localities-relation.sql"})
+    @Sql({"/db/data/insert-localities_relation.sql"})
     void findProvinceById() throws ExecutionException, InterruptedException {
         final CompletableFuture<Optional<Province>> province = CompletableFuture.supplyAsync(() -> {
             try {
@@ -119,7 +119,7 @@ public class LocalityServiceTest {
     }
 
     @Test
-    @Sql({"/db/data/localities-relation.sql"})
+    @Sql({"/db/data/insert-localities_relation.sql"})
     void findProvinces() throws ExecutionException, InterruptedException {
         final Condition<Province> firstProvince = new Condition<>(
                 province -> province.getName().equalsIgnoreCase("PROVINCE-1"),
@@ -137,7 +137,7 @@ public class LocalityServiceTest {
     }
 
     @Test
-    @Sql({"/db/data/localities-relation.sql"})
+    @Sql({"/db/data/insert-localities_relation.sql"})
     void findDepartmentById() throws ExecutionException, InterruptedException {
         final CompletableFuture<Optional<Departments>> province = CompletableFuture.supplyAsync(() -> {
             try {
@@ -152,7 +152,7 @@ public class LocalityServiceTest {
     }
 
     @Test
-    @Sql({"/db/data/localities-relation.sql"})
+    @Sql({"/db/data/insert-localities_relation.sql"})
     void findDepartments() throws ExecutionException, InterruptedException {
         final Condition<Departments> firstDepartment = new Condition<>(
                 department -> department.getName().equalsIgnoreCase("DEPARTMENT-1"),

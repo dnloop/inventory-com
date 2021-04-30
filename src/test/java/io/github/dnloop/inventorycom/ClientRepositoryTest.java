@@ -22,20 +22,21 @@ import java.util.concurrent.ExecutionException;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Basic client service tests units. Some methods that are meant to be async are executed sequentially in the
+ * <p>
+ * Basic client repository tests units. Some methods that are meant to be async are executed sequentially in the
  * background due to the nature of the operation such as saving a record and retrieving its results in the same
  * call.
- * <p>
+ * </p>
  */
 @SpringBootTest
 @EnableAsync
 @AutoConfigureTestDatabase
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @Sql({
-             "/db/data/localities.sql",
-             "/db/data/clients.sql"
+             "/db/data/insert-localities.sql",
+             "/db/data/insert-clients.sql"
      })
-class ClientServiceTest {
+class ClientRepositoryTest {
 
     @Autowired
     private ClientService clientService;

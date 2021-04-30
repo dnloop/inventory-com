@@ -1,17 +1,17 @@
-insert into PUBLIC.province
+insert into PUBLIC.PROVINCE
 (id, name)
 values(1, 'PROVINCE-1'),
       (2, 'PROVINCE-1'),
       (3, 'PROVINCE-1');
 
 
-insert into PUBLIC.departments
+insert into PUBLIC.DEPARTMENTS
 (id, name)
 values(1, 'DEPARTMENT-1'),
       (2, 'DEPARTMENT-2');
 
 
-insert into PUBLIC.municipality
+insert into PUBLIC.MUNICIPALITY
 (id, name)
 values(1, 'MUNICIPALITY-1'),
       (2, 'MUNICIPALITY-2'),
