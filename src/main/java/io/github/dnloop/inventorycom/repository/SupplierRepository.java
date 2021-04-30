@@ -1,5 +1,6 @@
 package io.github.dnloop.inventorycom.repository;
 
+import io.github.dnloop.inventorycom.model.SaleInvoice;
 import io.github.dnloop.inventorycom.model.Supplier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,15 @@ public interface SupplierRepository extends JpaRepository<Supplier, Integer> {
            " WHERE supplier.id = :id" +
            " AND supplier.deleted = 0")
     Optional<Supplier> findById(int id);
+
+    /**
+     * Method used by {@link SaleInvoice} a client may be deleted but
+     * its record is used for historical purposes.
+     */
+    @Query("SELECT supplier FROM Supplier supplier" +
+           " WHERE supplier.id = :id" +
+           " AND supplier.deleted = 0")
+    Optional<Supplier> findByIdIgnoreDeleted(int id);
 
     @Query("SELECT supplier FROM Supplier supplier" +
            " WHERE supplier.deleted = 1")

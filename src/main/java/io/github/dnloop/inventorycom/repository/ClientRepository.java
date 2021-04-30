@@ -1,6 +1,7 @@
 package io.github.dnloop.inventorycom.repository;
 
 import io.github.dnloop.inventorycom.model.Client;
+import io.github.dnloop.inventorycom.model.SaleInvoice;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,6 +19,14 @@ public interface ClientRepository extends JpaRepository<Client, Integer> {
            " WHERE client.id = :id" +
            " AND client.deleted = 0")
     Optional<Client> findById(int id);
+
+    /**
+     * Method used by {@link SaleInvoice} a client may be deleted but
+     * its record is used for historical purposes.
+     */
+    @Query("SELECT client FROM Client client" +
+           " WHERE client.id = :id")
+    Optional<Client> findByIdIgnoreDeleted(int id);
 
     @Query("SELECT client FROM Client client" +
            " WHERE client.deleted = 1" +

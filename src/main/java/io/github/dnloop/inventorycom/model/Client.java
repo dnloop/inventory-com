@@ -15,7 +15,6 @@ import java.util.Objects;
  * a client associated to a sale invoice. The field is hidden but related entities
  * can access its values.
  * </p>
- * TODO implement constraint
  */
 @Entity
 @Table(name = "client")
