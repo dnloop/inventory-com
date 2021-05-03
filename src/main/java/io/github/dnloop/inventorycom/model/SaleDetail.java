@@ -16,7 +16,7 @@ public class SaleDetail {
     private Integer amount;
     private BigDecimal unitPrice;
     private BigDecimal subtotal;
-    private Byte iva;
+    private Byte iva = 21;
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
@@ -25,6 +25,27 @@ public class SaleDetail {
     private Integer productId;
     private SaleInvoice saleInvoiceBySaleInvoiceId;
     private Product productByProductId;
+
+    public SaleDetail() {}
+
+    public SaleDetail(
+            Integer amount, BigDecimal unitPrice, BigDecimal subtotal, Byte iva, Byte deleted, Timestamp createdAt,
+            Timestamp modifiedAt,
+            Timestamp deletedAt,
+            Integer saleInvoiceId,
+            Integer productId
+    ) {
+        this.amount = amount;
+        this.unitPrice = unitPrice;
+        this.subtotal = subtotal;
+        this.iva = iva;
+        this.deleted = deleted;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+        this.deletedAt = deletedAt;
+        this.saleInvoiceId = saleInvoiceId;
+        this.productId = productId;
+    }
 
     @Id
     @Column(name = "id", nullable = false)
