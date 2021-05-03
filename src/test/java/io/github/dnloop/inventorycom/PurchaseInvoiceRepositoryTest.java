@@ -80,12 +80,11 @@ public class PurchaseInvoiceRepositoryTest {
         assertThat(
                 result.getContent().get(0)
         ).has(firstInvoice);
-
     }
 
     @Test
     void savePurchaseInvoice() throws ExecutionException, InterruptedException {
-        PurchaseInvoice newSupplier = new PurchaseInvoiceBuilder()
+        PurchaseInvoice newInvoice = new PurchaseInvoiceBuilder()
                 .setNumber(6)
                 .setGenerationDate(Timestamp.from(Instant.now()))
                 .setPaymentType("CASH")
@@ -95,7 +94,7 @@ public class PurchaseInvoiceRepositoryTest {
                 .createPurchaseInvoice();
 
         final CompletableFuture<Optional<PurchaseInvoice>> invoice =
-                purchaseService.saveInvoice(newSupplier).thenApply(spp -> {
+                purchaseService.saveInvoice(newInvoice).thenApply(spp -> {
                     try {
                         return purchaseService.findInvoiceById(spp.getId()).get();
                     } catch (InterruptedException | ExecutionException e) {
