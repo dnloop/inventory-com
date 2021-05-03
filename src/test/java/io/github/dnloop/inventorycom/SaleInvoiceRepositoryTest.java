@@ -96,9 +96,9 @@ public class SaleInvoiceRepositoryTest {
                 .createSaleInvoice();
 
         final CompletableFuture<Optional<SaleInvoice>> invoice =
-                saleService.saveInvoice(newInvoice).thenApply(spp -> {
+                saleService.saveInvoice(newInvoice).thenApply(saleInvoice -> {
                     try {
-                        return saleService.findInvoiceById(spp.getId()).get();
+                        return saleService.findInvoiceById(saleInvoice.getId()).get();
                     } catch (InterruptedException | ExecutionException e) {
                         return Optional.empty();
                     }
