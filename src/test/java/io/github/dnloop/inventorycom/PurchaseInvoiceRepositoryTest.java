@@ -94,9 +94,9 @@ public class PurchaseInvoiceRepositoryTest {
                 .createPurchaseInvoice();
 
         final CompletableFuture<Optional<PurchaseInvoice>> invoice =
-                purchaseService.saveInvoice(newInvoice).thenApply(spp -> {
+                purchaseService.saveInvoice(newInvoice).thenApply(invoice1 -> {
                     try {
-                        return purchaseService.findInvoiceById(spp.getId()).get();
+                        return purchaseService.findInvoiceById(invoice1.getId()).get();
                     } catch (InterruptedException | ExecutionException e) {
                         return Optional.empty();
                     }
@@ -117,7 +117,7 @@ public class PurchaseInvoiceRepositoryTest {
 
         final CompletableFuture<Optional<PurchaseInvoice>> modifiedInvoice =
                 purchaseService.saveInvoice(editInvoice).thenCompose(
-                        spp -> purchaseService.findInvoiceById(spp.getId())
+                        invoice -> purchaseService.findInvoiceById(invoice.getId())
                 );
 
         final Timestamp result;
