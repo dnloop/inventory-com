@@ -45,7 +45,7 @@ public class SaleInvoiceRepositoryTest {
     void contextLoads() {}
 
     @Test
-    void purchaseInvoiceNull() throws ExecutionException, InterruptedException {
+    void saleInvoiceNull() throws ExecutionException, InterruptedException {
         final CompletableFuture<Optional<SaleInvoice>> invoice = saleService.findInvoiceById(6);
 
         assertThat(
