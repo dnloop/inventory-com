@@ -42,7 +42,7 @@ public class ClientService {
     }
 
     @Async
-    public CompletableFuture<Optional<Client>> findDeletedClient(Integer id) {
+    public CompletableFuture<Optional<Client>> findDeletedClient(int id) {
         return CompletableFuture.completedFuture(clientRepository.findDeleted(id));
     }
 
@@ -97,7 +97,7 @@ public class ClientService {
     /* Client Phones */
 
     @Async
-    public CompletableFuture<Optional<ClientPhone>> findClientPhoneById(Integer id) {
+    public CompletableFuture<Optional<ClientPhone>> findClientPhoneById(int id) {
         return CompletableFuture.completedFuture(phoneRepository.findById(id));
     }
 
@@ -107,7 +107,7 @@ public class ClientService {
     }
 
     @Async
-    public CompletableFuture<Optional<ClientPhone>> findDeletedClientPhoneById(Integer id) {
+    public CompletableFuture<Optional<ClientPhone>> findDeletedClientPhoneById(int id) {
         return CompletableFuture.completedFuture(phoneRepository.findDeleted(id));
     }
 

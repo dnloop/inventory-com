@@ -74,7 +74,7 @@ public class ClientPhoneRepositoryTest {
     @Test
     void insertClientPhones() throws ExecutionException, InterruptedException {
         final Condition<ClientPhone> clientPhoneCondition = new Condition<>(
-                clientPhone -> clientPhone.getNumber().equals(""),
+                clientPhone -> clientPhone.getNumber().equals("12345678"),
                 "[Number] - Must be 12345678"
         );
 
