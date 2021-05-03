@@ -26,8 +26,8 @@ public class PurchaseInvoice {
     private Timestamp generationDate;
     private String paymentType;
     private String invoiceType;
-    private BigDecimal surcharge;
-    private BigDecimal discount;
+    private BigDecimal surcharge = BigDecimal.ZERO;
+    private BigDecimal discount = BigDecimal.ZERO;
     private BigDecimal total;
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
@@ -37,6 +37,32 @@ public class PurchaseInvoice {
     private Collection<PurchaseDetail> purchaseDetailsById;
     private Supplier supplierBySupplierId;
     private Collection<PurchaseShare> purchaseSharesById;
+
+    public PurchaseInvoice() {}
+
+    public PurchaseInvoice(
+            Integer number, Timestamp generationDate, String paymentType, String invoiceType, BigDecimal surcharge,
+            BigDecimal discount,
+            BigDecimal total,
+            Byte deleted,
+            Timestamp createdAt,
+            Timestamp modifiedAt,
+            Timestamp deletedAt,
+            Integer supplierId
+    ) {
+        this.number = number;
+        this.generationDate = generationDate;
+        this.paymentType = paymentType;
+        this.invoiceType = invoiceType;
+        this.surcharge = surcharge;
+        this.discount = discount;
+        this.total = total;
+        this.deleted = deleted;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+        this.deletedAt = deletedAt;
+        this.supplierId = supplierId;
+    }
 
     @Id
     @Column(name = "id", nullable = false)

@@ -8,8 +8,6 @@ import io.github.dnloop.inventorycom.utils.PageableProperty;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +45,7 @@ public class PurchaseService {
 
     @Async
     public CompletableFuture<Page<PurchaseInvoice>> findAllInvoices() {
+        PageableProperty pageableProperty = new PageableProperty("number");
         return CompletableFuture.completedFuture(invoiceRepository.findAll(pageableProperty.getPageable()));
     }
 
@@ -56,8 +55,8 @@ public class PurchaseService {
     }
 
     @Async
-    public void saveInvoice(PurchaseInvoice invoice) {
-        invoiceRepository.save(invoice);
+    public CompletableFuture<PurchaseInvoice> saveInvoice(PurchaseInvoice invoice) {
+        return CompletableFuture.completedFuture(invoiceRepository.save(invoice));
     }
 
     /* Purchase Share */
