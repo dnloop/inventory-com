@@ -46,7 +46,7 @@ class ClientRepositoryTest {
 
     @Test
     void clientNull() throws ExecutionException, InterruptedException {
-        final CompletableFuture<Optional<Client>> client = clientService.findById(6);
+        final CompletableFuture<Optional<Client>> client = clientService.findClientById(6);
 
         assertThat(
                 client.get()
@@ -56,7 +56,7 @@ class ClientRepositoryTest {
     @Test
     void insertClient() throws ExecutionException, InterruptedException {
         final Condition<Client> clientCondition = new Condition<>(
-                product -> product.getSurname().equals("Hanigan"),
+                client -> client.getSurname().equals("Hanigan"),
                 "[Surname] - Hanigan"
         );
 
@@ -69,9 +69,9 @@ class ClientRepositoryTest {
         );
 
         final CompletableFuture<Optional<Client>> client =
-                clientService.save(newClient).thenApply(cli -> {
+                clientService.saveClient(newClient).thenApply(cli -> {
                     try {
-                        return clientService.findById(cli.getId()).get();
+                        return clientService.findClientById(cli.getId()).get();
                     } catch (InterruptedException | ExecutionException e) {
                         return Optional.empty();
                     }
@@ -91,7 +91,7 @@ class ClientRepositoryTest {
     void findById() throws ExecutionException, InterruptedException {
         final CompletableFuture<Optional<Client>> client = CompletableFuture.supplyAsync(() -> {
             try {
-                return clientService.findById(1).get();
+                return clientService.findClientById(1).get();
             } catch (InterruptedException | ExecutionException e) {
                 return Optional.empty();
             }
@@ -108,7 +108,7 @@ class ClientRepositoryTest {
     void findByIdDeleted() throws ExecutionException, InterruptedException {
         final CompletableFuture<Optional<Client>> client = CompletableFuture.supplyAsync(() -> {
             try {
-                return clientService.findById(5).get();
+                return clientService.findClientById(5).get();
             } catch (InterruptedException | ExecutionException e) {
                 return Optional.empty();
             }
@@ -120,28 +120,28 @@ class ClientRepositoryTest {
 
     @Test
     void findDeletedClient() throws ExecutionException, InterruptedException {
-        final CompletableFuture<Optional<Client>> product = CompletableFuture.supplyAsync(() -> {
+        final CompletableFuture<Optional<Client>> client = CompletableFuture.supplyAsync(() -> {
             try {
-                return clientService.findDeleted(5).get();
+                return clientService.findDeletedClient(5).get();
             } catch (InterruptedException | ExecutionException e) {
                 return Optional.empty();
             }
         });
 
-        assertThat(product.get())
+        assertThat(client.get())
                 .matches(Optional::isPresent, "Must be present");
     }
 
     @Test
     void modifyClient() throws ExecutionException, InterruptedException {
         final Timestamp ts = Timestamp.from(Instant.now());
-        final Client editClient = clientService.findById(1).join().orElse(null);
+        final Client editClient = clientService.findClientById(1).join().orElse(null);
 
         Objects.requireNonNull(editClient).setModifiedAt(ts);
 
         final CompletableFuture<Optional<Client>> modifiedClient =
-                clientService.save(editClient).thenCompose(
-                        cli -> clientService.findById(cli.getId())
+                clientService.saveClient(editClient).thenCompose(
+                        cli -> clientService.findClientById(cli.getId())
                 );
 
         final Timestamp result;
@@ -162,7 +162,7 @@ class ClientRepositoryTest {
                 client -> client.getSurname().equalsIgnoreCase("Benson"),
                 "[Surname] - Benson"
         );
-        final CompletableFuture<Page<Client>> clients = clientService.findAll();
+        final CompletableFuture<Page<Client>> clients = clientService.findAllClients();
         final Page<Client> result = clients.get();
 
         assertThat(result).hasSize(3);
@@ -173,7 +173,7 @@ class ClientRepositoryTest {
 
     @Test
     void findAllDeleted() throws ExecutionException, InterruptedException {
-        final CompletableFuture<Page<Client>> clients = clientService.findAllDeleted();
+        final CompletableFuture<Page<Client>> clients = clientService.findAllDeletedClients();
         final Page<Client> result = clients.get();
         final Condition<Client> surname = new Condition<>(
                 client -> client.getSurname().equalsIgnoreCase("Ayers"),
@@ -187,14 +187,14 @@ class ClientRepositoryTest {
     @Test
     void deleteClient() throws ExecutionException, InterruptedException {
         final CompletableFuture<Void> client =
-                clientService.findById(1).thenAccept(client1 -> client1.ifPresent(
-                        value -> clientService.delete(value)
+                clientService.findClientById(1).thenAccept(client1 -> client1.ifPresent(
+                        value -> clientService.deleteClient(value)
                 ));
 
 
         final CompletableFuture<Optional<Client>> clientDeleted =
                 client.thenCompose(
-                        unused -> clientService.findDeleted(1)
+                        unused -> clientService.findDeletedClient(1)
                 );
 
         assertThat(
@@ -206,12 +206,12 @@ class ClientRepositoryTest {
     void deleteClientCollection() throws ExecutionException, InterruptedException {
 
         final CompletableFuture<Void> clients =
-                clientService.findAll().thenAccept(
-                        clients1 -> clientService.deleteAll(clients1.getContent())
+                clientService.findAllClients().thenAccept(
+                        clients1 -> clientService.deleteAllClients(clients1.getContent())
                 );
 
         final CompletableFuture<Page<Client>> clientsDeleted = clients.thenApply(
-                unused -> clientService.findAllDeleted().join()
+                unused -> clientService.findAllDeletedClients().join()
         );
 
         assertThat(

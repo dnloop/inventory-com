@@ -1,8 +1,6 @@
 package io.github.dnloop.inventorycom.model;
 
-import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -21,6 +19,13 @@ public class ClientPhone {
     private Timestamp deletedAt;
     private Integer clientId;
     private Client clientByClientId;
+
+    public ClientPhone() {}
+
+    public ClientPhone(String number, Integer clientId) {
+        this.number = number;
+        this.clientId = clientId;
+    }
 
     @Id
     @Column(name = "id", nullable = false)

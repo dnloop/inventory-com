@@ -37,28 +37,28 @@ public class ClientService {
     }
 
     @Async
-    public CompletableFuture<Optional<Client>> findById(int id) {
+    public CompletableFuture<Optional<Client>> findClientById(int id) {
         return CompletableFuture.completedFuture(clientRepository.findById(id));
     }
 
     @Async
-    public CompletableFuture<Optional<Client>> findDeleted(Integer id) {
+    public CompletableFuture<Optional<Client>> findDeletedClient(Integer id) {
         return CompletableFuture.completedFuture(clientRepository.findDeleted(id));
     }
 
     @Async
-    public CompletableFuture<Page<Client>> findAll() {
+    public CompletableFuture<Page<Client>> findAllClients() {
         PageableProperty pageableProperty = new PageableProperty("surname");
         return CompletableFuture.completedFuture(clientRepository.findAll(pageableProperty.getPageable()));
     }
 
     @Async
-    public CompletableFuture<Page<Client>> findAll(Pageable pageable) {
+    public CompletableFuture<Page<Client>> findAllClients(Pageable pageable) {
         return CompletableFuture.completedFuture(clientRepository.findAll(pageable));
     }
 
     @Async
-    public CompletableFuture<Page<Client>> findAllDeleted() {
+    public CompletableFuture<Page<Client>> findAllDeletedClients() {
         PageableProperty pageableProperty = new PageableProperty("surname");
         return CompletableFuture.completedFuture(
                 clientRepository.findAllDeleted(pageableProperty.getPageableDeleted())
@@ -66,19 +66,19 @@ public class ClientService {
     }
 
     @Async
-    public CompletableFuture<Page<Client>> findAllDeleted(PageableProperty pageableProperty) {
+    public CompletableFuture<Page<Client>> findAllDeletedClients(PageableProperty pageableProperty) {
         return CompletableFuture.completedFuture(
                 clientRepository.findAllDeleted(pageableProperty.getPageable())
         );
     }
 
     @Async
-    public CompletableFuture<Client> save(Client client) {
+    public CompletableFuture<Client> saveClient(Client client) {
         return CompletableFuture.completedFuture(clientRepository.save(client));
     }
 
     @Transactional
-    public void delete(Client client) {
+    public void deleteClient(Client client) {
         clientRepository.delete(client);
         log.debug("Record Deleted: " + client.toString());
         log.debug("Deleting Relationships");
@@ -88,12 +88,12 @@ public class ClientService {
         });
     }
 
-    @Async
-    public void deleteAll(Collection<Client> collectionClient) {
-        collectionClient.forEach(this::delete);
+    @Transactional
+    public void deleteAllClients(Collection<Client> collectionClient) {
+        collectionClient.forEach(this::deleteClient);
         log.debug("Records Deleted: " + collectionClient.size());
     }
-    
+
     /* Client Phones */
 
     @Async
@@ -107,22 +107,27 @@ public class ClientService {
     }
 
     @Async
+    public CompletableFuture<Optional<ClientPhone>> findDeletedClientPhoneById(Integer id) {
+        return CompletableFuture.completedFuture(phoneRepository.findDeleted(id));
+    }
+
+    @Async
     public CompletableFuture<LinkedHashSet<ClientPhone>> findAllDeletedClientPhones() {
         return CompletableFuture.completedFuture(phoneRepository.findAllDeleted());
     }
 
     @Async
-    public void saveClientPhone(ClientPhone clientPhone) {
-        phoneRepository.save(clientPhone);
+    public CompletableFuture<ClientPhone> saveClientPhone(ClientPhone clientPhone) {
+        return CompletableFuture.completedFuture(phoneRepository.save(clientPhone));
     }
 
-    @Async
+    @Transactional
     public void deleteClientPhone(ClientPhone clientPhone) {
         phoneRepository.delete(clientPhone);
         log.debug("Record Deleted: " + clientPhone.toString());
     }
 
-    @Async
+    @Transactional
     public void deleteAllClientPhones(Collection<ClientPhone> collectionClientPhone) {
         collectionClientPhone.forEach(this::deleteClientPhone);
         log.debug("Records Deleted: " + collectionClientPhone.size());
