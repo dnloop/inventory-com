@@ -204,7 +204,8 @@ public class Client {
         );
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "locality_id", referencedColumnName = "id", nullable = false,
                 insertable = false, updatable = false)
     public Locality getLocalityByLocalityId() {
@@ -215,7 +216,7 @@ public class Client {
         this.localityByLocalityId = localityByLocalityId;
     }
 
-    @OneToMany(mappedBy = "clientByClientId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "clientByClientId")
     @Fetch(FetchMode.JOIN)
     public Collection<ClientPhone> getClientPhonesById() {
         return clientPhonesById;

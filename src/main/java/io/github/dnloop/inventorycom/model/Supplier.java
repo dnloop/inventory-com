@@ -232,7 +232,7 @@ public class Supplier {
         this.supplierCatalogsById = supplierCatalogsById;
     }
 
-    @OneToMany(mappedBy = "supplierBySupplierId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "supplierBySupplierId")
     @Fetch(FetchMode.JOIN)
     public Collection<SupplierPhone> getSupplierPhonesById() {
         return supplierPhonesById;
