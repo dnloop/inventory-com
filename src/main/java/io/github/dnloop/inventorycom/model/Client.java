@@ -1,5 +1,7 @@
 package io.github.dnloop.inventorycom.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
@@ -213,7 +215,8 @@ public class Client {
         this.localityByLocalityId = localityByLocalityId;
     }
 
-    @OneToMany(mappedBy = "clientByClientId", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "clientByClientId", fetch = FetchType.LAZY)
+    @Fetch(FetchMode.JOIN)
     public Collection<ClientPhone> getClientPhonesById() {
         return clientPhonesById;
     }

@@ -1,5 +1,7 @@
 package io.github.dnloop.inventorycom.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
@@ -35,6 +37,27 @@ public class Supplier {
     private Locality localityByLocalityId;
     private Collection<SupplierCatalog> supplierCatalogsById;
     private Collection<SupplierPhone> supplierPhonesById;
+
+    public Supplier() {}
+
+    public Supplier(
+            String name, String description, String mail, Integer localityId, Byte deleted, Timestamp createdAt,
+            Timestamp modifiedAt,
+            Timestamp deletedAt,
+            String address,
+            Long cuit
+    ) {
+        this.name = name;
+        this.description = description;
+        this.mail = mail;
+        this.localityId = localityId;
+        this.deleted = deleted;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+        this.deletedAt = deletedAt;
+        this.address = address;
+        this.cuit = cuit;
+    }
 
     @Id
     @Column(name = "id", nullable = false)
@@ -209,7 +232,8 @@ public class Supplier {
         this.supplierCatalogsById = supplierCatalogsById;
     }
 
-    @OneToMany(mappedBy = "supplierBySupplierId")
+    @OneToMany(mappedBy = "supplierBySupplierId", fetch = FetchType.LAZY)
+    @Fetch(FetchMode.JOIN)
     public Collection<SupplierPhone> getSupplierPhonesById() {
         return supplierPhonesById;
     }

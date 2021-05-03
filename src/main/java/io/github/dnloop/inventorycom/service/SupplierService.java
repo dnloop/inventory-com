@@ -44,6 +44,7 @@ public class SupplierService {
 
     @Async
     public CompletableFuture<Page<Supplier>> findAllSuppliers() {
+        PageableProperty pageableProperty = new PageableProperty("name");
         return CompletableFuture.completedFuture(supplierRepository.findAll(pageableProperty.getPageable()));
     }
 
@@ -61,6 +62,7 @@ public class SupplierService {
 
     @Async
     public CompletableFuture<Page<Supplier>> findAllDeletedSuppliers() {
+        PageableProperty pageableProperty = new PageableProperty("name");
         return CompletableFuture.completedFuture(
                 supplierRepository.findAllDeleted(pageableProperty.getPageableDeleted())
         );
@@ -89,7 +91,7 @@ public class SupplierService {
         });
     }
 
-    @Async
+    @Transactional
     public void deleteAllSupplier(Collection<Supplier> collectionSupplier) {
         collectionSupplier.forEach(this::deleteSupplier);
         log.debug("Records Deleted: " + collectionSupplier.size());
