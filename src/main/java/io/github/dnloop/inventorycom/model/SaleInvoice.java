@@ -37,6 +37,32 @@ public class SaleInvoice {
     private Collection<SaleDetail> saleDetailsById;
     private Collection<SaleShare> saleSharesById;
 
+    public SaleInvoice() {}
+
+    public SaleInvoice(
+            Integer number, Timestamp generationDate, BigDecimal surcharge, BigDecimal total, String invoiceType,
+            String paymentType,
+            Byte deleted,
+            Timestamp createdAt,
+            BigDecimal discount,
+            Timestamp modifiedAt,
+            Timestamp deletedAt,
+            Integer clientId
+    ) {
+        this.number = number;
+        this.generationDate = generationDate;
+        this.surcharge = surcharge;
+        this.total = total;
+        this.invoiceType = invoiceType;
+        this.paymentType = paymentType;
+        this.deleted = deleted;
+        this.createdAt = createdAt;
+        this.discount = discount;
+        this.modifiedAt = modifiedAt;
+        this.deletedAt = deletedAt;
+        this.clientId = clientId;
+    }
+
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -8,12 +8,9 @@ import io.github.dnloop.inventorycom.utils.PageableProperty;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -41,24 +38,25 @@ public class SaleService {
     }
 
     @Async
-    public CompletableFuture<Optional<SaleInvoice>> findById(Integer id) {
+    public CompletableFuture<Optional<SaleInvoice>> findInvoiceById(Integer id) {
         return CompletableFuture.completedFuture(invoiceRepository.findById(id));
     }
 
     @Async
-    public CompletableFuture<Page<SaleInvoice>> findAll() {
+    public CompletableFuture<Page<SaleInvoice>> findAllInvoices() {
+        PageableProperty pageableProperty = new PageableProperty("number");
         return CompletableFuture.completedFuture(
                 invoiceRepository.findAll(pageableProperty.getPageable())
         );
     }
 
     @Async
-    public CompletableFuture<Page<SaleInvoice>> findAll(Pageable pageable) {
-        return CompletableFuture.completedFuture(invoiceRepository.findAll(pageable));
+    public CompletableFuture<Page<SaleInvoice>> findAllInvoices(PageableProperty pageableProperty) {
+        return CompletableFuture.completedFuture(invoiceRepository.findAll(pageableProperty.getPageable()));
     }
 
     @Async
-    public void save(SaleInvoice invoice) {
-        invoiceRepository.save(invoice);
+    public CompletableFuture<SaleInvoice> saveInvoice(SaleInvoice invoice) {
+        return CompletableFuture.completedFuture(invoiceRepository.save(invoice));
     }
 }
