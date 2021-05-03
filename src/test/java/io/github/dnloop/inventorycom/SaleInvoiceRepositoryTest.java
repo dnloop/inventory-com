@@ -86,7 +86,7 @@ public class SaleInvoiceRepositoryTest {
 
     @Test
     void saveSaleInvoice() throws ExecutionException, InterruptedException {
-        SaleInvoice newSupplier = new SaleInvoiceBuilder()
+        SaleInvoice newInvoice = new SaleInvoiceBuilder()
                 .setNumber(6)
                 .setGenerationDate(Timestamp.from(Instant.now()))
                 .setPaymentType("CASH")
@@ -96,7 +96,7 @@ public class SaleInvoiceRepositoryTest {
                 .createSaleInvoice();
 
         final CompletableFuture<Optional<SaleInvoice>> invoice =
-                saleService.saveInvoice(newSupplier).thenApply(spp -> {
+                saleService.saveInvoice(newInvoice).thenApply(spp -> {
                     try {
                         return saleService.findInvoiceById(spp.getId()).get();
                     } catch (InterruptedException | ExecutionException e) {
