@@ -1,5 +1,6 @@
 package io.github.dnloop.inventorycom.service;
 
+import io.github.dnloop.inventorycom.model.PurchaseDetail;
 import io.github.dnloop.inventorycom.model.PurchaseInvoice;
 import io.github.dnloop.inventorycom.repository.PurchaseInvoiceDetailsRepository;
 import io.github.dnloop.inventorycom.repository.PurchaseInvoiceRepository;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -20,20 +22,18 @@ public class PurchaseService {
 
     private final PurchaseInvoiceRepository invoiceRepository;
 
-    private final PurchaseInvoiceDetailsRepository invoiceDetailRepository;
+    private final PurchaseInvoiceDetailsRepository detailRepository;
 
-    private final PurchaseShareRepository purchaseShareRepository;
-
-    private final PageableProperty pageableProperty = new PageableProperty();
+    private final PurchaseShareRepository shareRepository;
 
     public PurchaseService(
             PurchaseInvoiceRepository invoiceRepository,
-            PurchaseInvoiceDetailsRepository invoiceDetailRepository,
-            PurchaseShareRepository purchaseShareRepository
+            PurchaseInvoiceDetailsRepository detailRepository,
+            PurchaseShareRepository shareRepository
     ) {
         this.invoiceRepository = invoiceRepository;
-        this.invoiceDetailRepository = invoiceDetailRepository;
-        this.purchaseShareRepository = purchaseShareRepository;
+        this.detailRepository = detailRepository;
+        this.shareRepository = shareRepository;
     }
 
     /* Invoice */
@@ -59,5 +59,25 @@ public class PurchaseService {
         return CompletableFuture.completedFuture(invoiceRepository.save(invoice));
     }
 
-    /* Purchase Share */
+    /* Detail */
+
+    @Async
+    public CompletableFuture<Optional<PurchaseDetail>> findDetailById(Integer id) {
+        return CompletableFuture.completedFuture(detailRepository.findById(id));
+    }
+
+    @Async
+    public CompletableFuture<ArrayList<PurchaseDetail>> findAllDetailsById(int invoiceId) {
+
+        return CompletableFuture.completedFuture(
+                detailRepository.findAllBySaleInvoiceId(invoiceId)
+        );
+    }
+
+    @Async
+    public CompletableFuture<PurchaseDetail> saveDetail(PurchaseDetail invoice) {
+        return CompletableFuture.completedFuture(detailRepository.save(invoice));
+    }
+
+    /* Share */
 }

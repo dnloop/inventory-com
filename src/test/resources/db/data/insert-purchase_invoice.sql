@@ -18,23 +18,19 @@
  */
 
 INSERT
-INTO
-    PUBLIC.PURCHASE_INVOICE (ID,
-                             CREATED_AT,
-                             DELETED,
-                             DELETED_AT,
-                             DISCOUNT,
-                             GENERATION_DATE,
-                             INVOICE_TYPE,
-                             MODIFIED_AT,
-                             "NUMBER",
-                             PAYMENT_TYPE,
-                             SUPPLIER_ID,
-                             SURCHARGE,
-                             TOTAL)
-VALUES
-(1, CURRENT_TIMESTAMP(), 0, NULL, 0, CURRENT_TIMESTAMP(), 'A', NULL, 1, 'CASH', 1, 0, 100),
-(2, CURRENT_TIMESTAMP(), 0, NULL, 0, CURRENT_TIMESTAMP(), 'A', NULL, 1, 'CASH', 2, 0, 100),
-(3, CURRENT_TIMESTAMP(), 0, NULL, 0, CURRENT_TIMESTAMP(), 'A', NULL, 1, 'CASH', 3, 0, 100),
-(4, CURRENT_TIMESTAMP(), 0, NULL, 0, CURRENT_TIMESTAMP(), 'A', NULL, 4, 'CASH', 4, 0, 100),
-(5, CURRENT_TIMESTAMP(), 0, NULL, 0, CURRENT_TIMESTAMP(), 'A', NULL, 5, 'CASH', 5, 0, 100);
+INTO PUBLIC.PURCHASE_INVOICE (ID,
+                              CREATED_AT,
+                              DELETED,
+                              DELETED_AT,
+                              DISCOUNT,
+                              GENERATION_DATE,
+                              INVOICE_TYPE,
+                              MODIFIED_AT,
+                              "NUMBER",
+                              PAYMENT_TYPE,
+                              SUPPLIER_ID,
+                              SURCHARGE,
+                              TOTAL)
+VALUES (1, CURRENT_TIMESTAMP(), 0, NULL, 0, CURRENT_TIMESTAMP(), 'A', NULL, 1, 'CASH', 1, 0, 100),
+       (2, CURRENT_TIMESTAMP(), 0, NULL, 0, CURRENT_TIMESTAMP(), 'A', NULL, 2, 'CASH', 2, 0, 100),
+       (3, CURRENT_TIMESTAMP(), 0, NULL, 0, CURRENT_TIMESTAMP(), 'A', NULL, 3, 'CASH', 3, 0, 100);

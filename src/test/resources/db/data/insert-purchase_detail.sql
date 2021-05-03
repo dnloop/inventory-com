@@ -18,24 +18,19 @@
  */
 
 INSERT
-	INTO
-	PUBLIC.PURCHASE_DETAIL (ID,
-	AMOUNT,
-	CREATED_AT,
-	DELETED,
-	DELETED_AT,
-	IVA,
-	MODIFIED_AT,
-	PRODUCT_ID,
-	PURCHASE_INVOICE_ID,
-	SUBTOTAL,
-	UNIT_PRICE)
-VALUES
-(1, 10, CURRENT_TIMESTAMP(), 0, NULL, 21, NULL, 1, 1, 100, 10),
-(2, 10, CURRENT_TIMESTAMP(), 0, NULL, 21, NULL, 1, 1, 100, 10),
-(3, 10, CURRENT_TIMESTAMP(), 0, NULL, 21, NULL, 1, 1, 100, 10),
-(4, 10, CURRENT_TIMESTAMP(), 0, NULL, 21, NULL, 1, 1, 100, 10),
-(5, 10, CURRENT_TIMESTAMP(), 0, NULL, 21, NULL, 1, 1, 100, 10),
-(6, 10, CURRENT_TIMESTAMP(), 0, NULL, 21, NULL, 1, 1, 100, 10),
-(7, 10, CURRENT_TIMESTAMP(), 0, NULL, 21, NULL, 4, 1, 100, 10),
-(8, 10, CURRENT_TIMESTAMP(), 0, NULL, 21, NULL, 5, 1, 100, 10);
+INTO PUBLIC.PURCHASE_DETAIL (ID,
+                             AMOUNT,
+                             CREATED_AT,
+                             DELETED,
+                             DELETED_AT,
+                             IVA,
+                             MODIFIED_AT,
+                             PRODUCT_ID,
+                             PURCHASE_INVOICE_ID,
+                             SUBTOTAL,
+                             UNIT_PRICE)
+VALUES (1, 10, CURRENT_TIMESTAMP(), 0, NULL, 21, NULL, 1, 1, 100, 10),
+       (2, 10, CURRENT_TIMESTAMP(), 0, NULL, 21, NULL, 1, 1, 100, 10),
+       (3, 10, CURRENT_TIMESTAMP(), 0, NULL, 21, NULL, 1, 1, 100, 10),
+       (4, 10, CURRENT_TIMESTAMP(), 0, NULL, 21, NULL, 1, 2, 100, 10),
+       (5, 10, CURRENT_TIMESTAMP(), 0, NULL, 21, NULL, 1, 3, 100, 10);

@@ -26,6 +26,28 @@ public class PurchaseDetail {
     private PurchaseInvoice purchaseInvoiceByPurchaseInvoiceId;
     private Product productByProductId;
 
+    public PurchaseDetail() {}
+
+    public PurchaseDetail(
+            Integer amount, BigDecimal unitPrice, BigDecimal subtotal, Byte deleted, Timestamp createdAt,
+            Timestamp modifiedAt,
+            Timestamp deletedAt,
+            Integer purchaseInvoiceId,
+            Integer productId,
+            Byte iva
+    ) {
+        this.amount = amount;
+        this.unitPrice = unitPrice;
+        this.subtotal = subtotal;
+        this.deleted = deleted;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+        this.deletedAt = deletedAt;
+        this.purchaseInvoiceId = purchaseInvoiceId;
+        this.productId = productId;
+        this.iva = iva;
+    }
+
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
