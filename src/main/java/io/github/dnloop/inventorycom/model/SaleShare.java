@@ -23,6 +23,23 @@ public class SaleShare {
     private Integer saleInvoiceId;
     private SaleInvoice saleInvoiceBySaleInvoiceId;
 
+    public SaleShare() {}
+
+    public SaleShare(
+            Integer number, Date paymentDate, Date dueDate, Byte deleted, Timestamp createdAt, Timestamp modifiedAt,
+            Timestamp deletedAt,
+            Integer saleInvoiceId
+    ) {
+        this.number = number;
+        this.paymentDate = paymentDate;
+        this.dueDate = dueDate;
+        this.deleted = deleted;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+        this.deletedAt = deletedAt;
+        this.saleInvoiceId = saleInvoiceId;
+    }
+
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)

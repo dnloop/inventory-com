@@ -23,6 +23,23 @@ public class PurchaseShare {
     private Integer purchaseInvoiceId;
     private PurchaseInvoice purchaseInvoiceByPurchaseInvoiceId;
 
+    public PurchaseShare() {}
+
+    public PurchaseShare(
+            Integer number, Date paymentDate, Date dueDate, Byte deleted, Timestamp createdAt, Timestamp modifiedAt,
+            Timestamp deletedAt,
+            Integer purchaseInvoiceId
+    ) {
+        this.number = number;
+        this.paymentDate = paymentDate;
+        this.dueDate = dueDate;
+        this.deleted = deleted;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+        this.deletedAt = deletedAt;
+        this.purchaseInvoiceId = purchaseInvoiceId;
+    }
+
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)

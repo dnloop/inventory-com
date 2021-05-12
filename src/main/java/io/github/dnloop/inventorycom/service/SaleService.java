@@ -1,5 +1,6 @@
 package io.github.dnloop.inventorycom.service;
 
+import io.github.dnloop.inventorycom.model.SaleShare;
 import io.github.dnloop.inventorycom.model.SaleDetail;
 import io.github.dnloop.inventorycom.model.SaleInvoice;
 import io.github.dnloop.inventorycom.repository.SaleInvoiceDetailsRepository;
@@ -11,8 +12,10 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,8 +29,6 @@ public class SaleService {
     private final SaleInvoiceDetailsRepository detailsRepository;
 
     private final SaleShareRepository shareRepository;
-
-    private final PageableProperty pageableProperty = new PageableProperty();
 
     public SaleService(
             SaleInvoiceRepository invoiceRepository,
@@ -82,5 +83,38 @@ public class SaleService {
     @Async
     public CompletableFuture<SaleDetail> saveDetail(SaleDetail invoice) {
         return CompletableFuture.completedFuture(detailsRepository.save(invoice));
+    }
+
+    /* Share */
+
+    @Async
+    public CompletableFuture<Optional<SaleShare>> findSaleShareById(int id) {
+        return CompletableFuture.completedFuture(shareRepository.findById(id));
+    }
+
+    @Async
+    public CompletableFuture<Optional<SaleShare>> findDeletedSaleShare(int id) {
+        return CompletableFuture.completedFuture(shareRepository.findDeleted(id));
+    }
+
+    @Async
+    public CompletableFuture<LinkedHashSet<SaleShare>> findAllSaleShares() {
+        return CompletableFuture.completedFuture(shareRepository.findAll());
+    }
+
+    @Async
+    public CompletableFuture<LinkedHashSet<SaleShare>> findAllDeletedSaleShares() {
+        return CompletableFuture.completedFuture(shareRepository.findAllDeleted());
+    }
+
+    @Async
+    public CompletableFuture<SaleShare> saveSaleShare(SaleShare saleShare) {
+        return CompletableFuture.completedFuture(shareRepository.save(saleShare));
+    }
+
+    @Transactional
+    public void deleteSaleShare(SaleShare saleShare) {
+        shareRepository.delete(saleShare);
+        log.debug("SaleShare Deleted: " + saleShare.toString());
     }
 }

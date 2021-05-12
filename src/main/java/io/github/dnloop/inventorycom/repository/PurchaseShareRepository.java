@@ -10,7 +10,8 @@ import java.util.Optional;
 public interface PurchaseShareRepository extends CrudRepository<PurchaseShare, Integer> {
 
     @Query("SELECT purchaseShare FROM PurchaseShare purchaseShare" +
-           " WHERE purchaseShare.deleted = 0")
+           " WHERE purchaseShare.deleted = 0" +
+           " ORDER BY purchaseShare.dueDate")
     LinkedHashSet<PurchaseShare> findAll();
 
     @Query("SELECT purchaseShare FROM PurchaseShare purchaseShare" +
@@ -18,7 +19,8 @@ public interface PurchaseShareRepository extends CrudRepository<PurchaseShare, I
     Optional<PurchaseShare> findById(int id);
 
     @Query("SELECT purchaseShare FROM PurchaseShare purchaseShare" +
-           " WHERE purchaseShare.deleted = 1")
+           " WHERE purchaseShare.deleted = 1" +
+           " ORDER BY purchaseShare.dueDate")
     LinkedHashSet<PurchaseShare> findAllDeleted();
 
     @Query("SELECT purchaseShare FROM PurchaseShare purchaseShare" +

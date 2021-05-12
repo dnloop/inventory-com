@@ -2,6 +2,7 @@ package io.github.dnloop.inventorycom.service;
 
 import io.github.dnloop.inventorycom.model.PurchaseDetail;
 import io.github.dnloop.inventorycom.model.PurchaseInvoice;
+import io.github.dnloop.inventorycom.model.PurchaseShare;
 import io.github.dnloop.inventorycom.repository.PurchaseInvoiceDetailsRepository;
 import io.github.dnloop.inventorycom.repository.PurchaseInvoiceRepository;
 import io.github.dnloop.inventorycom.repository.PurchaseShareRepository;
@@ -11,8 +12,10 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -80,4 +83,36 @@ public class PurchaseService {
     }
 
     /* Share */
+
+    @Async
+    public CompletableFuture<Optional<PurchaseShare>> findPurchaseShareById(int id) {
+        return CompletableFuture.completedFuture(shareRepository.findById(id));
+    }
+
+    @Async
+    public CompletableFuture<Optional<PurchaseShare>> findDeletedPurchaseShare(int id) {
+        return CompletableFuture.completedFuture(shareRepository.findDeleted(id));
+    }
+
+    @Async
+    public CompletableFuture<LinkedHashSet<PurchaseShare>> findAllPurchaseShares() {
+        return CompletableFuture.completedFuture(shareRepository.findAll());
+    }
+
+
+    @Async
+    public CompletableFuture<LinkedHashSet<PurchaseShare>> findAllDeletedPurchaseShares() {
+        return CompletableFuture.completedFuture(shareRepository.findAllDeleted());
+    }
+
+    @Async
+    public CompletableFuture<PurchaseShare> savePurchaseShare(PurchaseShare purchaseShare) {
+        return CompletableFuture.completedFuture(shareRepository.save(purchaseShare));
+    }
+
+    @Transactional
+    public void deletePurchaseShare(PurchaseShare purchaseShare) {
+        shareRepository.delete(purchaseShare);
+        log.debug("PurchaseShare Deleted: " + purchaseShare.toString());
+    }
 }
