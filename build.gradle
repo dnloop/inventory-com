@@ -29,7 +29,7 @@ dependencies {
     implementation 'com.calendarfx:view:11.8.1'
     implementation 'org.kordamp.ikonli:ikonli-javafx:12.2.0'
     implementation 'org.kordamp.ikonli:ikonli-fontawesome-pack:12.2.0'
-
+    implementation 'net.objectlab.kit:datecalc-joda:1.4.2'
 }
 
 test {
