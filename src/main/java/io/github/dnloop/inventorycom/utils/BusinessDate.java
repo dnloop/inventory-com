@@ -126,6 +126,6 @@ public class BusinessDate {
     }
 
     public DateCalculator<LocalDate> getDateCalculator() {
-        return LocalDateKitCalculatorsFactory.forwardCalculator("AR");
+        return LocalDateKitCalculatorsFactory.modifiedFollowingCalculator("AR");
     }
 }
