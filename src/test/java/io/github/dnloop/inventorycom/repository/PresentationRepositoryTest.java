@@ -17,10 +17,9 @@
  *
  */
 
-package io.github.dnloop.inventorycom;
+package io.github.dnloop.inventorycom.repository;
 
 import io.github.dnloop.inventorycom.model.Presentation;
-import io.github.dnloop.inventorycom.repository.PresentationRepository;
 import io.github.dnloop.inventorycom.service.ProductService;
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.Test;

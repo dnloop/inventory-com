@@ -17,14 +17,10 @@
  *
  */
 
-package io.github.dnloop.inventorycom;
+package io.github.dnloop.inventorycom.repository;
 
-import io.github.dnloop.inventorycom.model.Category;
-import io.github.dnloop.inventorycom.model.CategoryLevel;
-import io.github.dnloop.inventorycom.model.Level;
-import io.github.dnloop.inventorycom.model.LevelBuilder;
+import io.github.dnloop.inventorycom.model.*;
 import io.github.dnloop.inventorycom.service.ProductService;
-import io.github.dnloop.inventorycom.model.LevelManager;
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -17,11 +17,10 @@
  *
  */
 
-package io.github.dnloop.inventorycom;
+package io.github.dnloop.inventorycom.repository;
 
 import io.github.dnloop.inventorycom.model.PurchaseDetail;
 import io.github.dnloop.inventorycom.model.PurchaseDetailBuilder;
-import io.github.dnloop.inventorycom.repository.PurchaseInvoiceDetailsRepository;
 import io.github.dnloop.inventorycom.service.PurchaseService;
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.Test;

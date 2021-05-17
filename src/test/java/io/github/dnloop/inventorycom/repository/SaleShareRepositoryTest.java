@@ -17,12 +17,12 @@
  *
  */
 
-package io.github.dnloop.inventorycom;
+package io.github.dnloop.inventorycom.repository;
 
-import io.github.dnloop.inventorycom.model.PurchaseShare;
-import io.github.dnloop.inventorycom.model.PurchaseShareBuilder;
-import io.github.dnloop.inventorycom.repository.PurchaseShareRepository;
+import io.github.dnloop.inventorycom.model.SaleShare;
+import io.github.dnloop.inventorycom.model.SaleShareBuilder;
 import io.github.dnloop.inventorycom.service.PurchaseService;
+import io.github.dnloop.inventorycom.service.SaleService;
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +45,7 @@ import java.util.concurrent.ExecutionException;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Test {@link PurchaseShareRepository} property in {@link PurchaseService}.
+ * Test {@link SaleShareRepository} property in {@link PurchaseService}.
  * <p>
  * Basic purchase share service tests units. Perform CRUD operations and test relationships with dependencies.
  *
@@ -62,7 +62,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @Sql({
              "/db/data/insert-localities.sql",
-             "/db/data/insert-suppliers.sql",
+             "/db/data/insert-clients.sql",
              "/db/data/insert-category.sql",
              "/db/data/insert-category_level.sql",
              "/db/data/insert-material.sql",
@@ -70,20 +70,20 @@ import static org.assertj.core.api.Assertions.assertThat;
              "/db/data/insert-presentation.sql",
              "/db/data/insert-product_detail.sql",
              "/db/data/insert-product.sql",
-             "/db/data/insert-purchase_invoice.sql",
-             "/db/data/insert-purchase_detail.sql",
-             "/db/data/insert-purchase_share.sql"
+             "/db/data/insert-sale_invoice.sql",
+             "/db/data/insert-sale_detail.sql",
+             "/db/data/insert-sale_share.sql"
      })
-public class PurchaseShareTest {
+public class SaleShareRepositoryTest {
     @Autowired
-    PurchaseService purchaseService;
+    SaleService saleService;
 
     @Test
     void contextLoads() {}
 
     @Test
-    void purchaseShareNull() throws ExecutionException, InterruptedException {
-        final CompletableFuture<Optional<PurchaseShare>> purchaseShare = purchaseService.findPurchaseShareById(7);
+    void saleShareNull() throws ExecutionException, InterruptedException {
+        final CompletableFuture<Optional<SaleShare>> purchaseShare = saleService.findSaleShareById(7);
 
         assertThat(
                 purchaseShare.get()
@@ -91,10 +91,10 @@ public class PurchaseShareTest {
     }
 
     @Test
-    void findPurchaseShareById() throws ExecutionException, InterruptedException {
-        final CompletableFuture<Optional<PurchaseShare>> share = CompletableFuture.supplyAsync(() -> {
+    void findSaleShareById() throws ExecutionException, InterruptedException {
+        final CompletableFuture<Optional<SaleShare>> share = CompletableFuture.supplyAsync(() -> {
             try {
-                return purchaseService.findPurchaseShareById(1).get();
+                return saleService.findSaleShareById(1).get();
             } catch (InterruptedException | ExecutionException e) {
                 return Optional.empty();
             }
@@ -108,10 +108,10 @@ public class PurchaseShareTest {
      * Query a deleted record with a non-delete clause
      */
     @Test
-    void findPurchaseShareByIdDeleted() throws ExecutionException, InterruptedException {
-        final CompletableFuture<Optional<PurchaseShare>> share = CompletableFuture.supplyAsync(() -> {
+    void findSaleShareByIdDeleted() throws ExecutionException, InterruptedException {
+        final CompletableFuture<Optional<SaleShare>> share = CompletableFuture.supplyAsync(() -> {
             try {
-                return purchaseService.findPurchaseShareById(4).get();
+                return saleService.findSaleShareById(4).get();
             } catch (InterruptedException | ExecutionException e) {
                 return Optional.empty();
             }
@@ -122,10 +122,10 @@ public class PurchaseShareTest {
     }
 
     @Test
-    void findDeletedPurchaseShare() throws ExecutionException, InterruptedException {
-        final CompletableFuture<Optional<PurchaseShare>> share = CompletableFuture.supplyAsync(() -> {
+    void findDeletedSaleShare() throws ExecutionException, InterruptedException {
+        final CompletableFuture<Optional<SaleShare>> share = CompletableFuture.supplyAsync(() -> {
             try {
-                return purchaseService.findDeletedPurchaseShare(5).get();
+                return saleService.findDeletedSaleShare(5).get();
             } catch (InterruptedException | ExecutionException e) {
                 return Optional.empty();
             }
@@ -136,45 +136,45 @@ public class PurchaseShareTest {
     }
 
     @Test
-    void findAllPurchaseShare() throws ExecutionException, InterruptedException {
-        final CompletableFuture<LinkedHashSet<PurchaseShare>> shares = purchaseService.findAllPurchaseShares();
-        final LinkedHashSet<PurchaseShare> result = shares.get();
+    void findAllSaleShare() throws ExecutionException, InterruptedException {
+        final CompletableFuture<LinkedHashSet<SaleShare>> shares = saleService.findAllSaleShares();
+        final LinkedHashSet<SaleShare> result = shares.get();
 
         assertThat(result).hasSize(3);
     }
 
     @Test
-    void findAllDeletedPurchaseShare() throws ExecutionException, InterruptedException {
-        final CompletableFuture<LinkedHashSet<PurchaseShare>> shares = purchaseService.findAllDeletedPurchaseShares();
-        final LinkedHashSet<PurchaseShare> result = shares.get();
+    void findAllDeletedSaleShare() throws ExecutionException, InterruptedException {
+        final CompletableFuture<LinkedHashSet<SaleShare>> shares = saleService.findAllDeletedSaleShares();
+        final LinkedHashSet<SaleShare> result = shares.get();
 
         assertThat(result).hasSize(2);
     }
 
     @Test
-    void savePurchaseShare() throws ExecutionException, InterruptedException {
-        final Condition<PurchaseShare> shareCondition = new Condition<>(
+    void saveSaleShare() throws ExecutionException, InterruptedException {
+        final Condition<SaleShare> shareCondition = new Condition<>(
                 product -> product.getNumber().equals(1),
                 "[Number] - Share number must be 1"
         );
 
         Date dueDate = Date.valueOf(LocalDate.now().plusMonths(1L));
 
-        PurchaseShare newShare = new PurchaseShareBuilder()
+        SaleShare newShare = new SaleShareBuilder()
                 .setNumber(1)
                 .setDueDate(dueDate)
-                .setPurchaseInvoiceId(3)
-                .createPurchaseShare();
+                .setSaleInvoiceId(3)
+                .createSaleShare();
 
-        final CompletableFuture<Optional<PurchaseShare>> share =
-                purchaseService.savePurchaseShare(newShare).thenApply(share1 -> {
+        final CompletableFuture<Optional<SaleShare>> share =
+                saleService.saveSaleShare(newShare).thenApply(share1 -> {
                     try {
-                        return purchaseService.findPurchaseShareById(share1.getId()).get();
+                        return saleService.findSaleShareById(share1.getId()).get();
                     } catch (InterruptedException | ExecutionException e) {
                         return Optional.empty();
                     }
                 });
-        final Optional<PurchaseShare> result = share.get();
+        final Optional<SaleShare> result = share.get();
 
         assertThat(result)
                 .matches(Optional::isPresent, "Must be present");
@@ -182,19 +182,18 @@ public class PurchaseShareTest {
             assertThat(result.get()).has(shareCondition);
         else
             throw new AssertionError("Result is not present");
-
     }
 
     @Test
-    void modifyPurchaseShare() throws ExecutionException, InterruptedException {
+    void modifySaleShare() throws ExecutionException, InterruptedException {
         final Timestamp ts = Timestamp.from(Instant.now());
-        final PurchaseShare editShare = purchaseService.findPurchaseShareById(1).join().orElse(null);
+        final SaleShare editShare = saleService.findSaleShareById(1).join().orElse(null);
 
         Objects.requireNonNull(editShare).setModifiedAt(ts);
 
-        final CompletableFuture<Optional<PurchaseShare>> modifiedShare =
-                purchaseService.savePurchaseShare(editShare).thenCompose(
-                        share -> purchaseService.findPurchaseShareById(share.getId())
+        final CompletableFuture<Optional<SaleShare>> modifiedShare =
+                saleService.saveSaleShare(editShare).thenCompose(
+                        share -> saleService.findSaleShareById(share.getId())
                 );
 
         final Timestamp result;
@@ -207,20 +206,19 @@ public class PurchaseShareTest {
         assertThat(result)
                 .as("TimeStamp should be equal to %s", result)
                 .isEqualTo(ts);
-
     }
 
     @Test
-    void deletePurchaseShare() throws ExecutionException, InterruptedException {
+    void deleteSaleShare() throws ExecutionException, InterruptedException {
         final CompletableFuture<Void> productDetail =
-                purchaseService.findPurchaseShareById(1).thenAccept(productDetail1 -> productDetail1.ifPresent(
-                        value -> purchaseService.deletePurchaseShare(value)
+                saleService.findSaleShareById(1).thenAccept(productDetail1 -> productDetail1.ifPresent(
+                        value -> saleService.deleteSaleShare(value)
                 ));
 
 
-        final CompletableFuture<Optional<PurchaseShare>> productDeleted =
+        final CompletableFuture<Optional<SaleShare>> productDeleted =
                 productDetail.thenCompose(
-                        unused -> purchaseService.findDeletedPurchaseShare(1)
+                        unused -> saleService.findDeletedSaleShare(1)
                 );
 
         assertThat(

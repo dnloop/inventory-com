@@ -17,17 +17,17 @@
  *
  */
 
-package io.github.dnloop.inventorycom;
+package io.github.dnloop.inventorycom.repository;
 
-import io.github.dnloop.inventorycom.model.SaleDetail;
-import io.github.dnloop.inventorycom.model.SaleDetailBuilder;
-import io.github.dnloop.inventorycom.repository.SaleInvoiceDetailsRepository;
+import io.github.dnloop.inventorycom.model.SaleInvoice;
+import io.github.dnloop.inventorycom.model.SaleInvoiceBuilder;
 import io.github.dnloop.inventorycom.service.SaleService;
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.jdbc.Sql;
@@ -35,7 +35,6 @@ import org.springframework.test.context.jdbc.Sql;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -44,7 +43,7 @@ import java.util.concurrent.ExecutionException;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Test {@link SaleInvoiceDetailsRepository} property in  {@link SaleService}.
+ * Test {@link SaleInvoiceRepository} property in  {@link SaleService}.
  */
 @SpringBootTest
 @EnableAsync
@@ -53,17 +52,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Sql({
              "/db/data/insert-localities.sql",
              "/db/data/insert-clients.sql",
-             "/db/data/insert-category.sql",
-             "/db/data/insert-category_level.sql",
-             "/db/data/insert-material.sql",
-             "/db/data/insert-measure.sql",
-             "/db/data/insert-presentation.sql",
-             "/db/data/insert-product_detail.sql",
-             "/db/data/insert-product.sql",
-             "/db/data/insert-sale_invoice.sql",
-             "/db/data/insert-sale_detail.sql"
+             "/db/data/insert-sale_invoice.sql"
      })
-public class SaleDetailsRepositoryTest {
+public class SaleInvoiceRepositoryTest {
+
     @Autowired
     SaleService saleService;
 
@@ -71,65 +63,66 @@ public class SaleDetailsRepositoryTest {
     void contextLoads() {}
 
     @Test
-    void saleDetailsNull() throws ExecutionException, InterruptedException {
-        final CompletableFuture<Optional<SaleDetail>> invoiceDetail = saleService.findDetailById(6);
+    void saleInvoiceNull() throws ExecutionException, InterruptedException {
+        final CompletableFuture<Optional<SaleInvoice>> invoice = saleService.findInvoiceById(6);
 
         assertThat(
-                invoiceDetail.get()
+                invoice.get()
         ).matches(Optional::isEmpty, "Must be empty");
 
     }
 
     @Test
-    void findSaleInvoiceDetailById() throws ExecutionException, InterruptedException {
-        final CompletableFuture<Optional<SaleDetail>> invoiceDetail = CompletableFuture.supplyAsync(() -> {
+    void findSaleInvoiceById() throws ExecutionException, InterruptedException {
+        final CompletableFuture<Optional<SaleInvoice>> invoice = CompletableFuture.supplyAsync(() -> {
             try {
-                return saleService.findDetailById(1).get();
+                return saleService.findInvoiceById(1).get();
             } catch (InterruptedException | ExecutionException e) {
                 return Optional.empty();
             }
         });
 
-        assertThat(invoiceDetail.get())
+        assertThat(invoice.get())
                 .matches(Optional::isPresent, "Must be present");
     }
 
     @Test
-    void findAllSaleInvoiceDetails() throws ExecutionException, InterruptedException {
-        final Condition<SaleDetail> detailCondition = new Condition<>(
-                saleDetail -> saleDetail.getSaleInvoiceId().equals(1),
-                "[Invoice Id] - Must have ID: 1"
+    void findAllSaleInvoice() throws ExecutionException, InterruptedException {
+        final Condition<SaleInvoice> firstInvoice = new Condition<>(
+                invoice -> invoice.getNumber().equals(1),
+                "[Number] - Must be Number 1"
         );
-        final CompletableFuture<ArrayList<SaleDetail>> invoices = saleService.findAllDetailsById(1);
-        final ArrayList<SaleDetail> result = invoices.get();
+        final CompletableFuture<Page<SaleInvoice>> invoices = saleService.findAllInvoices();
+        final Page<SaleInvoice> result = invoices.get();
 
         assertThat(result).hasSize(3);
         assertThat(
-                result.get(0)
-        ).has(detailCondition);
+                result.getContent().get(0)
+        ).has(firstInvoice);
 
     }
 
     @Test
-    void saveSaleInvoiceDetails() throws ExecutionException, InterruptedException {
-        SaleDetail newSaleDetail = new SaleDetailBuilder()
-                .setSaleInvoiceId(1)
-                .setAmount(1)
-                .setProductId(1)
-                .setUnitPrice(BigDecimal.valueOf(20.00))
-                .setSubtotal(BigDecimal.valueOf(20.00))
-                .createSaleDetail();
+    void saveSaleInvoice() throws ExecutionException, InterruptedException {
+        SaleInvoice newInvoice = new SaleInvoiceBuilder()
+                .setNumber(6)
+                .setGenerationDate(Timestamp.from(Instant.now()))
+                .setPaymentType("CASH")
+                .setInvoiceType("A")
+                .setClientId(1)
+                .setTotal(BigDecimal.valueOf(2000.00))
+                .createSaleInvoice();
 
-        final CompletableFuture<Optional<SaleDetail>> invoiceDetail =
-                saleService.saveDetail(newSaleDetail).thenApply(saleDetail -> {
+        final CompletableFuture<Optional<SaleInvoice>> invoice =
+                saleService.saveInvoice(newInvoice).thenApply(saleInvoice -> {
                     try {
-                        return saleService.findDetailById(saleDetail.getId()).get();
+                        return saleService.findInvoiceById(saleInvoice.getId()).get();
                     } catch (InterruptedException | ExecutionException e) {
                         return Optional.empty();
                     }
                 });
 
-        final Optional<SaleDetail> result = invoiceDetail.get();
+        final Optional<SaleInvoice> result = invoice.get();
 
         assertThat(result)
                 .matches(Optional::isPresent, "Must be present");
@@ -137,15 +130,15 @@ public class SaleDetailsRepositoryTest {
     }
 
     @Test
-    void modifySaleInvoiceDetails() throws ExecutionException, InterruptedException {
+    void modifySaleInvoice() throws ExecutionException, InterruptedException {
         final Timestamp ts = Timestamp.from(Instant.now());
-        final SaleDetail editDetail = saleService.findDetailById(1).join().orElse(null);
+        final SaleInvoice editInvoice = saleService.findInvoiceById(1).join().orElse(null);
 
-        Objects.requireNonNull(editDetail).setModifiedAt(ts);
+        Objects.requireNonNull(editInvoice).setModifiedAt(ts);
 
-        final CompletableFuture<Optional<SaleDetail>> modifiedInvoice =
-                saleService.saveDetail(editDetail).thenCompose(
-                        invoiceDetail -> saleService.findDetailById(invoiceDetail.getId())
+        final CompletableFuture<Optional<SaleInvoice>> modifiedInvoice =
+                saleService.saveInvoice(editInvoice).thenCompose(
+                        invoice -> saleService.findInvoiceById(invoice.getId())
                 );
 
         final Timestamp result;

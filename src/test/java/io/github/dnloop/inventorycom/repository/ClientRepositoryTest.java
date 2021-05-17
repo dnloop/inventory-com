@@ -17,11 +17,9 @@
  *
  */
 
-package io.github.dnloop.inventorycom;
+package io.github.dnloop.inventorycom.repository;
 
 import io.github.dnloop.inventorycom.model.Client;
-import io.github.dnloop.inventorycom.model.ClientPhone;
-import io.github.dnloop.inventorycom.repository.ClientPhoneRepository;
 import io.github.dnloop.inventorycom.service.ClientService;
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.Test;
@@ -35,7 +33,6 @@ import org.springframework.test.context.jdbc.Sql;
 
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -44,7 +41,11 @@ import java.util.concurrent.ExecutionException;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Test {@link ClientPhoneRepository} property in  {@link ClientService}.
+ * <p>
+ * Basic client repository tests units. Some methods that are meant to be async are executed sequentially in the
+ * background due to the nature of the operation such as saving a record and retrieving its results in the same
+ * call.
+ * </p>
  */
 @SpringBootTest
 @EnableAsync
@@ -52,64 +53,70 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @Sql({
              "/db/data/insert-localities.sql",
-             "/db/data/insert-clients.sql",
-             "/db/data/insert-client_phones.sql"
+             "/db/data/insert-clients.sql"
      })
-public class ClientPhoneRepositoryTest {
+class ClientRepositoryTest {
+
     @Autowired
-    private ClientService clientPhoneService;
+    private ClientService clientService;
 
     @Test
     void contextLoads() {}
 
     @Test
-    void clientPhonePhonesNull() throws ExecutionException, InterruptedException {
-        final CompletableFuture<Optional<ClientPhone>> clientPhone = clientPhoneService.findClientPhoneById(6);
+    void clientNull() throws ExecutionException, InterruptedException {
+        final CompletableFuture<Optional<Client>> client = clientService.findClientById(6);
 
         assertThat(
-                clientPhone.get()
+                client.get()
         ).matches(Optional::isEmpty, "Must be empty");
     }
 
     @Test
-    void insertClientPhones() throws ExecutionException, InterruptedException {
-        final Condition<ClientPhone> clientPhoneCondition = new Condition<>(
-                clientPhone -> clientPhone.getNumber().equals("12345678"),
-                "[Number] - Must be 12345678"
+    void insertClient() throws ExecutionException, InterruptedException {
+        final Condition<Client> clientCondition = new Condition<>(
+                client -> client.getSurname().equals("Hanigan"),
+                "[Surname] - Hanigan"
         );
 
-        ClientPhone newClientPhone = new ClientPhone("12345678", 1);
+        Client newClient = new Client(
+                "Berengaria", "Hanigan",
+                "ADDRESS-1", 123456789L, "12345678",
+                1, (byte) 0, Timestamp.from(Instant.now()),
+                null, null,
+                "Joe@dora.biz"
+        );
 
-        final CompletableFuture<Optional<ClientPhone>> clientPhone =
-                clientPhoneService.saveClientPhone(newClientPhone).thenApply(cli -> {
+        final CompletableFuture<Optional<Client>> client =
+                clientService.saveClient(newClient).thenApply(cli -> {
                     try {
-                        return clientPhoneService.findClientPhoneById(cli.getId()).get();
+                        return clientService.findClientById(cli.getId()).get();
                     } catch (InterruptedException | ExecutionException e) {
                         return Optional.empty();
                     }
                 });
 
-        final Optional<ClientPhone> result = clientPhone.get();
+        final Optional<Client> result = client.get();
 
         assertThat(result)
                 .matches(Optional::isPresent, "Must be present");
         if (result.isPresent())
-            assertThat(result.get()).has(clientPhoneCondition);
+            assertThat(result.get()).has(clientCondition);
         else
             throw new AssertionError("Result is not present");
     }
 
     @Test
     void findById() throws ExecutionException, InterruptedException {
-        final CompletableFuture<Optional<ClientPhone>> clientPhone = CompletableFuture.supplyAsync(() -> {
+        final CompletableFuture<Optional<Client>> client = CompletableFuture.supplyAsync(() -> {
             try {
-                return clientPhoneService.findClientPhoneById(1).get();
+                return clientService.findClientById(1).get();
             } catch (InterruptedException | ExecutionException e) {
                 return Optional.empty();
             }
         });
 
-        assertThat(clientPhone.get())
+        assertThat(client.get())
                 .matches(Optional::isPresent, "Must be present");
     }
 
@@ -118,42 +125,42 @@ public class ClientPhoneRepositoryTest {
      */
     @Test
     void findByIdDeleted() throws ExecutionException, InterruptedException {
-        final CompletableFuture<Optional<ClientPhone>> clientPhone = CompletableFuture.supplyAsync(() -> {
+        final CompletableFuture<Optional<Client>> client = CompletableFuture.supplyAsync(() -> {
             try {
-                return clientPhoneService.findClientPhoneById(5).get();
+                return clientService.findClientById(5).get();
             } catch (InterruptedException | ExecutionException e) {
                 return Optional.empty();
             }
         });
 
-        assertThat(clientPhone.get())
+        assertThat(client.get())
                 .matches(Optional::isEmpty, "Must be empty");
     }
 
     @Test
-    void findDeletedClientPhone() throws ExecutionException, InterruptedException {
-        final CompletableFuture<Optional<ClientPhone>> clientPhone = CompletableFuture.supplyAsync(() -> {
+    void findDeletedClient() throws ExecutionException, InterruptedException {
+        final CompletableFuture<Optional<Client>> client = CompletableFuture.supplyAsync(() -> {
             try {
-                return clientPhoneService.findDeletedClientPhoneById(5).get();
+                return clientService.findDeletedClient(5).get();
             } catch (InterruptedException | ExecutionException e) {
                 return Optional.empty();
             }
         });
 
-        assertThat(clientPhone.get())
+        assertThat(client.get())
                 .matches(Optional::isPresent, "Must be present");
     }
 
     @Test
-    void modifyClientPhone() throws ExecutionException, InterruptedException {
+    void modifyClient() throws ExecutionException, InterruptedException {
         final Timestamp ts = Timestamp.from(Instant.now());
-        final Client editClient = clientPhoneService.findClientById(1).join().orElse(null);
+        final Client editClient = clientService.findClientById(1).join().orElse(null);
 
         Objects.requireNonNull(editClient).setModifiedAt(ts);
 
         final CompletableFuture<Optional<Client>> modifiedClient =
-                clientPhoneService.saveClient(editClient).thenCompose(
-                        cli -> clientPhoneService.findClientById(cli.getId())
+                clientService.saveClient(editClient).thenCompose(
+                        cli -> clientService.findClientById(cli.getId())
                 );
 
         final Timestamp result;
@@ -171,11 +178,11 @@ public class ClientPhoneRepositoryTest {
     @Test
     void findAll() throws ExecutionException, InterruptedException {
         final Condition<Client> firstClient = new Condition<>(
-                clientPhone -> clientPhone.getSurname().equalsIgnoreCase("Benson"),
+                client -> client.getSurname().equalsIgnoreCase("Benson"),
                 "[Surname] - Benson"
         );
-        final CompletableFuture<Page<Client>> clientPhones = clientPhoneService.findAllClients();
-        final Page<Client> result = clientPhones.get();
+        final CompletableFuture<Page<Client>> clients = clientService.findAllClients();
+        final Page<Client> result = clients.get();
 
         assertThat(result).hasSize(3);
         assertThat(
@@ -185,28 +192,49 @@ public class ClientPhoneRepositoryTest {
 
     @Test
     void findAllDeleted() throws ExecutionException, InterruptedException {
-        final CompletableFuture<LinkedHashSet<ClientPhone>> clientPhones = clientPhoneService
-                .findAllDeletedClientPhones();
-        final LinkedHashSet<ClientPhone> result = clientPhones.get();
+        final CompletableFuture<Page<Client>> clients = clientService.findAllDeletedClients();
+        final Page<Client> result = clients.get();
+        final Condition<Client> surname = new Condition<>(
+                client -> client.getSurname().equalsIgnoreCase("Ayers"),
+                "[Surname] - Ayers "
+        );
 
         assertThat(result).hasSize(2);
+        assertThat(result.getContent().get(0)).has(surname);
     }
 
     @Test
-    void deleteClientPhones() throws ExecutionException, InterruptedException {
-        final CompletableFuture<Void> clientPhone =
-                clientPhoneService.findClientPhoneById(1).thenAccept(clientPhone1 -> clientPhone1.ifPresent(
-                        value -> clientPhoneService.deleteClientPhone(value)
+    void deleteClient() throws ExecutionException, InterruptedException {
+        final CompletableFuture<Void> client =
+                clientService.findClientById(1).thenAccept(client1 -> client1.ifPresent(
+                        value -> clientService.deleteClient(value)
                 ));
 
 
-        final CompletableFuture<Optional<ClientPhone>> clientPhoneDeleted =
-                clientPhone.thenCompose(
-                        unused -> clientPhoneService.findDeletedClientPhoneById(1)
+        final CompletableFuture<Optional<Client>> clientDeleted =
+                client.thenCompose(
+                        unused -> clientService.findDeletedClient(1)
                 );
 
         assertThat(
-                clientPhoneDeleted.get()
+                clientDeleted.get()
         ).matches(Optional::isPresent, "Must be present");
+    }
+
+    @Test
+    void deleteClientCollection() throws ExecutionException, InterruptedException {
+
+        final CompletableFuture<Void> clients =
+                clientService.findAllClients().thenAccept(
+                        clients1 -> clientService.deleteAllClients(clients1.getContent())
+                );
+
+        final CompletableFuture<Page<Client>> clientsDeleted = clients.thenApply(
+                unused -> clientService.findAllDeletedClients().join()
+        );
+
+        assertThat(
+                clientsDeleted.get().getContent()
+        ).hasSize(5);
     }
 }
