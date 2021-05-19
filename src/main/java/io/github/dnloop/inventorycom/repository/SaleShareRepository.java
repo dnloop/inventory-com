@@ -28,4 +28,10 @@ public interface SaleShareRepository extends CrudRepository<SaleShare, Integer> 
            " WHERE saleShare.id = :id" +
            " AND saleShare.deleted = 1")
     Optional<SaleShare> findDeleted(int id);
+
+    @Query("SELECT saleShare FROM SaleShare saleShare" +
+           " WHERE saleShare.deleted = 0" +
+           " AND saleShare.saleInvoiceId = :invoiceId" +
+           " ORDER BY saleShare.dueDate")
+    LinkedHashSet<SaleShare> findAllByInvoiceId(int invoiceId);
 }

@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -111,8 +112,18 @@ public class SaleService extends ShareGenerator<SaleShare> {
     }
 
     @Async
+    public CompletableFuture<LinkedHashSet<SaleShare>> findAllSaleSharesByInvoice(int invoiceId) {
+        return CompletableFuture.completedFuture(shareRepository.findAllByInvoiceId(invoiceId));
+    }
+
+    @Async
     public CompletableFuture<SaleShare> saveSaleShare(SaleShare saleShare) {
         return CompletableFuture.completedFuture(shareRepository.save(saleShare));
+    }
+
+    @Async
+    public CompletableFuture<Iterable<SaleShare>> saveAllSaleShares(List<SaleShare> saleShare) {
+        return CompletableFuture.completedFuture(shareRepository.saveAll(saleShare));
     }
 
     @Transactional

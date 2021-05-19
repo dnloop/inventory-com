@@ -332,3 +332,6 @@ create table PUBLIC.supplier_phone
 
 create sequence PURCHASE_SHARE_SEQUENCE start with 6 -- only for tests
     increment by 1;
+
+create sequence SALE_SHARE_SEQUENCE start with 6 -- only for tests
+    increment by 1;

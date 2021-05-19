@@ -37,6 +37,7 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -144,6 +145,15 @@ public class SaleShareRepositoryTest {
     }
 
     @Test
+    void findAllSaleShareByInvoiceId() throws ExecutionException, InterruptedException {
+        final CompletableFuture<LinkedHashSet<SaleShare>> shares = saleService
+                .findAllSaleSharesByInvoice(1);
+        final LinkedHashSet<SaleShare> result = shares.get();
+
+        assertThat(result).hasSize(2);
+    }
+
+    @Test
     void findAllDeletedSaleShare() throws ExecutionException, InterruptedException {
         final CompletableFuture<LinkedHashSet<SaleShare>> shares = saleService.findAllDeletedSaleShares();
         final LinkedHashSet<SaleShare> result = shares.get();
@@ -182,6 +192,31 @@ public class SaleShareRepositoryTest {
             assertThat(result.get()).has(shareCondition);
         else
             throw new AssertionError("Result is not present");
+    }
+
+    @Test
+    void saveAllSaleShare() throws ExecutionException, InterruptedException {
+        final org.joda.time.LocalDate currentDate = new org.joda.time.LocalDate("2021-01-01");
+        int months = 1;
+
+        List<SaleShare> listShares = saleService.generateShares(6, currentDate);
+
+        final CompletableFuture<LinkedHashSet<SaleShare>> shares =
+                saleService.saveAllSaleShares(listShares).thenApply(unused -> {
+                    try {
+                        return saleService.findAllSaleSharesByInvoice(3).get();
+                    } catch (InterruptedException | ExecutionException e) {
+                        return new LinkedHashSet<>();
+                    }
+                });
+        final LinkedHashSet<SaleShare> result = shares.get();
+
+        assertThat(result).hasSize(6);
+        for (SaleShare share : result) {
+            Date expectedDate = saleService.createDueDate(currentDate, months);
+            assertThat(share.getDueDate()).isEqualTo(expectedDate);
+            ++months;
+        }
     }
 
     @Test
