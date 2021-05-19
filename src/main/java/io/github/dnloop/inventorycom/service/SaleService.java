@@ -1,26 +1,29 @@
 package io.github.dnloop.inventorycom.service;
 
-import io.github.dnloop.inventorycom.model.SaleShare;
 import io.github.dnloop.inventorycom.model.SaleDetail;
 import io.github.dnloop.inventorycom.model.SaleInvoice;
+import io.github.dnloop.inventorycom.model.SaleShare;
+import io.github.dnloop.inventorycom.model.SaleShareBuilder;
 import io.github.dnloop.inventorycom.repository.SaleInvoiceDetailsRepository;
 import io.github.dnloop.inventorycom.repository.SaleInvoiceRepository;
 import io.github.dnloop.inventorycom.repository.SaleShareRepository;
 import io.github.dnloop.inventorycom.utils.PageableProperty;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.joda.time.LocalDate;
 import org.springframework.data.domain.Page;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class SaleService {
+public class SaleService extends ShareGenerator<SaleShare> {
 
     private static final Log log = LogFactory.getLog(SaleService.class);
 
@@ -116,5 +119,21 @@ public class SaleService {
     public void deleteSaleShare(SaleShare saleShare) {
         shareRepository.delete(saleShare);
         log.debug("SaleShare Deleted: " + saleShare.toString());
+    }
+
+    @Override
+    public ArrayList<SaleShare> generateShares(int number, LocalDate currentDate) {
+        SaleShareBuilder builder = new SaleShareBuilder();
+        ArrayList<SaleShare> list = new ArrayList<>(number);
+        for (int i = 1; i <= number; ++i) {
+            Date dueDate = super.createDueDate(currentDate, i);
+            list.add(
+                    builder.setNumber(1)
+                           .setDueDate(dueDate)
+                           .setSaleInvoiceId(3)
+                           .createSaleShare()
+            );
+        }
+        return list;
     }
 }

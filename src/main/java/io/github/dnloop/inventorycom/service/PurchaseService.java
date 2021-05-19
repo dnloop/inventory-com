@@ -7,9 +7,7 @@ import io.github.dnloop.inventorycom.model.PurchaseShareBuilder;
 import io.github.dnloop.inventorycom.repository.PurchaseInvoiceDetailsRepository;
 import io.github.dnloop.inventorycom.repository.PurchaseInvoiceRepository;
 import io.github.dnloop.inventorycom.repository.PurchaseShareRepository;
-import io.github.dnloop.inventorycom.utils.BusinessDate;
 import io.github.dnloop.inventorycom.utils.PageableProperty;
-import net.objectlab.kit.datecalc.common.DateCalculator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.joda.time.LocalDate;
@@ -26,7 +24,7 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class PurchaseService {
+public class PurchaseService extends ShareGenerator<PurchaseShare> {
     private static final Log log = LogFactory.getLog(PurchaseService.class);
 
     private final PurchaseInvoiceRepository invoiceRepository;
@@ -35,19 +33,14 @@ public class PurchaseService {
 
     private final PurchaseShareRepository shareRepository;
 
-    private final DateCalculator<LocalDate> calculator;
-
-
     public PurchaseService(
             PurchaseInvoiceRepository invoiceRepository,
             PurchaseInvoiceDetailsRepository detailRepository,
-            PurchaseShareRepository shareRepository,
-            BusinessDate businessDate
+            PurchaseShareRepository shareRepository
     ) {
         this.invoiceRepository = invoiceRepository;
         this.detailRepository = detailRepository;
         this.shareRepository = shareRepository;
-        calculator = businessDate.getDateCalculator();
     }
 
     /* Invoice */
@@ -136,38 +129,13 @@ public class PurchaseService {
         log.debug("PurchaseShare Deleted: " + purchaseShare.toString());
     }
 
-    public Date createDueDate() {
-        calculator.setStartDate(LocalDate.now().plusMonths(1));
-        return new Date(
-                calculator.getCurrentBusinessDate()
-                          .toDateTimeAtStartOfDay()
-                          .getMillis()
-        );
-    }
 
-    public Date createDueDate(LocalDate localDate) {
-        calculator.setStartDate(localDate.plusMonths(1));
-        return new Date(
-                calculator.getCurrentBusinessDate()
-                          .toDateTimeAtStartOfDay()
-                          .getMillis()
-        );
-    }
-
-    public Date createDueDate(LocalDate localDate, int months) {
-        calculator.setStartDate(localDate.plusMonths(months));
-        return new Date(
-                calculator.getCurrentBusinessDate()
-                          .toDateTimeAtStartOfDay()
-                          .getMillis()
-        );
-    }
-
+    @Override
     public ArrayList<PurchaseShare> generateShares(int number, LocalDate currentDate) {
         PurchaseShareBuilder builder = new PurchaseShareBuilder();
         ArrayList<PurchaseShare> list = new ArrayList<>(number);
         for (int i = 1; i <= number; ++i) {
-            Date dueDate = this.createDueDate(currentDate, i);
+            Date dueDate = super.createDueDate(currentDate, i);
             list.add(
                     builder.setNumber(1)
                            .setDueDate(dueDate)
