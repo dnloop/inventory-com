@@ -15,6 +15,12 @@ public interface PurchaseShareRepository extends CrudRepository<PurchaseShare, I
     LinkedHashSet<PurchaseShare> findAll();
 
     @Query("SELECT purchaseShare FROM PurchaseShare purchaseShare" +
+           " WHERE purchaseShare.deleted = 0" +
+           " AND purchaseShare.purchaseInvoiceId = :invoiceId" +
+           " ORDER BY purchaseShare.dueDate")
+    LinkedHashSet<PurchaseShare> findAllByInvoiceId(int invoiceId);
+
+    @Query("SELECT purchaseShare FROM PurchaseShare purchaseShare" +
            " WHERE purchaseShare.id = :id AND purchaseShare.deleted = 0")
     Optional<PurchaseShare> findById(int id);
 

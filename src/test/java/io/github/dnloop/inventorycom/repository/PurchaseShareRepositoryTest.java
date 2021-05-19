@@ -23,6 +23,7 @@ import io.github.dnloop.inventorycom.model.PurchaseShare;
 import io.github.dnloop.inventorycom.model.PurchaseShareBuilder;
 import io.github.dnloop.inventorycom.service.PurchaseService;
 import org.assertj.core.api.Condition;
+import org.joda.time.LocalDate;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -34,8 +35,8 @@ import org.springframework.test.context.jdbc.Sql;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -53,7 +54,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  * requires that given an amount of shares it must create the appropriate due dates of shares on a monthly basis.
  * </p>
  * <p>
- * TODO implement monthly share creation
  */
 @SpringBootTest
 @EnableAsync
@@ -152,12 +152,14 @@ public class PurchaseShareRepositoryTest {
 
     @Test
     void savePurchaseShare() throws ExecutionException, InterruptedException {
+        final LocalDate currentDate = new LocalDate("2021-01-01");
+        final Date expectedDate = Date.valueOf("2021-02-01");
         final Condition<PurchaseShare> shareCondition = new Condition<>(
-                product -> product.getNumber().equals(1),
-                "[Number] - Share number must be 1"
+                product -> product.getDueDate().equals(expectedDate),
+                "[DueDate] - Due date must be 2021-02-01"
         );
 
-        Date dueDate = Date.valueOf(LocalDate.now().plusMonths(1L));
+        Date dueDate = purchaseService.createDueDate(currentDate);
 
         PurchaseShare newShare = new PurchaseShareBuilder()
                 .setNumber(1)
@@ -182,6 +184,31 @@ public class PurchaseShareRepositoryTest {
         else
             throw new AssertionError("Result is not present");
 
+    }
+
+    @Test
+    void saveAllPurchaseShare() throws ExecutionException, InterruptedException {
+        final LocalDate currentDate = new LocalDate("2021-01-01");
+        int months = 1;
+
+        List<PurchaseShare> listShares = purchaseService.generateShares(6, currentDate);
+
+        final CompletableFuture<LinkedHashSet<PurchaseShare>> shares =
+                purchaseService.saveAllPurchaseShares(listShares).thenApply(unused -> {
+                    try {
+                        return purchaseService.findAllPurchaseSharesByInvoice(3).get();
+                    } catch (InterruptedException | ExecutionException e) {
+                        return new LinkedHashSet<>();
+                    }
+                });
+        final LinkedHashSet<PurchaseShare> result = shares.get();
+
+        assertThat(result).hasSize(6);
+        for (PurchaseShare share : result) {
+            Date expectedDate = purchaseService.createDueDate(currentDate, months);
+            assertThat(share.getDueDate()).isEqualTo(expectedDate);
+            ++months;
+        }
     }
 
     @Test

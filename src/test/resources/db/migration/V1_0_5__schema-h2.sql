@@ -329,3 +329,6 @@ create table PUBLIC.supplier_phone
     supplier_id integer                not null,
     primary key (id)
 );
+
+create sequence PURCHASE_SHARE_SEQUENCE start with 6 -- only for tests
+    increment by 1;

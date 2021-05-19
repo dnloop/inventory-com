@@ -24,6 +24,8 @@ import net.objectlab.kit.datecalc.common.DefaultHolidayCalendar;
 import net.objectlab.kit.datecalc.common.HolidayCalendar;
 import net.objectlab.kit.datecalc.joda.LocalDateKitCalculatorsFactory;
 import org.joda.time.LocalDate;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -34,6 +36,7 @@ import java.util.Set;
  *
  * @see <a href= "https://github.com/appendium/objectlabkit">ObjectLab-Kit</a>
  */
+@Component
 public class BusinessDate {
     private final Set<LocalDate> holidays = new HashSet<>();
     private final int year = LocalDate.now().getYear();
