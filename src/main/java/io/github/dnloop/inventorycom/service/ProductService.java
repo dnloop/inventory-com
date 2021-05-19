@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -91,6 +92,10 @@ public class ProductService {
         return CompletableFuture.completedFuture(productRepository.save(product));
     }
 
+    @Async
+    public CompletableFuture<Iterable<Product>> saveAllProducts(List<Product> products) {
+        return CompletableFuture.completedFuture(productRepository.saveAll(products));
+    }
 
     @Transactional
     public void deleteProduct(Product product) {

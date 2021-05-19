@@ -335,3 +335,6 @@ create sequence PURCHASE_SHARE_SEQUENCE start with 6 -- only for tests
 
 create sequence SALE_SHARE_SEQUENCE start with 6 -- only for tests
     increment by 1;
+
+create sequence PRODUCT_SEQUENCE start with 7 -- only for tests
+    increment by 1;

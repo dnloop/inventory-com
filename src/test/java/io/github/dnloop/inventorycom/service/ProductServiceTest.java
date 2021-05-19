@@ -20,6 +20,7 @@
 package io.github.dnloop.inventorycom.service;
 
 import io.github.dnloop.inventorycom.model.Product;
+import io.github.dnloop.inventorycom.model.ProductBuilder;
 import io.github.dnloop.inventorycom.model.ProductDetail;
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.Test;
@@ -33,6 +34,8 @@ import org.springframework.test.context.jdbc.Sql;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -180,12 +183,10 @@ public class ProductServiceTest {
                 "[Description] - PD-NEW"
         );
 
-        Product newProduct = new Product(
-                "PD-NEW", 1,
-                "CODE-NEW",
-                2,
-                1
-        );
+        Product newProduct = new ProductBuilder().setDescription("PD-NEW")
+                                                 .setCategoryId(2)
+                                                 .setProductCode("CODE-NEW")
+                                                 .createProduct();
 
         final CompletableFuture<Optional<Product>> product =
                 productService.saveProduct(newProduct).thenApply(product1 -> {
@@ -203,6 +204,39 @@ public class ProductServiceTest {
             assertThat(result.get()).has(productCondition);
         else
             throw new AssertionError("Result is not present");
+    }
+
+    @Test
+    void saveAllPurchaseShare() throws ExecutionException, InterruptedException {
+        List<Product> listProducts = generateProducts();
+
+        final CompletableFuture<Page<Product>> products =
+                productService.saveAllProducts(listProducts).thenApply(unused -> {
+                    try {
+                        return productService.findAllProducts().get();
+                    } catch (InterruptedException | ExecutionException e) {
+                        e.printStackTrace();
+                        return Page.empty();
+                    }
+                });
+        final Page<Product> result = products.get();
+
+        assertThat(result).hasSize(14);
+    }
+
+    private List<Product> generateProducts() {
+        ProductBuilder pb = new ProductBuilder();
+        List<Product> list = new ArrayList<>();
+
+        for (int i = 0; i < 10; ++i) {
+            Product product = pb.setDescription("DESC-" + i)
+                                .setProductCode("CODE-" + i)
+                                .setCategoryId(2)
+                                .createProduct();
+            list.add(product);
+        }
+
+        return list;
     }
 
     @Test
@@ -229,6 +263,31 @@ public class ProductServiceTest {
                 .isEqualTo(ts);
     }
 
+
+    @Test
+    void batchUpdateProduct() throws ExecutionException, InterruptedException {
+        final Timestamp ts = Timestamp.from(Instant.now());
+        final Page<Product> listProducts = productService.findAllProducts().join();
+
+        listProducts.forEach(product -> product.setModifiedAt(ts));
+
+        final CompletableFuture<Page<Product>> products =
+                productService.saveAllProducts(listProducts.getContent()).thenApply(unused -> {
+                    try {
+                        return productService.findAllProducts().get();
+                    } catch (InterruptedException | ExecutionException e) {
+                        e.printStackTrace();
+                        return Page.empty();
+                    }
+                });
+
+        final Page<Product> result = products.get();
+
+        result.forEach(product -> assertThat(product.getModifiedAt())
+                .as("TimeStamp should be equal to %s", ts)
+                .isEqualTo(ts));
+
+    }
 
     @Test
     void deleteProduct() throws ExecutionException, InterruptedException {

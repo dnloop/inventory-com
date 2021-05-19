@@ -11,7 +11,11 @@ import java.util.Objects;
 /**
  * <h4>Product Detail</h4>
  * <p>
- * Requires a default 'generic' value preloaded. This allows to have products that won't require
+ * Requires a default 'generic' vafor (Product share : result) {
+            Date expectedDate = productService.createDueDate(currentDate, months);
+            assertThat(share.getDueDate()).isEqualTo(expectedDate);
+            ++months;
+        }lue preloaded. This allows to have products that won't require
  * further details.
  */
 @Entity

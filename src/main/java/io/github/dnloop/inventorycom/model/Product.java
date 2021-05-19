@@ -1,9 +1,9 @@
 package io.github.dnloop.inventorycom.model;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Collection;
@@ -37,17 +37,38 @@ public class Product {
 
     public Product() {}
 
-    public Product(String description, Integer stock, String productCode, Integer categoryId, Integer detailId) {
+    public Product(
+            String description, Integer stock, String productCode, Byte deleted, Timestamp createdAt,
+            Timestamp modifiedAt,
+            Integer categoryId,
+            Timestamp deletedAt,
+            String image,
+            Integer detailId
+    ) {
         this.description = description;
         this.stock = stock;
         this.productCode = productCode;
-        this.detailId = detailId;
+        this.deleted = deleted;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
         this.categoryId = categoryId;
+        this.deletedAt = deletedAt;
+        this.image = image;
+        this.detailId = detailId;
     }
 
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "sequence-generator")
+    @GenericGenerator(
+            name = "sequence-generator",
+            strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+            parameters = {
+                    @org.hibernate.annotations.Parameter(name = "sequence_name", value = "product_sequence"),
+                    @org.hibernate.annotations.Parameter(name = "initial_value", value = "1"),
+                    @org.hibernate.annotations.Parameter(name = "increment_size", value = "1")
+            }
+    )
     public Integer getId() {
         return id;
     }
@@ -176,9 +197,10 @@ public class Product {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, description, stock, productCode, deleted, createdAt, modifiedAt, categoryId, deletedAt, image,
-                            detailId
-        );
+        return Objects
+                .hash(id, description, stock, productCode, deleted, createdAt, modifiedAt, categoryId, deletedAt, image,
+                      detailId
+                );
     }
 
     @ManyToOne
