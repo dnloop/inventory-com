@@ -143,8 +143,18 @@ public class PurchaseShareRepositoryTest {
     }
 
     @Test
+    void findAllPurchaseShareByInvoiceId() throws ExecutionException, InterruptedException {
+        final CompletableFuture<LinkedHashSet<PurchaseShare>> shares = purchaseService
+                .findAllPurchaseSharesByInvoice(1);
+        final LinkedHashSet<PurchaseShare> result = shares.get();
+
+        assertThat(result).hasSize(2);
+    }
+
+    @Test
     void findAllDeletedPurchaseShare() throws ExecutionException, InterruptedException {
-        final CompletableFuture<LinkedHashSet<PurchaseShare>> shares = purchaseService.findAllDeletedPurchaseShares();
+        final CompletableFuture<LinkedHashSet<PurchaseShare>> shares = purchaseService
+                .findAllDeletedPurchaseShares();
         final LinkedHashSet<PurchaseShare> result = shares.get();
 
         assertThat(result).hasSize(2);
