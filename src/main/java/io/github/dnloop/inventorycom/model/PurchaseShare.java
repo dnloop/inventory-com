@@ -3,6 +3,9 @@ package io.github.dnloop.inventorycom.model;
 import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -13,13 +16,17 @@ import java.util.Objects;
 @SQLDelete(sql = "UPDATE purchase_share SET deleted = 1 WHERE id= ?")
 public class PurchaseShare {
     private Integer id;
+    @Min(value = 1, message = "{number.min}")
     private Integer number;
+    @FutureOrPresent(message = "{invoice.dateFoP}")
     private Date paymentDate;
+    @FutureOrPresent(message = "{invoice.dateFoP}")
     private Date dueDate;
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
+    @NotNull(message = "{purchaseInvoice.required}")
     private Integer purchaseInvoiceId;
     private PurchaseInvoice purchaseInvoiceByPurchaseInvoiceId;
 

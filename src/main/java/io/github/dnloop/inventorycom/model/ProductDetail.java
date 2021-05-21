@@ -3,6 +3,8 @@ package io.github.dnloop.inventorycom.model;
 import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Collection;
@@ -12,10 +14,10 @@ import java.util.Objects;
  * <h4>Product Detail</h4>
  * <p>
  * Requires a default 'generic' vafor (Product share : result) {
-            Date expectedDate = productService.createDueDate(currentDate, months);
-            assertThat(share.getDueDate()).isEqualTo(expectedDate);
-            ++months;
-        }lue preloaded. This allows to have products that won't require
+ * Date expectedDate = productService.createDueDate(currentDate, months);
+ * assertThat(share.getDueDate()).isEqualTo(expectedDate);
+ * ++months;
+ * }lue preloaded. This allows to have products that won't require
  * further details.
  */
 @Entity
@@ -23,6 +25,8 @@ import java.util.Objects;
 @SQLDelete(sql = "UPDATE product_detail SET deleted=1 WHERE id=?")
 public class ProductDetail {
     private Integer id;
+    @NotEmpty(message = "{productDetail.brand}")
+    @Size(min = 3, max = 140, message = "{field.size}")
     private String brand;
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());

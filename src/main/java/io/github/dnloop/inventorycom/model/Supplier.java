@@ -5,6 +5,7 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Collection;
@@ -23,15 +24,24 @@ import java.util.Objects;
 @SQLDelete(sql = "UPDATE supplier SET deleted=1 WHERE id=?")
 public class Supplier {
     private Integer id;
+    @NotEmpty(message = "{supplier.name}")
+    @Size(min = 2, max = 320, message = "{field.size}")
     private String name;
+    @Max(value = 320, message = "{character.max}")
     private String description;
+    @Email(message = "{mail.invalid}")
+    @Max(value = 320, message = "{mail.max}")
     private String mail;
+    @NotNull(message = "{locality.required}")
     private Integer localityId;
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
+    @NotEmpty(message = "{supplier.address}")
+    @Size(min = 4, max = 280, message = "{field.size}")
     private String address;
+    @Min(value = 20, message = "{cuit.size}")
     private Long cuit;
     private Collection<PurchaseInvoice> purchaseInvoicesById;
     private Locality localityByLocalityId;

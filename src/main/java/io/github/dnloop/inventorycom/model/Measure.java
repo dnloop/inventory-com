@@ -3,6 +3,8 @@ package io.github.dnloop.inventorycom.model;
 import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotEmpty;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Collection;
@@ -14,20 +16,26 @@ import java.util.Objects;
  * Requires a default 'unavailable' value preloaded to ensure Product Detail is never
  * left in an invalid state. This allows for later UI controls to hide the nonexistent
  * value or suggest assignment.
+ * <p>
+ * Constraints like length width and diameter can be avoided by implementing text field
+ * limits on the UI.
+ * </p>
  */
 @Entity
 @Table(name = "measure")
 @SQLDelete(sql = "UPDATE measure SET deleted=1 WHERE id=?")
 public class Measure {
     private Integer id;
+    @NotEmpty(message = "{measure.type}")
+    @Max(value = 4, message = "{character.max}")
     private String type; // mm, cm, in...
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
-    private Double length;
-    private Double width;
-    private Double diameter;
+    private Double length = 0.0;
+    private Double width = 0.0;
+    private Double diameter = 0.0;
     private Collection<ProductDetail> productDetailsById;
 
     public Measure() {}

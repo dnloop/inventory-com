@@ -3,6 +3,7 @@ package io.github.dnloop.inventorycom.model;
 import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Objects;
@@ -12,6 +13,8 @@ import java.util.Objects;
 @SQLDelete(sql = "UPDATE client_phone SET deleted=1 WHERE id=?")
 public class ClientPhone {
     private Integer id;
+    @NotEmpty(message = "{phone.required}")
+    // TODO include libphone library
     private String number;
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());

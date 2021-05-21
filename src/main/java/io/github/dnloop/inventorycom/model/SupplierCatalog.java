@@ -3,6 +3,8 @@ package io.github.dnloop.inventorycom.model;
 import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Objects;
@@ -15,6 +17,8 @@ public class SupplierCatalog {
     private Timestamp deletedAt;
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
+    @NotEmpty(message = "{supplierCatalog.code}")
+    @Size(min = 1, max = 20, message = "{field.size}")
     private String catalogCode;
     private Integer id;
     private Supplier supplierBySupplierId;

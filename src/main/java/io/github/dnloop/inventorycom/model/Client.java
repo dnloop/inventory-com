@@ -5,6 +5,7 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Collection;
@@ -23,16 +24,27 @@ import java.util.Objects;
 @SQLDelete(sql = "UPDATE client SET deleted=1 WHERE id=?")
 public class Client {
     private Integer id;
+    @NotEmpty(message = "{client.name}")
+    @Size(min = 1, max = 60, message = "{field.size}")
     private String name;
+    @NotEmpty(message = "{client.surname}")
+    @Size(min = 1, max = 140, message = "{field.size}")
     private String surname;
+    @NotEmpty(message = "{client.address}")
+    @Size(min = 4, max = 280, message = "{field.size}")
     private String address;
+    @Min(value = 20, message = "{cuit.size}")
     private Long cuit;
+    @Min(value = 20, message = "{cuit.size}")
     private String dni;
+    @NotNull(message = "{locality.required}")
     private Integer localityId;
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
+    @Email(message = "{mail.invalid}")
+    @Max(value = 320, message = "{mail.max}")
     private String mail;
     private Locality localityByLocalityId;
     private Collection<ClientPhone> clientPhonesById;

@@ -3,6 +3,8 @@ package io.github.dnloop.inventorycom.model;
 import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Collection;
@@ -19,6 +21,8 @@ import java.util.Objects;
 @SQLDelete(sql = "UPDATE category SET deleted=1 WHERE id=?")
 public class Category {
     private Integer id;
+    @NotEmpty(message = "{category.required}")
+    @Size(min = 4, max = 140, message = "{field.size}")
     private String description;
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());

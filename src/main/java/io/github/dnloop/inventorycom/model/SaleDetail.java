@@ -3,6 +3,10 @@ package io.github.dnloop.inventorycom.model;
 import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -13,15 +17,21 @@ import java.util.Objects;
 @SQLDelete(sql = "UPDATE sale_detail SET deleted=1 WHERE id=?")
 public class SaleDetail {
     private Integer id;
+    @Min(value = 1, message = "{number.min}")
     private Integer amount;
+    @DecimalMin(value = "0.0", inclusive = false, message = "{price.min}")
+    @Digits(integer = 15, fraction = 2, message = "{price.digit}")
     private BigDecimal unitPrice;
-    private BigDecimal subtotal;
-    private Byte iva = 21;
+    @Digits(integer = 15, fraction = 2, message = "{price.digit}")
+    private BigDecimal subtotal = BigDecimal.ZERO;
+    private Byte iva;
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
+    @NotNull(message = "{saleInvoice.required}")
     private Integer saleInvoiceId;
+    @NotNull(message = "{product.required}")
     private Integer productId;
     private SaleInvoice saleInvoiceBySaleInvoiceId;
     private Product productByProductId;

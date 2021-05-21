@@ -3,6 +3,10 @@ package io.github.dnloop.inventorycom.model;
 import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -15,24 +19,37 @@ import java.util.Objects;
  * Entity representing a purchase invoice. Constraints must be enforced to
  * prevent record deletion as well as related entities.
  * </p>
- * TODO implement constraint
+ * <p>
+ * Future implementations will include sale point number.
+ * </p>
+ * <p>
+ * Payment and invoice type don't require constraints due to extracting
+ * default values from UI. This means that no matter the scenario, it
+ * always receives a value.
+ * </p>
  */
 @Entity
 @Table(name = "purchase_invoice")
 @SQLDelete(sql = "UPDATE purchase_invoice SET deleted = 1 WHERE id= ?")
 public class PurchaseInvoice {
     private Integer id;
+    @Min(value = 1, message = "{number.min}")
     private Integer number;
+    @FutureOrPresent(message = "{invoice.dateFoP}")
     private Timestamp generationDate;
     private String paymentType;
     private String invoiceType;
+    @Digits(integer = 15, fraction = 2, message = "{price.digit}")
     private BigDecimal surcharge = BigDecimal.ZERO;
+    @Digits(integer = 15, fraction = 2, message = "{price.digit}")
     private BigDecimal discount = BigDecimal.ZERO;
-    private BigDecimal total;
+    @Digits(integer = 15, fraction = 2, message = "{price.digit}")
+    private BigDecimal total = BigDecimal.ZERO;
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
+    @NotNull(message = "{supplier.required}")
     private Integer supplierId;
     private Collection<PurchaseDetail> purchaseDetailsById;
     private Supplier supplierBySupplierId;
