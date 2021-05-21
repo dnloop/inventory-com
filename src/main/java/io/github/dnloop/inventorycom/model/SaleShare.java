@@ -49,7 +49,7 @@ public class SaleShare {
     @SequenceGenerator(
             name = "sequence-generator",
             sequenceName = "sale_share_sequence",
-            allocationSize = 1
+            allocationSize = 100
     )
     public Integer getId() {
         return id;

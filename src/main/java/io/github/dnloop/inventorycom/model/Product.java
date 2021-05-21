@@ -65,7 +65,7 @@ public class Product {
     @SequenceGenerator(
             name = "sequence-generator",
             sequenceName = "product_sequence",
-            allocationSize = 1
+            allocationSize = 100
     )
     public Integer getId() {
         return id;
