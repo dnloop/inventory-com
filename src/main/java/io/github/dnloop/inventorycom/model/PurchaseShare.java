@@ -48,7 +48,8 @@ public class PurchaseShare {
     )
     @SequenceGenerator(
             name = "sequence-generator",
-            sequenceName = "purchase_share_sequence"
+            sequenceName = "purchase_share_sequence",
+            allocationSize = 1
     )
     public Integer getId() {
         return id;
