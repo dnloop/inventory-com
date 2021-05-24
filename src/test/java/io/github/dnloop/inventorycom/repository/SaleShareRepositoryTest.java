@@ -55,7 +55,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  * requires that given an amount of shares it must create the appropriate due dates of shares on a monthly basis.
  * </p>
  * <p>
- * TODO implement monthly share creation
  */
 @SpringBootTest
 @EnableAsync
