@@ -17,14 +17,13 @@
  *
  */
 
-package io.github.dnloop.inventorycom.utils;
+package io.github.dnloop.inventorycom.support;
 
 import net.objectlab.kit.datecalc.common.DateCalculator;
 import net.objectlab.kit.datecalc.common.DefaultHolidayCalendar;
 import net.objectlab.kit.datecalc.common.HolidayCalendar;
 import net.objectlab.kit.datecalc.joda.LocalDateKitCalculatorsFactory;
 import org.joda.time.LocalDate;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;

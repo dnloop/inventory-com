@@ -17,25 +17,12 @@
  *
  */
 
-package io.github.dnloop.inventorycom.utils;
+package io.github.dnloop.inventorycom.support.uiloader;
 
-import javax.validation.Constraint;
-import javax.validation.Payload;
-import java.lang.annotation.*;
+public interface PathInvoice {
+    String editInvoice();
 
-/**
- * Annotation used for bean validations with libphonenumber.
- */
-@Documented
-@Constraint(validatedBy = PhoneNumberValidator.class)
-@Target({ElementType.METHOD, ElementType.FIELD})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Phone {
-    String locale() default "";
+    String editDetails();
 
-    String message() default "Invalid phone number";
-
-    Class<?>[] groups() default {};
-
-    Class<? extends Payload>[] payload() default {};
+    String display();
 }

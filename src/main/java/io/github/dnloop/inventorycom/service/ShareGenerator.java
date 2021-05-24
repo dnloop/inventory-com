@@ -19,7 +19,7 @@
 
 package io.github.dnloop.inventorycom.service;
 
-import io.github.dnloop.inventorycom.utils.BusinessDate;
+import io.github.dnloop.inventorycom.support.BusinessDate;
 import net.objectlab.kit.datecalc.common.DateCalculator;
 import org.joda.time.LocalDate;
 

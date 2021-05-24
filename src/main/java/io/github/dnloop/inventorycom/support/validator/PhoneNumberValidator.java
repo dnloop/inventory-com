@@ -17,7 +17,7 @@
  *
  */
 
-package io.github.dnloop.inventorycom.utils;
+package io.github.dnloop.inventorycom.support.validator;
 
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;

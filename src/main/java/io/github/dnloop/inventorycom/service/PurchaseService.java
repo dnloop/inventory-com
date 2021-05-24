@@ -7,7 +7,7 @@ import io.github.dnloop.inventorycom.model.PurchaseShareBuilder;
 import io.github.dnloop.inventorycom.repository.PurchaseInvoiceDetailsRepository;
 import io.github.dnloop.inventorycom.repository.PurchaseInvoiceRepository;
 import io.github.dnloop.inventorycom.repository.PurchaseShareRepository;
-import io.github.dnloop.inventorycom.utils.PageableProperty;
+import io.github.dnloop.inventorycom.support.uiloader.PageableProperty;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.joda.time.LocalDate;

@@ -21,7 +21,7 @@ package io.github.dnloop.inventorycom.utility;
 
 import io.github.dnloop.inventorycom.model.PurchaseShare;
 import io.github.dnloop.inventorycom.model.SaleShare;
-import io.github.dnloop.inventorycom.utils.BusinessDate;
+import io.github.dnloop.inventorycom.support.BusinessDate;
 import net.objectlab.kit.datecalc.common.DateCalculator;
 import org.joda.time.LocalDate;
 import org.junit.jupiter.api.Test;

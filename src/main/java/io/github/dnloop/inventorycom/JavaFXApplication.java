@@ -1,7 +1,7 @@
 package io.github.dnloop.inventorycom;
 
 import io.github.dnloop.inventorycom.controller.main.Main;
-import io.github.dnloop.inventorycom.utils.*;
+import io.github.dnloop.inventorycom.support.uiloader.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;

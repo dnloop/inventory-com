@@ -4,7 +4,7 @@ import io.github.dnloop.inventorycom.model.Client;
 import io.github.dnloop.inventorycom.model.ClientPhone;
 import io.github.dnloop.inventorycom.repository.ClientPhoneRepository;
 import io.github.dnloop.inventorycom.repository.ClientRepository;
-import io.github.dnloop.inventorycom.utils.PageableProperty;
+import io.github.dnloop.inventorycom.support.uiloader.PageableProperty;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.data.domain.Page;

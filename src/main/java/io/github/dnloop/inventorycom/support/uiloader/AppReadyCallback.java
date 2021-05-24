@@ -17,25 +17,8 @@
  *
  */
 
-package io.github.dnloop.inventorycom.utils;
+package io.github.dnloop.inventorycom.support.uiloader;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-import java.util.Set;
-
-/**
- * Utility class to validate entities and return their error messages.
- */
-public final class EntityValidator {
-    private static final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
-
-    private static final Validator validator = validatorFactory.getValidator();
-
-    private EntityValidator() {}
-
-    public static <T> Set<ConstraintViolation<T>> validate(T entity) {
-        return validator.validate(entity);
-    }
+public interface AppReadyCallback {
+    void appState(Boolean ready);
 }

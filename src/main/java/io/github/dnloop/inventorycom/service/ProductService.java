@@ -2,7 +2,7 @@ package io.github.dnloop.inventorycom.service;
 
 import io.github.dnloop.inventorycom.model.*;
 import io.github.dnloop.inventorycom.repository.*;
-import io.github.dnloop.inventorycom.utils.PageableProperty;
+import io.github.dnloop.inventorycom.support.uiloader.PageableProperty;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.data.domain.Page;

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0"
             prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="io.github.dnloop.inventorycom.utils.LoadingDialog">
+            fx:controller="io.github.dnloop.inventorycom.support.uiloader.LoadingDialog">
     <center>
         <VBox alignment="CENTER" prefHeight="100.0" prefWidth="100.0" BorderPane.alignment="CENTER">
             <Region prefHeight="50.0" prefWidth="200.0"/>

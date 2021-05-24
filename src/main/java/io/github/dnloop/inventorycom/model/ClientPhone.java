@@ -1,6 +1,6 @@
 package io.github.dnloop.inventorycom.model;
 
-import io.github.dnloop.inventorycom.utils.Phone;
+import io.github.dnloop.inventorycom.support.validator.Phone;
 import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;

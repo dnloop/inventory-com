@@ -17,7 +17,7 @@
  *
  */
 
-package io.github.dnloop.inventorycom.utils;
+package io.github.dnloop.inventorycom.support.uiloader;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

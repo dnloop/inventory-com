@@ -1,9 +1,9 @@
 package io.github.dnloop.inventorycom.controller.main;
 
-import io.github.dnloop.inventorycom.utils.RouteCrud;
-import io.github.dnloop.inventorycom.utils.RouteInvoice;
-import io.github.dnloop.inventorycom.utils.RouteMain;
-import io.github.dnloop.inventorycom.utils.SceneManager;
+import io.github.dnloop.inventorycom.support.uiloader.RouteCrud;
+import io.github.dnloop.inventorycom.support.uiloader.RouteInvoice;
+import io.github.dnloop.inventorycom.support.uiloader.RouteMain;
+import io.github.dnloop.inventorycom.support.uiloader.SceneManager;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

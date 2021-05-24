@@ -6,7 +6,7 @@ import io.github.dnloop.inventorycom.model.Province;
 import io.github.dnloop.inventorycom.repository.DepartmentRepository;
 import io.github.dnloop.inventorycom.repository.LocalityRepository;
 import io.github.dnloop.inventorycom.repository.ProvinceRepository;
-import io.github.dnloop.inventorycom.utils.PageableProperty;
+import io.github.dnloop.inventorycom.support.uiloader.PageableProperty;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
