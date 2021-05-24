@@ -1,20 +1,27 @@
 package io.github.dnloop.inventorycom.model;
 
+import io.github.dnloop.inventorycom.utils.Phone;
 import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Objects;
 
+/**
+ * <h4>Client Phone</h4>
+ * <p>
+ * Entity used to represent client's phones on the database
+ * </p>
+ */
 @Entity
 @Table(name = "client_phone")
 @SQLDelete(sql = "UPDATE client_phone SET deleted=1 WHERE id=?")
 public class ClientPhone {
     private Integer id;
-    @NotEmpty(message = "{phone.required}")
-    // TODO include libphone library
+    @Transient
+    @Phone(message = "{phone.required}")
+    private transient PhoneNumber phoneNumber;
     private String number;
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
@@ -141,4 +148,12 @@ public class ClientPhone {
                '}';
     }
 
+
+    public PhoneNumber getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(PhoneNumber phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 }
