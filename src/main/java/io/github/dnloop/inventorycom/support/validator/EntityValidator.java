@@ -19,23 +19,30 @@
 
 package io.github.dnloop.inventorycom.support.validator;
 
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+
 import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
 import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-import java.util.Set;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Utility class to validate entities and return their error messages.
  */
 public final class EntityValidator {
-    private static final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
 
-    private static final Validator validator = validatorFactory.getValidator();
+    private final Validator validator;
 
-    private EntityValidator() {}
+    public EntityValidator(LocalValidatorFactoryBean factoryBean) {
+        validator = factoryBean.getValidator();
+    }
 
-    public static <T> Set<ConstraintViolation<T>> validate(T entity) {
-        return validator.validate(entity);
+    public <T> Map<String, String> validate(T entity) {
+        return validator.validate(entity).stream().collect(
+                Collectors.toMap(
+                        constraintViolation -> constraintViolation.getPropertyPath().toString(),
+                        ConstraintViolation::getMessage
+                )
+        );
     }
 }
