@@ -17,7 +17,7 @@
  *
  */
 
-package io.github.dnloop.inventorycom.support.uiloader;
+package io.github.dnloop.inventorycom.support.validator;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
