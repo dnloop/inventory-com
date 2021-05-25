@@ -21,6 +21,7 @@ package io.github.dnloop.inventorycom.repository;
 
 import io.github.dnloop.inventorycom.model.*;
 import io.github.dnloop.inventorycom.service.ProductService;
+import io.github.dnloop.inventorycom.support.validator.LevelManager;
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

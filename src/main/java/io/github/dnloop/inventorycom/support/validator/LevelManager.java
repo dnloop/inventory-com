@@ -17,8 +17,10 @@
  *
  */
 
-package io.github.dnloop.inventorycom.model;
+package io.github.dnloop.inventorycom.support.validator;
 
+import io.github.dnloop.inventorycom.model.Level;
+import io.github.dnloop.inventorycom.model.LevelBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
