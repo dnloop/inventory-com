@@ -35,7 +35,7 @@ public class Client {
     private String address;
     @Min(value = 20, message = "{cuit.size}")
     private Long cuit;
-    @Min(value = 20, message = "{cuit.size}")
+    @Min(value = 8, message = "{dni.size}")
     private String dni;
     @NotNull(message = "{locality.required}")
     private Integer localityId;

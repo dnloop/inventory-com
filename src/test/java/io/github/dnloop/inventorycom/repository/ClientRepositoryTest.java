@@ -20,6 +20,7 @@
 package io.github.dnloop.inventorycom.repository;
 
 import io.github.dnloop.inventorycom.model.Client;
+import io.github.dnloop.inventorycom.model.ClientBuilder;
 import io.github.dnloop.inventorycom.service.ClientService;
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.Test;
@@ -79,13 +80,11 @@ class ClientRepositoryTest {
                 "[Surname] - Hanigan"
         );
 
-        Client newClient = new Client(
-                "Berengaria", "Hanigan",
-                "ADDRESS-1", 123456789L, "12345678",
-                1, (byte) 0, Timestamp.from(Instant.now()),
-                null, null,
-                "Joe@dora.biz"
-        );
+        Client newClient = new ClientBuilder().setName("Berengaria").setSurname("Hanigan").setAddress("ADDRESS-1")
+                                              .setCuit(123456789L).setDni("12345678").setLocalityId(1)
+                                              .setDeleted((byte) 0).setCreatedAt(Timestamp.from(Instant.now()))
+                                              .setModifiedAt(null).setDeletedAt(null).setMail("Joe@dora.biz")
+                                              .createClient();
 
         final CompletableFuture<Optional<Client>> client =
                 clientService.saveClient(newClient).thenApply(cli -> {
