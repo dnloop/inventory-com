@@ -33,10 +33,21 @@ public final class EntityValidator {
 
     private final Validator validator;
 
+    /**
+     * Creates a custom validator for different types of entities.
+     *
+     * @param factoryBean autowired factory with property messages provided by spring.
+     */
     public EntityValidator(LocalValidatorFactoryBean factoryBean) {
         validator = factoryBean.getValidator();
     }
 
+    /**
+     * Perform validation on the given entity and return the invalid fields.
+     *
+     * @param <T> entity from model package.
+     * @return Map with key being the field of the model and value the message.
+     */
     public <T> Map<String, String> validate(T entity) {
         return validator.validate(entity).stream().collect(
                 Collectors.toMap(
