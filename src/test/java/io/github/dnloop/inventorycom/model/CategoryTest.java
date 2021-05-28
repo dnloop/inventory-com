@@ -66,7 +66,7 @@ public class CategoryTest {
 
     @Test
     void emptyCategory() {
-        Map<String, String> constraints = validator.validate(new Category());
+        Map<String, String> constraints = validator.validate(emptyCategory);
         assertThat(constraints.containsKey("description")).isTrue();
         assertThat(constraints).hasSize(1);
     }
