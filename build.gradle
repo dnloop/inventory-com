@@ -30,6 +30,7 @@ dependencies {
     implementation 'org.kordamp.ikonli:ikonli-fontawesome-pack:12.2.0'
     implementation 'net.objectlab.kit:datecalc-joda:1.4.2'
     implementation 'com.googlecode.libphonenumber:libphonenumber:8.12.23'
+    compile 'com.thedeanda:lorem:2.1'
 }
 
 test {

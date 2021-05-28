@@ -19,6 +19,7 @@
 
 package io.github.dnloop.inventorycom.model;
 
+import com.thedeanda.lorem.LoremIpsum;
 import io.github.dnloop.inventorycom.support.validator.EntityValidator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,26 +32,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 public class CategoryTest {
 
+    private final LoremIpsum lorem = new LoremIpsum();
+
     private final Category validCategory = new Category("Lorem ipsum dolor sit amet.");
 
     private final Category emptyCategory = new Category();
 
-    private final Category overSizeCategory = new Category(
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
-            "Nam ullamcorper diam lacus, vel fringilla magna tristique at. " +
-            "Donec elementum sapien in urna porttitor, id ornare justo tempor. " +
-            "Phasellus nec vehicula nisi. Vestibulum sit amet auctor sapien, nec euismod felis. " +
-            "Aliquam tristique efficitur scelerisque. Aliquam nec vulputate nunc. " +
-            "Integer varius imperdiet dictum." +
-            "Nulla tortor turpis, pharetra sit amet ex id, ornare condimentum arcu." +
-            " Vestibulum ut tincidunt orci, eu sodales neque. Sed quis augue erat. " +
-            "Nulla finibus nulla eu vehicula posuere. Praesent sit amet venenatis eros." +
-            " Duis non eleifend purus. Donec tincidunt, orci at molestie bibendum, velit nisi " +
-            "tincidunt mauris, vitae pellentesque sapien urna a magna. Vivamus massa neque, auctor " +
-            "ut lectus in, pulvinar porta leo. Maecenas ultricies facilisis tortor, non euismod eros" +
-            " suscipit vitae. Aliquam rhoncus ac mauris id mattis. Donec metus sapien, dignissim non sodales " +
-            "et, accumsan at libero. Aenean. End"
-    );
+    private final Category overSizeCategory = new Category(lorem.getWords(141));
 
     @Autowired
     private EntityValidator validator;
