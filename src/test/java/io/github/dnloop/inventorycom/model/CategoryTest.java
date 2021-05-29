@@ -55,14 +55,14 @@ public class CategoryTest {
     @Test
     void emptyCategory() {
         Map<String, String> constraints = validator.validate(emptyCategory);
-        assertThat(constraints.containsKey("description")).isTrue();
+        assertThat(constraints.containsKey("category.required"));
         assertThat(constraints).hasSize(1);
     }
 
     @Test
     void overSizeCategory() {
         Map<String, String> constraints = validator.validate(overSizeCategory);
-        assertThat(constraints.containsKey("description")).isTrue();
+        assertThat(constraints.containsKey("category.description.size"));
         assertThat(constraints).hasSize(1);
     }
 }

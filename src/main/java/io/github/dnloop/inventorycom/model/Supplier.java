@@ -30,7 +30,7 @@ public class Supplier {
     @Max(value = 320, message = "{supplier.description.max}")
     private String description;
     @Email(message = "{mail.invalid}")
-    @Max(value = 320, message = "{supplier.mail.max}")
+    @Size(min = 3, max = 320, message = "{supplier.mail.size}")
     private String mail;
     @NotNull(message = "{supplier.locality.required}")
     private Integer localityId;
@@ -41,7 +41,6 @@ public class Supplier {
     @NotEmpty(message = "{supplier.address.required}")
     @Size(min = 4, max = 280, message = "{supplier.address.size}")
     private String address;
-    @Min(value = 20, message = "{supplier.cuit.size}")
     private Long cuit;
     private Collection<PurchaseInvoice> purchaseInvoicesById;
     private Locality localityByLocalityId;

@@ -50,7 +50,7 @@ public class CategoryLevelTest {
     @Test
     void emptyCategoryLevel() {
         Map<String, String> constraints = validator.validate(emptyCategoryLevel);
-        assertThat(constraints.containsKey("categoryId")).isTrue();
+        assertThat(constraints.containsKey("categoryLevel.categoryId.required"));
         assertThat(constraints).hasSize(1);
     }
 }

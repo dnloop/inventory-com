@@ -5,7 +5,10 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Collection;
@@ -24,18 +27,17 @@ import java.util.Objects;
 @SQLDelete(sql = "UPDATE client SET deleted=1 WHERE id=?")
 public class Client {
     private Integer id;
-    @NotEmpty(message = "{client.name}")
-    @Size(min = 1, max = 60, message = "{field.size}")
+    @NotEmpty(message = "{client.name.required}")
+    @Size(min = 1, max = 60, message = "{client.name.size}")
     private String name;
-    @NotEmpty(message = "{client.surname}")
-    @Size(min = 1, max = 140, message = "{field.size}")
+    @NotEmpty(message = "{client.surname.required}")
+    @Size(min = 1, max = 140, message = "{client.surname.size}")
     private String surname;
-    @NotEmpty(message = "{client.address}")
+    @NotEmpty(message = "{client.address.required}")
     @Size(min = 4, max = 280, message = "{client.address.size}")
     private String address;
-    @Min(value = 20, message = "{client.cuit.size}")
     private Long cuit;
-    @Min(value = 8, message = "{client.dni.size}")
+    @Size(min = 8, max = 8, message = "{client.dni.size}")
     private String dni;
     @NotNull(message = "{client.locality.required}")
     private Integer localityId;
@@ -44,7 +46,7 @@ public class Client {
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
     @Email(message = "{client.mail.invalid}")
-    @Max(value = 320, message = "{client.mail.max}")
+    @Size(min = 3, max = 320, message = "{client.mail.size}")
     private String mail;
     private Locality localityByLocalityId;
     private Collection<ClientPhone> clientPhonesById;
