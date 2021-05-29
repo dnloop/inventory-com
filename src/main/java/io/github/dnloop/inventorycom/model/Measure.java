@@ -27,7 +27,7 @@ import java.util.Objects;
 public class Measure {
     private Integer id;
     @NotEmpty(message = "{measure.type}")
-    @Max(value = 4, message = "{character.max}")
+    @Max(value = 4, message = "{measure.type.max}")
     private String type; // mm, cm, in...
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());

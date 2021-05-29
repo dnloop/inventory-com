@@ -33,7 +33,7 @@ import java.util.Objects;
 @SQLDelete(sql = "UPDATE sub_category SET deleted=1 WHERE id=?")
 public class CategoryLevel {
     private Integer id;
-    @NotNull(message = "{category.required}")
+    @NotNull(message = "{categoryLevel.required}")
     private Integer categoryId;
     private Integer l1 = 0;
     private Integer l2 = 0;

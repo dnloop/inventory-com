@@ -19,7 +19,7 @@ import java.util.Objects;
 @SQLDelete(sql = "UPDATE client_phone SET deleted=1 WHERE id=?")
 public class ClientPhone {
     private Integer id;
-    @Phone(message = "{phone.required}")
+    @Phone(message = "{client.phone.required}")
     private transient PhoneNumber phoneNumber;
     private String number;
     private Byte deleted = 0;

@@ -16,17 +16,17 @@ import java.util.Objects;
 @SQLDelete(sql = "UPDATE purchase_share SET deleted = 1 WHERE id= ?")
 public class PurchaseShare {
     private Integer id;
-    @Min(value = 1, message = "{number.min}")
+    @Min(value = 1, message = "{purchaseShare.number.min}")
     private Integer number;
-    @FutureOrPresent(message = "{invoice.dateFoP}")
+    @FutureOrPresent(message = "{purchaseShare.paymentDate}")
     private Date paymentDate;
-    @FutureOrPresent(message = "{invoice.dateFoP}")
+    @FutureOrPresent(message = "{purchaseShare.dueDate}")
     private Date dueDate;
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
-    @NotNull(message = "{purchaseInvoice.required}")
+    @NotNull(message = "{purchaseShare.purchaseInvoice.required}")
     private Integer purchaseInvoiceId;
     private PurchaseInvoice purchaseInvoiceByPurchaseInvoiceId;
 

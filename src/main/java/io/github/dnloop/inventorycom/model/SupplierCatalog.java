@@ -17,8 +17,8 @@ public class SupplierCatalog {
     private Timestamp deletedAt;
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
-    @NotEmpty(message = "{supplierCatalog.code}")
-    @Size(min = 1, max = 20, message = "{field.size}")
+    @NotEmpty(message = "{supplierCatalog.code.required}")
+    @Size(min = 1, max = 20, message = "{supplierCatalog.code.size}")
     private String catalogCode;
     private Integer id;
     private Supplier supplierBySupplierId;

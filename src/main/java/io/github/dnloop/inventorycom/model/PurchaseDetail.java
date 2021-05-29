@@ -17,19 +17,20 @@ import java.util.Objects;
 @SQLDelete(sql = "UPDATE purchase_detail SET deleted = 1 WHERE id= ?")
 public class PurchaseDetail {
     private Integer id;
-    @Min(value = 1, message = "{product.amount}")
+    @Min(value = 1, message = "{purchaseDetail.amount.min}")
     private Integer amount;
-    @DecimalMin(value = "0.0", inclusive = false, message = "{price.min}")
-    @Digits(integer = 15, fraction = 2, message = "{price.digit}")
+    @DecimalMin(value = "0.0", inclusive = false, message = "{purchaseDetail.price.min}")
+    @Digits(integer = 15, fraction = 2, message = "{purchaseDetail.unitPrice.digit}")
     private BigDecimal unitPrice;
-    @Digits(integer = 15, fraction = 2, message = "{price.digit}")
+    @Digits(integer = 15, fraction = 2, message = "{purchaseDetail.subtotal.digit}")
     private BigDecimal subtotal = BigDecimal.ZERO;
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
+    @NotNull(message = "{purchaseDetail.purchaseInvoice.required}")
     private Integer purchaseInvoiceId;
-    @NotNull(message = "{product.required}")
+    @NotNull(message = "{purchaseDetail.product.required}")
     private Integer productId;
     private Byte iva;
     private PurchaseInvoice purchaseInvoiceByPurchaseInvoiceId;

@@ -26,7 +26,7 @@ import java.util.Objects;
 public class ProductDetail {
     private Integer id;
     @NotEmpty(message = "{productDetail.brand}")
-    @Size(min = 3, max = 140, message = "{field.size}")
+    @Size(min = 3, max = 140, message = "{productDetail.brand.size}")
     private String brand;
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());

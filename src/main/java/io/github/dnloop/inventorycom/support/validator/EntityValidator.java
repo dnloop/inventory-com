@@ -51,7 +51,11 @@ public final class EntityValidator {
     public <T> Map<String, String> validate(T entity) {
         return validator.validate(entity).stream().collect(
                 Collectors.toMap(
-                        constraintViolation -> constraintViolation.getPropertyPath().toString(),
+                        constraintViolation -> constraintViolation
+                                .getConstraintDescriptor()
+                                .getMessageTemplate()
+                                .replace('{', '\0')
+                                .replace('}', '\0'),
                         ConstraintViolation::getMessage
                 )
         );

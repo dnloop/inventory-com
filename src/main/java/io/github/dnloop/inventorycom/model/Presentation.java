@@ -22,8 +22,8 @@ import java.util.Objects;
 @SQLDelete(sql = "UPDATE presentation SET deleted=1 WHERE id=?")
 public class Presentation {
     private Integer id;
-    @NotEmpty(message =  "{presentation.required}")
-    @Size(min = 4, max = 140, message = "{field.size}")
+    @NotEmpty(message = "{presentation.required}")
+    @Size(min = 4, max = 140, message = "{presentation.description.size}")
     private String description;
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());

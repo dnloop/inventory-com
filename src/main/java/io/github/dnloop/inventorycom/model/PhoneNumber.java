@@ -33,7 +33,7 @@ import javax.validation.constraints.NotEmpty;
  * @see <a href="https://github.com/google/libphonenumber">libphonenumber</a>
  */
 public class PhoneNumber {
-    @NotEmpty(message = "{phone.value}")
+    @NotEmpty(message = "{phone.required}")
     private String value;
     @NotEmpty(message = "{phone.locale}")
     private String locale;

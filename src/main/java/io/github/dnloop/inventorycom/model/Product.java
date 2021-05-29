@@ -28,14 +28,14 @@ public class Product {
     @Min(value = 0, message = "{product.stock}")
     private Integer stock = 0;
     @NotEmpty(message = "{product.code}")
-    @Size(min = 1, max = 320, message = "{field.size}")
+    @Size(min = 1, max = 320, message = "{product.code.size}")
     private String productCode;
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
     private Integer categoryId;
     private Timestamp deletedAt;
-    @Max(value = 500, message = "{character.max}")
+    @Max(value = 500, message = "{product.image.max}")
     private String image = "";
     private Integer detailId = 1;
     private Category categoryByCategoryId;

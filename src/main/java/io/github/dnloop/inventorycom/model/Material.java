@@ -23,7 +23,7 @@ import java.util.Objects;
 public class Material {
     private Integer id;
     @NotEmpty(message = "{material.type}")
-    @Size(min = 4, max = 320, message = "{field.size}")
+    @Size(min = 4, max = 320, message = "{material.type.size}")
     private String type;
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());

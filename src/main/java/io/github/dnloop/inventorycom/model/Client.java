@@ -31,20 +31,20 @@ public class Client {
     @Size(min = 1, max = 140, message = "{field.size}")
     private String surname;
     @NotEmpty(message = "{client.address}")
-    @Size(min = 4, max = 280, message = "{field.size}")
+    @Size(min = 4, max = 280, message = "{client.address.size}")
     private String address;
-    @Min(value = 20, message = "{cuit.size}")
+    @Min(value = 20, message = "{client.cuit.size}")
     private Long cuit;
-    @Min(value = 8, message = "{dni.size}")
+    @Min(value = 8, message = "{client.dni.size}")
     private String dni;
-    @NotNull(message = "{locality.required}")
+    @NotNull(message = "{client.locality.required}")
     private Integer localityId;
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
-    @Email(message = "{mail.invalid}")
-    @Max(value = 320, message = "{mail.max}")
+    @Email(message = "{client.mail.invalid}")
+    @Max(value = 320, message = "{client.mail.max}")
     private String mail;
     private Locality localityByLocalityId;
     private Collection<ClientPhone> clientPhonesById;

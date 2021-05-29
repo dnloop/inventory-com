@@ -33,23 +33,23 @@ import java.util.Objects;
 @SQLDelete(sql = "UPDATE sale_invoice SET deleted=1 WHERE id=?")
 public class SaleInvoice {
     private Integer id;
-    @Min(value = 1, message = "{number.min}")
+    @Min(value = 1, message = "{saleInvoice.number.min}")
     private Integer number;
-    @FutureOrPresent(message = "{invoice.dateFoP}")
+    @FutureOrPresent(message = "{saleInvoice.dateFoP}")
     private Timestamp generationDate;
-    @Digits(integer = 15, fraction = 2, message = "{price.digit}")
+    @Digits(integer = 15, fraction = 2, message = "{saleInvoice.digit}")
     private BigDecimal surcharge = BigDecimal.ZERO;
-    @Digits(integer = 15, fraction = 2, message = "{price.digit}")
+    @Digits(integer = 15, fraction = 2, message = "{saleInvoice.total.digit}")
     private BigDecimal total = BigDecimal.ZERO;
     private String invoiceType;
     private String paymentType;
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
-    @Digits(integer = 15, fraction = 2, message = "{price.digit}")
+    @Digits(integer = 15, fraction = 2, message = "{saleInvoice.discount.digit}")
     private BigDecimal discount = BigDecimal.ZERO;
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
-    @NotNull(message = "{client.required}")
+    @NotNull(message = "{saleInvoice.client.required}")
     private Integer clientId;
     private Collection<SaleDetail> saleDetailsById;
     private Collection<SaleShare> saleSharesById;

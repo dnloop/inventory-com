@@ -22,7 +22,7 @@ import java.util.Objects;
 public class Category {
     private Integer id;
     @NotEmpty(message = "{category.required}")
-    @Size(min = 4, max = 140, message = "{field.size}")
+    @Size(min = 4, max = 140, message = "{category.description.size}")
     private String description;
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());

@@ -33,23 +33,23 @@ import java.util.Objects;
 @SQLDelete(sql = "UPDATE purchase_invoice SET deleted = 1 WHERE id= ?")
 public class PurchaseInvoice {
     private Integer id;
-    @Min(value = 1, message = "{number.min}")
+    @Min(value = 1, message = "{purchaseInvoice.number.min}")
     private Integer number;
     @FutureOrPresent(message = "{invoice.dateFoP}")
     private Timestamp generationDate;
     private String paymentType;
     private String invoiceType;
-    @Digits(integer = 15, fraction = 2, message = "{price.digit}")
+    @Digits(integer = 15, fraction = 2, message = "{purchaseInvoice.surcharge.digit}")
     private BigDecimal surcharge = BigDecimal.ZERO;
-    @Digits(integer = 15, fraction = 2, message = "{price.digit}")
+    @Digits(integer = 15, fraction = 2, message = "{purchaseInvoice.discount.digit}")
     private BigDecimal discount = BigDecimal.ZERO;
-    @Digits(integer = 15, fraction = 2, message = "{price.digit}")
+    @Digits(integer = 15, fraction = 2, message = "{purchaseInvoice.total.digit}")
     private BigDecimal total = BigDecimal.ZERO;
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
-    @NotNull(message = "{supplier.required}")
+    @NotNull(message = "{purchaseInvoice.supplier.required}")
     private Integer supplierId;
     private Collection<PurchaseDetail> purchaseDetailsById;
     private Supplier supplierBySupplierId;

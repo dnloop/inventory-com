@@ -24,24 +24,24 @@ import java.util.Objects;
 @SQLDelete(sql = "UPDATE supplier SET deleted=1 WHERE id=?")
 public class Supplier {
     private Integer id;
-    @NotEmpty(message = "{supplier.name}")
-    @Size(min = 2, max = 320, message = "{field.size}")
+    @NotEmpty(message = "{supplier.name.required}")
+    @Size(min = 2, max = 320, message = "{supplier.name.size}")
     private String name;
-    @Max(value = 320, message = "{character.max}")
+    @Max(value = 320, message = "{supplier.description.max}")
     private String description;
     @Email(message = "{mail.invalid}")
-    @Max(value = 320, message = "{mail.max}")
+    @Max(value = 320, message = "{supplier.mail.max}")
     private String mail;
-    @NotNull(message = "{locality.required}")
+    @NotNull(message = "{supplier.locality.required}")
     private Integer localityId;
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
-    @NotEmpty(message = "{supplier.address}")
-    @Size(min = 4, max = 280, message = "{field.size}")
+    @NotEmpty(message = "{supplier.address.required}")
+    @Size(min = 4, max = 280, message = "{supplier.address.size}")
     private String address;
-    @Min(value = 20, message = "{cuit.size}")
+    @Min(value = 20, message = "{supplier.cuit.size}")
     private Long cuit;
     private Collection<PurchaseInvoice> purchaseInvoicesById;
     private Locality localityByLocalityId;
