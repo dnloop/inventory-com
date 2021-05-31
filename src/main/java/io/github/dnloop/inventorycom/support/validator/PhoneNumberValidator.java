@@ -26,6 +26,9 @@ import io.github.dnloop.inventorycom.model.PhoneNumber;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+/**
+ * Custom validation for phone numbers.
+ */
 public class PhoneNumberValidator implements ConstraintValidator<Phone, PhoneNumber> {
     @Override
     public void initialize(Phone constraintAnnotation) {
@@ -34,13 +37,17 @@ public class PhoneNumberValidator implements ConstraintValidator<Phone, PhoneNum
 
     @Override
     public boolean isValid(PhoneNumber phoneNumber, ConstraintValidatorContext context) {
-        if (phoneNumber.getLocale() == null || phoneNumber.getValue() == null) {
+        if (phoneNumber.getCountryCode() == 0 || phoneNumber.getValue() == null) {
             return false;
         }
         try {
             PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
-            return phoneNumberUtil
-                    .isValidNumber(phoneNumberUtil.parse(phoneNumber.getValue(), phoneNumber.getLocale()));
+            return phoneNumberUtil.isValidNumber(
+                    phoneNumberUtil.parse(
+                            phoneNumber.getValue(),
+                            String.valueOf(phoneNumber.getCountryCode())
+                    )
+            );
         } catch (NumberParseException e) {
             return false;
         }

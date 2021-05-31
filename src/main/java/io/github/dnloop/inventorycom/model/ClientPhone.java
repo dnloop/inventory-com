@@ -11,7 +11,9 @@ import java.util.Objects;
 /**
  * <h4>Client Phone</h4>
  * <p>
- * Entity used to represent client's phones on the database
+ * Entity used to represent client's phones on the database.
+ * Transient field is used for validation. If the number is valid, the implementation class must set
+ * the number provided by {@link PhoneNumber#getValue()}
  * </p>
  */
 @Entity
@@ -19,7 +21,7 @@ import java.util.Objects;
 @SQLDelete(sql = "UPDATE client_phone SET deleted=1 WHERE id=?")
 public class ClientPhone {
     private Integer id;
-    @Phone(message = "{client.phone.required}")
+    @Phone(message = "{client.phone.invalid}")
     private transient PhoneNumber phoneNumber;
     private String number;
     private Byte deleted = 0;
@@ -31,7 +33,8 @@ public class ClientPhone {
 
     public ClientPhone() {}
 
-    public ClientPhone(String number, Integer clientId) {
+    public ClientPhone(PhoneNumber phoneNumber, String number, Integer clientId) {
+        this.phoneNumber = phoneNumber;
         this.number = number;
         this.clientId = clientId;
     }

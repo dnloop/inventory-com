@@ -21,6 +21,7 @@ package io.github.dnloop.inventorycom.repository;
 
 import io.github.dnloop.inventorycom.model.Client;
 import io.github.dnloop.inventorycom.model.ClientPhone;
+import io.github.dnloop.inventorycom.model.ClientPhoneBuilder;
 import io.github.dnloop.inventorycom.service.ClientService;
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.Test;
@@ -77,7 +78,10 @@ public class ClientPhoneRepositoryTest {
                 "[Number] - Must be 12345678"
         );
 
-        ClientPhone newClientPhone = new ClientPhone("12345678", 1);
+        ClientPhone newClientPhone = new ClientPhoneBuilder()
+                .setNumber("12345678")
+                .setClientId(1)
+                .createClientPhone();
 
         final CompletableFuture<Optional<ClientPhone>> clientPhone =
                 clientPhoneService.saveClientPhone(newClientPhone).thenApply(cli -> {

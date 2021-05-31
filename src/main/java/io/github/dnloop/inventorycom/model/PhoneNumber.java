@@ -19,12 +19,15 @@
 
 package io.github.dnloop.inventorycom.model;
 
+import com.google.i18n.phonenumbers.Phonenumber;
+
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
 /**
  * <h4>Phone Number</h4>
  * <p>
- * This class is used for validation.
+ * This class is a wrapper used for libphonenumber model used for validation.
  * </p>
  * <p>
  * The related classes:  {@link ClientPhone} and {@link SupplierPhone} are used for persistence.
@@ -32,25 +35,32 @@ import javax.validation.constraints.NotEmpty;
  *
  * @see <a href="https://github.com/google/libphonenumber">libphonenumber</a>
  */
-public class PhoneNumber {
+public class PhoneNumber extends Phonenumber.PhoneNumber {
     @NotEmpty(message = "{phone.required}")
     private String value;
-    @NotEmpty(message = "{phone.locale}")
-    private String locale;
 
+    public PhoneNumber() {}
+
+    public PhoneNumber(String value, @Min(1) int countryCode) {
+        this.value = "+" + countryCode + value;
+        super.setRawInput(value);
+        super.setCountryCode(countryCode);
+    }
+
+    /**
+     * Method required for validation in PhoneNumberValidator.
+     *
+     * @see io.github.dnloop.inventorycom.support.validator.PhoneNumberValidator
+     */
     public String getValue() {
         return value;
     }
 
+    /**
+     * Set a raw value to be parsed by the library.
+     */
     public void setValue(String value) {
         this.value = value;
-    }
-
-    public String getLocale() {
-        return locale;
-    }
-
-    public void setLocale(String locale) {
-        this.locale = locale;
+        super.setRawInput(value);
     }
 }
