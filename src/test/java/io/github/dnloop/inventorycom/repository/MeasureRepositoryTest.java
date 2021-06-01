@@ -21,6 +21,7 @@ package io.github.dnloop.inventorycom.repository;
 
 import io.github.dnloop.inventorycom.model.Material;
 import io.github.dnloop.inventorycom.model.Measure;
+import io.github.dnloop.inventorycom.model.MeasureBuilder;
 import io.github.dnloop.inventorycom.service.ProductService;
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.Test;
@@ -140,9 +141,8 @@ public class MeasureRepositoryTest {
 
     @Test
     void saveMeasures() throws ExecutionException, InterruptedException {
-        Measure newMeasure = new Measure(
-                "CM", 1.2, 1.1, 0.0
-        );
+        Measure newMeasure = new MeasureBuilder().setType("CM").setLength(1.2).setWidth(1.1).setDiameter(0.0)
+                                                 .createMeasure();
 
         final CompletableFuture<Optional<Measure>> measure =
                 productService.saveMeasures(newMeasure).thenApply(measure1 -> {

@@ -3,8 +3,7 @@ package io.github.dnloop.inventorycom.model;
 import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.*;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Collection;
@@ -26,15 +25,21 @@ import java.util.Objects;
 @SQLDelete(sql = "UPDATE measure SET deleted=1 WHERE id=?")
 public class Measure {
     private Integer id;
-    @NotEmpty(message = "{measure.type}")
-    @Max(value = 4, message = "{measure.type.max}")
+    @NotEmpty(message = "{measure.type.required}")
+    @Size(min = 1, max = 4, message = "{measure.type.size}")
     private String type; // mm, cm, in...
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
     private Timestamp deletedAt;
+    @Digits(integer = 6, fraction = 2, message = "{measure.length.digit}")
+    @DecimalMin(value = "0.0", message = "{measure.length.min}")
     private Double length = 0.0;
+    @Digits(integer = 6, fraction = 2, message = "{measure.width.digit}")
+    @DecimalMin(value = "0.0", message = "{measure.width.min}")
     private Double width = 0.0;
+    @Digits(integer = 6, fraction = 2, message = "{measure.diameter.digit}")
+    @DecimalMin(value = "0.0", message = "{measure.diameter.min}")
     private Double diameter = 0.0;
     private Collection<ProductDetail> productDetailsById;
 

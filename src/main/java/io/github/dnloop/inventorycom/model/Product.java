@@ -22,12 +22,12 @@ import java.util.Objects;
 @SQLDelete(sql = "UPDATE product SET deleted=1 WHERE id=?")
 public class Product {
     private Integer id;
-    @NotEmpty(message = "{product.name}")
-    @Size(min = 1, max = 60, message = "{field.size}")
+    @NotEmpty(message = "{product.name.required}")
+    @Size(min = 1, max = 60, message = "{product.description.size}")
     private String description;
-    @Min(value = 0, message = "{product.stock}")
+    @Min(value = 0, message = "{product.stock.min}")
     private Integer stock = 0;
-    @NotEmpty(message = "{product.code}")
+    @NotEmpty(message = "{product.code.required}")
     @Size(min = 1, max = 320, message = "{product.code.size}")
     private String productCode;
     private Byte deleted = 0;
