@@ -22,7 +22,7 @@ import java.util.Objects;
 @SQLDelete(sql = "UPDATE material SET deleted=1 WHERE id=?")
 public class Material {
     private Integer id;
-    @NotEmpty(message = "{material.type}")
+    @NotEmpty(message = "{material.type.required}")
     @Size(min = 4, max = 320, message = "{material.type.size}")
     private String type;
     private Byte deleted = 0;
