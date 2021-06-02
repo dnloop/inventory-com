@@ -21,7 +21,7 @@ import java.util.Objects;
 @SQLDelete(sql = "UPDATE category SET deleted=1 WHERE id=?")
 public class Category {
     private Integer id;
-    @NotEmpty(message = "{category.required}")
+    @NotEmpty(message = "{category.description.required}")
     @Size(min = 4, max = 140, message = "{category.description.size}")
     private String description;
     private Byte deleted = 0;
