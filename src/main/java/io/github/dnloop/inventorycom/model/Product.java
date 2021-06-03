@@ -1,6 +1,7 @@
 package io.github.dnloop.inventorycom.model;
 
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -22,10 +23,10 @@ import java.util.Objects;
 @SQLDelete(sql = "UPDATE product SET deleted=1 WHERE id=?")
 public class Product {
     private Integer id;
-    @NotEmpty(message = "{product.name.required}")
+    @NotEmpty(message = "{product.description.required}")
     @Size(min = 1, max = 60, message = "{product.description.size}")
     private String description;
-    @Min(value = 0, message = "{product.stock.min}")
+    @Range(min = 0, message = "{product.stock.size}")
     private Integer stock = 0;
     @NotEmpty(message = "{product.code.required}")
     @Size(min = 1, max = 320, message = "{product.code.size}")
@@ -35,8 +36,8 @@ public class Product {
     private Timestamp modifiedAt;
     private Integer categoryId;
     private Timestamp deletedAt;
-    @Max(value = 500, message = "{product.image.max}")
-    private String image = "";
+    @Size(min = 1, max = 500, message = "{product.image.size}")
+    private String image;
     private Integer detailId = 1;
     private Category categoryByCategoryId;
     private ProductDetail productDetailByDetailId;
