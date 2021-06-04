@@ -4,6 +4,11 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * <h4>Province</h4>
+ * <p>
+ * Entity used to represent provinces.
+ */
 @Entity
 @Table(name = "province")
 public class Province {

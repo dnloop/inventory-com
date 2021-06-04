@@ -4,6 +4,11 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * <h4>Municipality</h4>
+ * <p>
+ * Entity used to represent municipalities.
+ */
 @Entity
 @Table(name = "municipality")
 public class Municipality {

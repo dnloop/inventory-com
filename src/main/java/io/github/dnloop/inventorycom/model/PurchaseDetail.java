@@ -13,6 +13,11 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Objects;
 
+/**
+ * <h4>PurchaseDetail</h4>
+ * <p>
+ * Entity used to represent purchase details.
+ */
 @Entity
 @Table(name = "purchase_detail")
 @SQLDelete(sql = "UPDATE purchase_detail SET deleted = 1 WHERE id= ?")

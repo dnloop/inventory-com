@@ -11,6 +11,11 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Objects;
 
+/**
+ * <h4>Sale Share</h4>
+ * <p>
+ * Entity used to represent sale shares.
+ */
 @Entity
 @Table(name = "sale_share")
 @SQLDelete(sql = "UPDATE sale_share SET deleted=1 WHERE id=?")

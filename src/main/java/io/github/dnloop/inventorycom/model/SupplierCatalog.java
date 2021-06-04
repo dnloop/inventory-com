@@ -9,6 +9,11 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Objects;
 
+/**
+ * <h4>Supplier Catalog</h4>
+ * <p>
+ * Entity used to represent supplier's catalog.
+ */
 @Entity
 @Table(name = "supplier_catalog")
 @SQLDelete(sql = "UPDATE supplier_catalog SET deleted=1 WHERE id=?")
