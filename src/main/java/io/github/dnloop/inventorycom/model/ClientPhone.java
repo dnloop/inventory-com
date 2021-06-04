@@ -56,6 +56,9 @@ public class ClientPhone {
         return number;
     }
 
+    /**
+     * Store number to database.
+     */
     public void setNumber(String number) {
         this.number = number;
     }
@@ -119,7 +122,7 @@ public class ClientPhone {
                Objects.equals(deleted, that.deleted) && Objects.equals(createdAt, that.createdAt) &&
                Objects.equals(modifiedAt, that.modifiedAt) &&
                Objects.equals(deletedAt, that.deletedAt) && Objects.equals(clientId, that.clientId);
-    }
+    } // TODO review equals
 
     @Override
     public int hashCode() {
@@ -149,7 +152,10 @@ public class ClientPhone {
                ", clientId=" + clientId +
                '}';
     }
-
+    /**
+     * Field used for phone validation. Once it passes user must ensure it is stored
+     * with {@link ClientPhone#setNumber(String)}.
+     */
     @Transient
     public PhoneNumber getPhoneNumber() {
         return phoneNumber;

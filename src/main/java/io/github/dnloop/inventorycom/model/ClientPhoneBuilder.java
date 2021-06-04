@@ -20,6 +20,7 @@
 package io.github.dnloop.inventorycom.model;
 
 public class ClientPhoneBuilder {
+    // TODO adjust builder default values
     private PhoneNumber phoneNumber;
     private String number;
     private Integer clientId;

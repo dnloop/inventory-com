@@ -35,9 +35,6 @@ public class ClientPhoneTest {
             .setClientId(1)
             .createClientPhone();
 
-    private final ClientPhone emptyClientPhone = new ClientPhoneBuilder()
-            .createClientPhone();
-
     @Autowired
     private EntityValidator validator;
 

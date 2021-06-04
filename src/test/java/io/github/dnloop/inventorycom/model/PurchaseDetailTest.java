@@ -36,8 +36,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PurchaseDetailTest {
     private static final Log log = LogFactory.getLog(PurchaseDetailTest.class);
 
-    private final LoremIpsum lorem = new LoremIpsum();
-
     private final PurchaseDetail purchaseDetail = new PurchaseDetailBuilder()
             .setAmount(1)
             .setProductId(1)

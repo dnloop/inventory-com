@@ -1,11 +1,12 @@
 package io.github.dnloop.inventorycom.model;
 
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -33,16 +34,20 @@ import java.util.Objects;
 @SQLDelete(sql = "UPDATE purchase_invoice SET deleted = 1 WHERE id= ?")
 public class PurchaseInvoice {
     private Integer id;
-    @Min(value = 1, message = "{purchaseInvoice.number.min}")
+    @Range(min = 1, message = "{purchaseInvoice.number.min}")
     private Integer number;
-    @FutureOrPresent(message = "{invoice.dateFoP}")
+    @FutureOrPresent(message = "{purchaseInvoice.generationDate.dateFoP}")
+    private transient Instant genDate;
     private Timestamp generationDate;
-    private String paymentType;
+    private String paymentType = "CASH";
     private String invoiceType;
+    @DecimalMin(value = "0.0", message = "{purchaseInvoice.surcharge.min}")
     @Digits(integer = 15, fraction = 2, message = "{purchaseInvoice.surcharge.digit}")
     private BigDecimal surcharge = BigDecimal.ZERO;
+    @DecimalMin(value = "0.0", message = "{purchaseInvoice.discount.min}")
     @Digits(integer = 15, fraction = 2, message = "{purchaseInvoice.discount.digit}")
     private BigDecimal discount = BigDecimal.ZERO;
+    @DecimalMin(value = "0.0", message = "{purchaseInvoice.total.min}", inclusive = false)
     @Digits(integer = 15, fraction = 2, message = "{purchaseInvoice.total.digit}")
     private BigDecimal total = BigDecimal.ZERO;
     private Byte deleted = 0;
@@ -58,7 +63,8 @@ public class PurchaseInvoice {
     public PurchaseInvoice() {}
 
     public PurchaseInvoice(
-            Integer number, Timestamp generationDate, String paymentType, String invoiceType, BigDecimal surcharge,
+            Integer number, Instant genDate, Timestamp generationDate,
+            String paymentType, String invoiceType, BigDecimal surcharge,
             BigDecimal discount,
             BigDecimal total,
             Byte deleted,
@@ -68,6 +74,7 @@ public class PurchaseInvoice {
             Integer supplierId
     ) {
         this.number = number;
+        this.genDate = genDate;
         this.generationDate = generationDate;
         this.paymentType = paymentType;
         this.invoiceType = invoiceType;
@@ -108,6 +115,9 @@ public class PurchaseInvoice {
         return generationDate;
     }
 
+    /**
+     * Store invoice generation date to database.
+     */
     public void setGenerationDate(Timestamp generationDate) {
         this.generationDate = generationDate;
     }
@@ -285,6 +295,20 @@ public class PurchaseInvoice {
                ", deletedAt=" + deletedAt +
                ", supplierId=" + supplierId +
                '}';
+    }
+
+    /**
+     * Field used for Instant time validation. Once it passes user must ensure that it
+     * is stored with {@link PurchaseInvoice#setGenerationDate(Timestamp)} with its proper
+     * conversion.
+     */
+    @Transient
+    public Instant getGenDate() {
+        return genDate;
+    }
+
+    public void setGenDate(Instant genDate) {
+        this.genDate = genDate;
     }
 }
 

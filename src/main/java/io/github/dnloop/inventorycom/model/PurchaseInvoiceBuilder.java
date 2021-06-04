@@ -21,9 +21,11 @@ package io.github.dnloop.inventorycom.model;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.Instant;
 
 public class PurchaseInvoiceBuilder {
     private Integer number;
+    private Instant genDate;
     private Timestamp generationDate;
     private String paymentType;
     private String invoiceType;
@@ -40,6 +42,11 @@ public class PurchaseInvoiceBuilder {
 
     public PurchaseInvoiceBuilder setNumber(Integer number) {
         this.number = number;
+        return this;
+    }
+
+    public PurchaseInvoiceBuilder setGenDate(Instant genDate) {
+        this.genDate = genDate;
         return this;
     }
 
@@ -100,7 +107,7 @@ public class PurchaseInvoiceBuilder {
 
     public PurchaseInvoice createPurchaseInvoice() {
         return new PurchaseInvoice(
-                number, generationDate, paymentType, invoiceType, surcharge, discount, total, deleted, createdAt,
+                number, genDate, generationDate, paymentType, invoiceType, surcharge, discount, total, deleted, createdAt,
                 modifiedAt, deletedAt, supplierId
         );
     }
