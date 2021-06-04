@@ -26,7 +26,7 @@ public class Product {
     @NotEmpty(message = "{product.description.required}")
     @Size(min = 1, max = 60, message = "{product.description.size}")
     private String description;
-    @Range(min = 0, message = "{product.stock.size}")
+    @Range(min = 0, message = "{product.stock.range}")
     private Integer stock = 0;
     @NotEmpty(message = "{product.code.required}")
     @Size(min = 1, max = 320, message = "{product.code.size}")

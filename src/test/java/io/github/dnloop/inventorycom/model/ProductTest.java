@@ -67,7 +67,7 @@ public class ProductTest {
         Map<String, String> constraints = validator.validate(product);
         log.debug(constraints);
         assertThat(constraints.containsKey("product.description.size"));
-        assertThat(constraints.containsKey("product.stock.size"));
+        assertThat(constraints.containsKey("product.stock.range"));
         assertThat(constraints.containsKey("product.code.required"));
         assertThat(constraints).hasSize(3);
     }
@@ -82,7 +82,7 @@ public class ProductTest {
         Map<String, String> constraints = validator.validate(product);
         log.debug(constraints);
         assertThat(constraints.containsKey("product.description.size"));
-        assertThat(constraints.containsKey("product.stock.size"));
+        assertThat(constraints.containsKey("product.stock.range"));
         assertThat(constraints.containsKey("product.code.required"));
         assertThat(constraints.containsKey("product.code.size"));
         assertThat(constraints.containsKey("product.image.size"));

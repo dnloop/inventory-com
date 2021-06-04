@@ -1,6 +1,7 @@
 package io.github.dnloop.inventorycom.model;
 
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
@@ -17,11 +18,12 @@ import java.util.Objects;
 @SQLDelete(sql = "UPDATE purchase_detail SET deleted = 1 WHERE id= ?")
 public class PurchaseDetail {
     private Integer id;
-    @Min(value = 1, message = "{purchaseDetail.amount.min}")
+    @Range(min = 1, message = "{purchaseDetail.amount.range}")
     private Integer amount;
-    @DecimalMin(value = "0.0", inclusive = false, message = "{purchaseDetail.price.min}")
+    @DecimalMin(value = "0.0", inclusive = false, message = "{purchaseDetail.unitPrice.min}")
     @Digits(integer = 15, fraction = 2, message = "{purchaseDetail.unitPrice.digit}")
     private BigDecimal unitPrice;
+    @DecimalMin(value = "0.0", inclusive = false, message = "{purchaseDetail.subtotal.min}")
     @Digits(integer = 15, fraction = 2, message = "{purchaseDetail.subtotal.digit}")
     private BigDecimal subtotal = BigDecimal.ZERO;
     private Byte deleted = 0;
