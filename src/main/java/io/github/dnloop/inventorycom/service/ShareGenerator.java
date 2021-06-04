@@ -43,18 +43,18 @@ public abstract class ShareGenerator<T> {
         );
     }
 
-    public Date createDueDate(LocalDate localDate) {
+    public LocalDate createDueDate(LocalDate localDate) {
         calculator.setStartDate(localDate.plusMonths(1));
-        return new Date(
+        return new LocalDate(
                 calculator.getCurrentBusinessDate()
                           .toDateTimeAtStartOfDay()
                           .getMillis()
         );
     }
 
-    public Date createDueDate(LocalDate localDate, int months) {
+    public LocalDate createDueDate(LocalDate localDate, int months) {
         calculator.setStartDate(localDate.plusMonths(months));
-        return new Date(
+        return new LocalDate(
                 calculator.getCurrentBusinessDate()
                           .toDateTimeAtStartOfDay()
                           .getMillis()

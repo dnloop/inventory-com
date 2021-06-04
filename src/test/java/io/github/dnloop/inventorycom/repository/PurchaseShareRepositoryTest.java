@@ -169,7 +169,7 @@ public class PurchaseShareRepositoryTest {
                 "[DueDate] - Due date must be 2021-02-01"
         );
 
-        Date dueDate = purchaseService.createDueDate(currentDate);
+        LocalDate dueDate = purchaseService.createDueDate(currentDate);
 
         PurchaseShare newShare = new PurchaseShareBuilder()
                 .setNumber(1)
@@ -215,7 +215,7 @@ public class PurchaseShareRepositoryTest {
 
         assertThat(result).hasSize(6);
         for (PurchaseShare share : result) {
-            Date expectedDate = purchaseService.createDueDate(currentDate, months);
+            LocalDate expectedDate = purchaseService.createDueDate(currentDate, months);
             assertThat(share.getDueDate()).isEqualTo(expectedDate);
             ++months;
         }

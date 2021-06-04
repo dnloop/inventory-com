@@ -19,14 +19,15 @@
 
 package io.github.dnloop.inventorycom.model;
 
-import java.sql.Date;
+import org.joda.time.LocalDate;
+
 import java.sql.Timestamp;
 import java.time.Instant;
 
 public class SaleShareBuilder {
     private Integer number;
-    private Date paymentDate;
-    private Date dueDate;
+    private LocalDate paymentDate;
+    private LocalDate dueDate;
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
@@ -38,12 +39,12 @@ public class SaleShareBuilder {
         return this;
     }
 
-    public SaleShareBuilder setPaymentDate(Date paymentDate) {
+    public SaleShareBuilder setPaymentDate(LocalDate paymentDate) {
         this.paymentDate = paymentDate;
         return this;
     }
 
-    public SaleShareBuilder setDueDate(Date dueDate) {
+    public SaleShareBuilder setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
         return this;
     }

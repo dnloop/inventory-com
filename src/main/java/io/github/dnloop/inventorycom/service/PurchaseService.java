@@ -135,7 +135,7 @@ public class PurchaseService extends ShareGenerator<PurchaseShare> {
         PurchaseShareBuilder builder = new PurchaseShareBuilder();
         ArrayList<PurchaseShare> list = new ArrayList<>(number);
         for (int i = 1; i <= number; ++i) {
-            Date dueDate = super.createDueDate(currentDate, i);
+            LocalDate dueDate = super.createDueDate(currentDate, i);
             list.add(
                     builder.setNumber(1)
                            .setDueDate(dueDate)

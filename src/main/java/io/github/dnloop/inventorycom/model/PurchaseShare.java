@@ -1,27 +1,34 @@
 package io.github.dnloop.inventorycom.model;
 
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.validator.constraints.Range;
+import org.joda.time.LocalDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Objects;
 
+/**
+ * <h4>Purchase Share</h4>
+ * <p>
+ * Entity used to represent purchase shares.
+ * <p>
+ * TODO add missing total per share.
+ */
 @Entity
 @Table(name = "purchase_share")
 @SQLDelete(sql = "UPDATE purchase_share SET deleted = 1 WHERE id= ?")
 public class PurchaseShare {
     private Integer id;
-    @Min(value = 1, message = "{purchaseShare.number.min}")
+    @Range(min = 1, message = "{purchaseShare.number.range}")
     private Integer number;
-    @FutureOrPresent(message = "{purchaseShare.paymentDate}")
-    private Date paymentDate;
-    @FutureOrPresent(message = "{purchaseShare.dueDate}")
-    private Date dueDate;
+    @FutureOrPresent(message = "{purchaseShare.paymentDate.dateFoP}")
+    private LocalDate paymentDate;
+    @FutureOrPresent(message = "{purchaseShare.dueDate.dateFoP}")
+    private LocalDate dueDate;
     private Byte deleted = 0;
     private Timestamp createdAt = Timestamp.from(Instant.now());
     private Timestamp modifiedAt;
@@ -33,7 +40,8 @@ public class PurchaseShare {
     public PurchaseShare() {}
 
     public PurchaseShare(
-            Integer number, Date paymentDate, Date dueDate, Byte deleted, Timestamp createdAt, Timestamp modifiedAt,
+            Integer number, LocalDate paymentDate, LocalDate dueDate, Byte deleted, Timestamp createdAt,
+            Timestamp modifiedAt,
             Timestamp deletedAt,
             Integer purchaseInvoiceId
     ) {
@@ -78,21 +86,21 @@ public class PurchaseShare {
 
     @Basic
     @Column(name = "payment_date")
-    public Date getPaymentDate() {
+    public LocalDate getPaymentDate() {
         return paymentDate;
     }
 
-    public void setPaymentDate(Date paymentDate) {
+    public void setPaymentDate(LocalDate paymentDate) {
         this.paymentDate = paymentDate;
     }
 
     @Basic
     @Column(name = "due_date", nullable = false)
-    public Date getDueDate() {
+    public LocalDate getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
 

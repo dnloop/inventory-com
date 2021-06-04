@@ -24,6 +24,7 @@ import io.github.dnloop.inventorycom.model.SaleShareBuilder;
 import io.github.dnloop.inventorycom.service.PurchaseService;
 import io.github.dnloop.inventorycom.service.SaleService;
 import org.assertj.core.api.Condition;
+import org.joda.time.LocalDate;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -32,10 +33,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.jdbc.Sql;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
@@ -167,7 +166,7 @@ public class SaleShareRepositoryTest {
                 "[Number] - Share number must be 1"
         );
 
-        Date dueDate = Date.valueOf(LocalDate.now().plusMonths(1L));
+        org.joda.time.LocalDate dueDate = LocalDate.now().plusMonths(1);
 
         SaleShare newShare = new SaleShareBuilder()
                 .setNumber(1)
@@ -212,7 +211,7 @@ public class SaleShareRepositoryTest {
 
         assertThat(result).hasSize(6);
         for (SaleShare share : result) {
-            Date expectedDate = saleService.createDueDate(currentDate, months);
+            LocalDate expectedDate = saleService.createDueDate(currentDate, months);
             assertThat(share.getDueDate()).isEqualTo(expectedDate);
             ++months;
         }

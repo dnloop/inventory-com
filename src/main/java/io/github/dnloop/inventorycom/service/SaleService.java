@@ -10,6 +10,7 @@ import io.github.dnloop.inventorycom.repository.SaleShareRepository;
 import io.github.dnloop.inventorycom.support.uiloader.PageableProperty;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.tomcat.jni.Local;
 import org.joda.time.LocalDate;
 import org.springframework.data.domain.Page;
 import org.springframework.scheduling.annotation.Async;
@@ -137,7 +138,7 @@ public class SaleService extends ShareGenerator<SaleShare> {
         SaleShareBuilder builder = new SaleShareBuilder();
         ArrayList<SaleShare> list = new ArrayList<>(number);
         for (int i = 1; i <= number; ++i) {
-            Date dueDate = super.createDueDate(currentDate, i);
+            LocalDate dueDate = super.createDueDate(currentDate, i);
             list.add(
                     builder.setNumber(1)
                            .setDueDate(dueDate)
